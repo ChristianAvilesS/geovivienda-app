@@ -1,0 +1,25 @@
+table {
+  width: 80%;
+  border: 1px black solid;
+}
+
+.w-90 {
+  width: 90%;
+}
+
+div.container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.title {
+  background-color: greenyellow;
+  border-radius: 50px 20px;
+  padding: 0.5rem 1rem;
+
+}
+
+.text-center {
+  text-align: center;
+}
