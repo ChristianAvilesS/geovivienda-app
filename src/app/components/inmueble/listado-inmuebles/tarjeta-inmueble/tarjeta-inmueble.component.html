@@ -1,0 +1,22 @@
+<mat-card class="w-25 custom-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ inmueble.nombre }}</mat-card-title>
+    <mat-card-subtitle>{{ inmueble.direccion.direccion }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <img
+    mat-card-image
+    src="https://material.angular.dev/assets/img/examples/shiba2.jpg"
+    alt="Photo of a Shiba Inu"
+  />
+
+  <mat-card-content class="card-content-scroll">
+    <p>
+      {{ inmueble.descripcion }}
+    </p>
+  </mat-card-content>
+
+  <mat-card-actions class="p-2 d-flex justify-content-center">
+    <button class="btn btn-primary">Ver detalles</button>
+  </mat-card-actions>
+</mat-card>
