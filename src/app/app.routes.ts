@@ -2,6 +2,9 @@ import { Routes } from '@angular/router';
 import { ListadoUsuariosComponent } from './components/usuario/listado-usuarios/listado-usuarios.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { DireccionComponent } from './components/direccion/direccion.component';
+import { InmuebleComponent } from './components/inmueble/inmueble.component';
+import { ListadoInmueblesComponent } from './components/inmueble/listado-inmuebles/listado-inmuebles.component';
+import { InformacionInmuebleComponent } from './components/inmueble/listado-inmuebles/tarjeta-inmueble/informacion-inmueble/informacion-inmueble.component';
 
 export const routes: Routes = [
   {
@@ -13,5 +16,21 @@ export const routes: Routes = [
     path: 'direcciones',
     component: DireccionComponent,
     children: [],
+  },
+  {
+    path: 'inmuebles',
+    component: InmuebleComponent,
+    children: [
+      {
+        path: 'listado',
+        component: ListadoInmueblesComponent,
+        children: [
+          {
+            path: 'informacion/:id',
+            component: InformacionInmuebleComponent,
+          },
+        ],
+      },
+    ],
   },
 ];
