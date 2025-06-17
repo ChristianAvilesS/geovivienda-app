@@ -1,7 +1,12 @@
-<div class="contenedor-grid-tarjetas">
-  <app-tarjeta-inmueble
-    *ngFor="let inmueble of inmuebles"
-    [inmueble]="inmueble"
-  >
-  </app-tarjeta-inmueble>
+<div class="p-4 d-flex flex-column">
+  <div class="text-center">
+    <h1>Listado de inmuebles</h1>
+  </div>
+  <div class="contenedor-grid-tarjetas">
+    <app-tarjeta-inmueble
+      *ngFor="let inmueble of inmuebles"
+      [inmueble]="inmueble"
+    >
+    </app-tarjeta-inmueble>
+  </div>
 </div>
