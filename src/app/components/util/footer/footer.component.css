@@ -1,0 +1,37 @@
+.footer-fijo {
+  background-color: #0A663A;
+  width: 100vw;
+  height: 8rem;
+  font-size: 1rem;
+  padding: 0 20px;
+  margin: 0;
+  font-family: Jost, sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 799;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h3, h4 {
+  color: #F4EE60;
+}
+
+h4 > mat-icon {
+  color: black;
+}
+
+
+img.logo {
+  width: 12%;
+}

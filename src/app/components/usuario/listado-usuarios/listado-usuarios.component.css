@@ -17,7 +17,9 @@ div.container-centrado {
 }
 
 .title {
-  background-color: greenyellow;
+  background-color: #f0ea5f;
+  color: #0A663A;
+  font-family: Jost, sans-serif;
   border-radius: 50px 20px;
   padding: 0.5rem 1rem;
 }
@@ -66,4 +68,11 @@ div.container-title {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
+}
+
+mat-paginator {
+  align-self: center;
+  justify-self: center;
+  width: 50%;
+  background-color: #BFE564;
 }

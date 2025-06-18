@@ -1,0 +1,17 @@
+<div class="header-nav">
+  <mat-toolbar class="flex-align">
+    <div>
+      <button matIconButton [matMenuTriggerFor]="menu">
+        <mat-icon class="self-center">menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['/']">Inicio</button>
+        <button mat-menu-item [routerLink]="['/usuarios/listado']">Usuarios</button>
+        <button mat-menu-item [routerLink]="['/inmuebles/listado']">Inmuebles</button>
+      </mat-menu>
+    </div>
+    <button matIconButton class="btn btn-light btn-sm btn-round">
+      <mat-icon>person</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
