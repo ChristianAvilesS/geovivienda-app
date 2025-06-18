@@ -31,15 +31,15 @@ export class UsuarioService {
   }
 
   buscarPorId(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(this.url + `/${id}`);
+    return this.http.get<Usuario>(`${this.url}/${id}`);
   }
 
   actualizar(u: Usuario) {
-    return this.http.put(this.url + `/${u.idUsuario}`, u);
+    return this.http.put(`${this.url}/${u.idUsuario}`, u);
   }
 
   eliminar(id: number) {
-    return this.http.delete(this.url + `/${id}`);
+    return this.http.delete(`${this.url}/${id}`);
   }
 
 }

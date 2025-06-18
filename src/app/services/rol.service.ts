@@ -31,14 +31,14 @@ export class RolService {
   }
 
   buscarPorId(id: number): Observable<Rol> {
-    return this.http.get<Rol>(this.url + `/${id}`);
+    return this.http.get<Rol>(`${this.url}/${id}`);
   }
 
   actualizar(r: Rol) {
-    return this.http.put(this.url + `/${r.idRol}`, r);
+    return this.http.put(`${this.url}/${r.idRol}`, r);
   }
 
   eliminar(id: number) {
-    return this.http.delete(this.url + `/${id}`);
+    return this.http.delete(`${this.url}/${id}`);
   }
 }
