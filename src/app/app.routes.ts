@@ -5,6 +5,7 @@ import { DireccionComponent } from './components/direccion/direccion.component';
 import { InmuebleComponent } from './components/inmueble/inmueble.component';
 import { ListadoInmueblesComponent } from './components/inmueble/listado-inmuebles/listado-inmuebles.component';
 import { InformacionInmuebleComponent } from './components/inmueble/listado-inmuebles/tarjeta-inmueble/informacion-inmueble/informacion-inmueble.component';
+import { AgregarInmueblesComponent } from './components/inmueble/agregar-inmuebles/agregar-inmuebles.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,10 @@ export const routes: Routes = [
             component: InformacionInmuebleComponent,
           },
         ],
+      },
+      {
+        path: 'agregar',
+        component: AgregarInmueblesComponent,
       },
     ],
   },
