@@ -1,0 +1,42 @@
+<div class="fondoMain">
+  <header>
+    <div id="cabecera">
+      <div id="logo">
+        <img src="/LogoGeoFondoAmarillo.png" alt="Logo GeoViviendas" title="GeoViviendaLogo" width="80" height="80">
+      </div>
+        <p id="tituloGeo">GeoViviendas</p>
+    </div>
+  </header>
+
+  <div class="titulo-pagina">
+    <h1>{{ edicion ? 'Actualizar Medio de Pago' : 'Registro de Medio de Pago' }}</h1>
+  </div>
+
+  <div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="aceptar()">
+
+      <mat-form-field class="example-full-width" *ngIf="edicion">       
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="idMedio" readonly/>
+        <mat-error *ngIf="form.get('idMedio')?.hasError('required')">
+          El id del medio de pago es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field class="example-full-width">
+        <mat-label>Medio de Pago</mat-label>
+        <input matInput placeholder="Ex. Debito" formControlName="medioPago" />
+        <mat-error *ngIf="form.get('medioPago')?.hasError('required')">
+          El medio de pago es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <button mat-raised-button class="btn-verde">
+        {{ edicion ? 'Actualizar' : 'Registrar' }}
+      </button>
+    </form>
+
+  </div>
+  
+</div>
