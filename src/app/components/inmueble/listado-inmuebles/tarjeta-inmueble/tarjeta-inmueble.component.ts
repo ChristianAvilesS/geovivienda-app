@@ -32,9 +32,9 @@ export class TarjetaInmuebleComponent {
   }
 
   @Input() set inmueble(value: Inmueble) {
-    if (value && value.id) {
+    if (value && value.idInmueble) {
       this._inmueble = value;
-      this.imagenService.listarPorInmueble(value.id).subscribe({
+      this.imagenService.listarPorInmueble(value.idInmueble).subscribe({
         next: (data) => {
           this.imagenes = data;
           console.log('Imágenes:', data);
