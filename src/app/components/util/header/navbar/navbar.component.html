@@ -1,0 +1,45 @@
+<div class="header-nav">
+  <mat-toolbar class="flex-align">
+    <div>
+      <button matIconButton [matMenuTriggerFor]="menu">
+        <mat-icon class="self-center">menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['/']">Inicio</button>
+        <button mat-menu-item [routerLink]="['/usuarios/listado']">
+          Usuarios
+        </button>
+        <button mat-menu-item [routerLink]="['/roles']">Roles</button>
+        <button mat-menu-item [routerLink]="['/inmuebles/listado']">
+          Inmuebles
+        </button>
+        @if(estaLogeado){<button mat-menu-item (click)="cerrarSesion()">
+          Cerrar Sesión</button
+        >}
+      </mat-menu>
+    </div>
+
+    @if (estaLogeado) {
+    <button matIconButton class="btn btn-light btn-sm btn-round">
+      <mat-icon [routerLink]="['usuarios/perfil']">person</mat-icon>
+    </button>
+    } @else {
+    <div>
+      <button
+        matIconButton
+        class="btn btn-light btn-sm me-3"
+        [routerLink]="['inicio-sesion']"
+      >
+        Iniciar Sesión
+      </button>
+      <button
+        matIconButton
+        class="btn btn-light btn-sm"
+        [routerLink]="['registro']"
+      >
+        Registrar
+      </button>
+    </div>
+    }
+  </mat-toolbar>
+</div>

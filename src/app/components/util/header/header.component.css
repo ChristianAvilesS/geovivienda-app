@@ -1,0 +1,33 @@
+.header-fijo {
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  font-family: Jost, sans-serif;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  z-index: 800;
+
+}
+
+.header-logo {
+  background-color: #f0ea5f;
+  width: 100vw;
+  height: 4rem;
+}
+
+
+.img-header {
+  height: 40px;
+}
+
+.title {
+  color: #0A663A;
+  font-size: 40px;
+}

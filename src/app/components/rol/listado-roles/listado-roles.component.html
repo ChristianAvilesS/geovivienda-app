@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="container-title">
+    <h1 class="text-center"><span class="title">Listado de Roles</span></h1>
+  </div>
+
+  <div class="container w-80">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8 table table-striped table-hover table-bordered"
+    >
+      <!-- ID  -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let rol">{{ rol.idRol }}</td>
+      </ng-container>
+
+      <!-- Rol  -->
+      <ng-container matColumnDef="rol">
+        <th mat-header-cell *matHeaderCellDef>Rol</th>
+        <td mat-cell *matCellDef="let rol">{{ rol.rol }}</td>
+      </ng-container>
+
+      <!-- Acciones  -->
+      <ng-container matColumnDef="eliminar">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let rol">
+          <button
+            matButton="outlined"
+            (click)="eliminarRol(rol.idRol)"
+            class="btn btn-sm btn-danger"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

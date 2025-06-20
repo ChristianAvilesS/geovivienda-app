@@ -1,0 +1,30 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.header-nav {
+  background-color: #0A663A;
+  width: 100vw;
+  height: 4rem;
+}
+
+mat-toolbar {
+  background-color: #0A663A;
+  padding: 0 20px;
+}
+
+.self-center {
+  align-self: center;
+  justify-self: center;
+}
+
+.flex-align {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-round {
+  border-radius: 100px;
+}

@@ -1,0 +1,23 @@
+<app-listado-roles></app-listado-roles>
+<div>
+  <form [formGroup]="form" (submit)="guardar()">
+    <div class="flex-container">
+      <!-- Role-->
+      <div class="mb-3">
+        <mat-form-field>
+          <mat-label>Rol</mat-label>
+          <input
+            matInput
+            placeholder="DEVELOPER"
+            formControlName="rol"
+          />
+          <mat-error *ngIf="form.get('rol')?.hasError('required')">
+            El nombre del rol es obligatorio!
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button class="text-center">Agregar Rol</button>
+    </div>
+  </form>
+</div>
