@@ -1,0 +1,23 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <div class="chat-title">Eva</div>
+  </div>
+
+  <div class="chat-body">
+    <div class="chat-message bot">
+      <img src="assets/eva.png" class="chat-avatar" />
+      <div class="chat-bubble">
+        ¡Hola! Soy Eva. Bienvenida/o a Geovivienda.
+      </div>
+    </div>
+
+    <div *ngFor="let msg of messages" [ngClass]="msg.sender">
+      <div class="chat-bubble">{{ msg.text }}</div>
+    </div>
+  </div>
+
+  <form (submit)="sendMessage(); $event.preventDefault()" class="chat-input-container">
+    <input type="text" [(ngModel)]="userInput" name="message" class="chat-input" placeholder="Escribe tu mensaje..." required />
+    <button type="submit" class="send-btn" [disabled]="isLoading">▶</button>
+  </form>
+</div>
