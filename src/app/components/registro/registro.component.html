@@ -1,0 +1,120 @@
+<div class="container p-3">
+  <div class="text-center">
+    <h1>Registro Usuario</h1>
+  </div>
+  <div class="mt-3">
+    <form [formGroup]="form" class="example-form" (submit)="aceptar()">
+      <!-- Full Name -->
+      <div class="mb-3">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nombre Completo</mat-label>
+          <input matInput placeholder="Ex. Pepe Perez" formControlName="nombre" />
+          <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+            Tu nombre es obligatorio!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Address -->
+      <div class="mb-3">
+        <mat-form-field class="example-full-width">
+          <mat-label>Dirección</mat-label>
+          <input matInput placeholder="Ex. Avenida Cesar Canevaro 1139, Lince, 15073, Peru" formControlName="direccion" />
+          <mat-error *ngIf="form.get('direccion')?.hasError('required')">
+            Tu dirección es obligatoria!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="mb-3">
+        <mat-form-field class="example-full-width">
+          <mat-label>Teléfono</mat-label>
+          <input matInput placeholder="Ex. 987654321" formControlName="telefono" />
+          <mat-error *ngIf="form.get('telefono')?.hasError('required')">
+            Tu teléfono es obligatorio!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <mat-form-field class="example-full-width">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput placeholder="Ex. pepe06@mail.com" formControlName="email" />
+          <mat-error *ngIf="form.get('email')?.hasError('email')">
+            El email ingresado no es válido!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Username -->
+      <div class="mb-3">
+        <mat-form-field class="example-full-width">
+          <mat-label>Username</mat-label>
+          <input matInput placeholder="Ex. ceas96" formControlName="username"/>
+          <mat-error *ngIf="form.get('username')?.hasError('required')">
+            El usuario ingresado no es válido!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3" *ngIf="!edicion">
+        <mat-form-field class="example-full-width">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            placeholder="Contraseña"
+            formControlName="password"
+            type="password"
+          />
+          <mat-error *ngIf="form.get('password')?.hasError('required') || form.get('password')?.hasError('minLength')">
+            La contraseña debe de tener por lo menos 8 caracteres
+          </mat-error>
+          <mat-error *ngIf="form.errors?.['passwordMismatch'] && form.touched">
+            Las contraseñas no coinciden
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="mb-3" *ngIf="!edicion">
+        <mat-form-field class="example-full-width">
+          <mat-label>Confirmar Contraseña</mat-label>
+          <input
+            matInput
+            placeholder="Confirmar Contraseña"
+            formControlName="passwordVerificar"
+            type="password"
+          />
+          <mat-error *ngIf="form.get('passwordVerificar')?.hasError('required')">
+            Confirme su contraseña
+          </mat-error>
+          <mat-error *ngIf="form.errors?.['passwordMismatch'] && form.touched">
+            Las contraseñas no coinciden
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="mb-3">
+        <h4>Rol</h4>
+        <mat-form-field>
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="rol">
+            @for (r of roles; track r) {
+            <mat-option [value]="r.id">{{ r.value }}</mat-option>
+            }
+          </mat-select>
+          <mat-error *ngIf="form.get('tipo')?.hasError('required')">
+            El rol es obligatorio!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="mt-3 text-center">
+        <button mat-raised-button>Registrar</button>
+      </div>
+    </form>
+  </div>
+</div>

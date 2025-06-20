@@ -3,6 +3,7 @@ import { environment } from '../environments/environments';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../models/usuario';
+import { UsuarioDevueltoDTO } from '../models/dtos/usuario-devuelto-dto';
 const base_url = environment.base;
 
 @Injectable({
@@ -18,8 +19,9 @@ export class UsuarioService {
     return this.http.get<Usuario[]>(this.url);
   }
 
-  insertar(u: Usuario) {
-    return this.http.post(this.url, u);
+  insertar(u: Usuario, rolId: number) {
+    const params = { rol: rolId };
+    return this.http.post<UsuarioDevueltoDTO>(this.url, u, { params });
   }
 
   setLista(listaNueva: Usuario[]) {
@@ -41,5 +43,4 @@ export class UsuarioService {
   eliminar(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }
-
 }

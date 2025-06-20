@@ -1,9 +1,26 @@
 .main-container {
-  margin-top: 10rem;
-  margin-bottom: 8rem;
-  padding-top: 10px;
   flex: 1;
   background: linear-gradient(180deg, #A4E267 0%, #BFE564 33%, #F0EA5F 65%, #14CC74 100%);
   min-height: 10rem;
+  overflow-y: auto;
+}
+
+app-header {
+  height: 8rem;
+}
+
+app-footer {
+  height: 5rem;
+}
+
+html, body {
   height: 100%;
+  margin: 0;
+}
+
+
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }

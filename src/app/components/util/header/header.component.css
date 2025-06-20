@@ -1,6 +1,5 @@
 .header-fijo {
   width: 100%;
-  font-size: 4rem;
   padding: 10px;
   margin: 0;
   font-family: Jost, sans-serif;
@@ -20,14 +19,15 @@
 .header-logo {
   background-color: #f0ea5f;
   width: 100vw;
-  height: 6rem;
+  height: 4rem;
 }
 
 
 .img-header {
-  height: 90px;
+  height: 40px;
 }
 
 .title {
   color: #0A663A;
+  font-size: 40px;
 }

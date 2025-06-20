@@ -1,7 +1,7 @@
 .footer-fijo {
   background-color: #0A663A;
   width: 100vw;
-  height: 8rem;
+  height: 5rem;
   font-size: 1rem;
   padding: 0 20px;
   margin: 0;
@@ -32,6 +32,11 @@ h4 > mat-icon {
 }
 
 
-img.logo {
+img.logo_x {
   width: 12%;
+}
+
+
+img.logo {
+  width: 20%;
 }
