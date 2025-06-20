@@ -4,11 +4,13 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { InmuebleComponent } from './components/inmueble/inmueble.component';
 import { ListadoInmueblesComponent } from './components/inmueble/listado-inmuebles/listado-inmuebles.component';
 import { InformacionInmuebleComponent } from './components/inmueble/listado-inmuebles/tarjeta-inmueble/informacion-inmueble/informacion-inmueble.component';
+import { AgregarInmueblesComponent } from './components/inmueble/agregar-inmuebles/agregar-inmuebles.component';
 import { InicioComponent } from './components/util/inicio/inicio.component';
 import { PerfilUsuarioComponent } from './components/usuario/perfil-usuario/perfil-usuario.component';
 import { RolComponent } from './components/rol/rol.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { InicioSesionComponent } from './components/inicio-sesion/inicio-sesion.component';
+
 
 export const routes: Routes = [
   {
@@ -38,6 +40,10 @@ export const routes: Routes = [
             component: InformacionInmuebleComponent,
           },
         ],
+      },
+      {
+        path: 'agregar',
+        component: AgregarInmueblesComponent,
       },
     ],
   },

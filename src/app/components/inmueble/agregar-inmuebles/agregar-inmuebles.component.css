@@ -1,0 +1,55 @@
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+form {
+  border: 1px solid #bbb;
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+.info-inmueble {
+  display: grid;
+  grid-template-areas:
+    "nombre tipo"
+    "descripcion descripcion"
+    "precio area"
+    "imagen imagen";
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.info-ubicacion {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.nombre {
+  grid-area: nombre;
+}
+
+.tipo {
+  grid-area: tipo;
+}
+
+.descripcion {
+  grid-area: descripcion;
+}
+
+.precio {
+  grid-area: precio;
+}
+
+.area {
+  grid-area: area;
+}
+
+.imagen {
+  grid-area: imagen;
+}
