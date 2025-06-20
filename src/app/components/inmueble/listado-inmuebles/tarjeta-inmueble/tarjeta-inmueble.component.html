@@ -6,7 +6,7 @@
 
   <div
     class="carousel slide carrusel"
-    [id]="'carousel' + inmueble.id"
+    [id]="'carousel' + inmueble.idInmueble"
     data-bs-ride="carousel"
     *ngIf="imagenes.length > 0"
   >
@@ -14,7 +14,7 @@
       <button
         *ngFor="let img of imagenes; let i = index"
         type="button"
-        [attr.data-bs-target]="'#carousel' + inmueble.id"
+        [attr.data-bs-target]="'#carousel' + inmueble.idInmueble"
         [attr.data-bs-slide-to]="i"
         [class.active]="i === 0"
         [attr.aria-current]="i === 0 ? 'true' : null"
@@ -40,7 +40,7 @@
     <button
       class="carousel-control-prev"
       type="button"
-      [attr.data-bs-target]="'#carousel' + inmueble.id"
+      [attr.data-bs-target]="'#carousel' + inmueble.idInmueble"
       data-bs-slide="prev"
     >
       <span class="carousel-control-prev-icon"></span>
@@ -50,7 +50,7 @@
     <button
       class="carousel-control-next"
       type="button"
-      [attr.data-bs-target]="'#carousel' + inmueble.id"
+      [attr.data-bs-target]="'#carousel' + inmueble.idInmueble"
       data-bs-slide="next"
     >
       <span class="carousel-control-next-icon"></span>

@@ -1,0 +1,100 @@
+<div class="contenedor">
+  <h2>Agregar Inmueble</h2>
+  <form [formGroup]="form" (submit)="insertarInmueble()">
+    <div class="info-inmueble">
+      <mat-form-field class="input-agregar nombre">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre" formControlName="nombre" />
+        <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+          El nombre es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input-agregar tipo">
+        <mat-label>Tipo de inmueble</mat-label>
+        <mat-select formControlName="tipo">
+          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+            {{ tipo.viewValue }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('tipo')?.hasError('required')">
+          El tipo es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input-agregar descripcion">
+        <mat-label>Descripción</mat-label>
+        <textarea
+          matInput
+          placeholder="Descripción"
+          formControlName="descripcion"
+        ></textarea>
+        <mat-error *ngIf="form.get('descripcion')?.hasError('required')">
+          La descripción es obligatoria.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input-agregar precio">
+        <mat-label>Precio</mat-label>
+        <input
+          matInput
+          placeholder="Precio"
+          type="number"
+          formControlName="precio"
+        />
+        <mat-error *ngIf="form.get('precio')?.hasError('required')">
+          El precio es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input-agregar area">
+        <mat-label>Área</mat-label>
+        <input
+          matInput
+          placeholder="Área"
+          type="number"
+          formControlName="area"
+        />
+        <mat-error *ngIf="form.get('area')?.hasError('required')">
+          El área es obligatoria.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="input-agregar imagen">
+        <label for="fileInput" class="form-label">Seleccionar imágenes:</label>
+        <input
+          class="form-control"
+          type="file"
+          id="fileInput"
+          (change)="onFilesSelected($event)"
+          multiple
+          accept="image/*"
+        />
+      </div>
+    </div>
+
+    <div class="info-ubicacion">
+      <div
+        id="mapa"
+        style="height: 300px; width: 100%; margin-bottom: 16px"
+      ></div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="direccion" readonly />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>ID Usuario Dueño</mat-label>
+        <input matInput formControlName="usuarioDuenio" />
+        <mat-error *ngIf="form.get('usuarioDuenio')?.hasError('required')">
+          El ID del usuario dueño es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">
+        Guardar Inmueble
+      </button>
+    </div>
+  </form>
+</div>

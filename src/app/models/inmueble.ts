@@ -1,7 +1,7 @@
 import { Direccion } from './direccion';
 
 export class Inmueble {
-  id: number = 0;
+  idInmueble: number = 0;
   nombre: string = '';
   tipo: string = '';
   direccion: Direccion = new Direccion();

@@ -1,36 +1,71 @@
 <div class="container">
-  <div><h1 class="text-center"><span class="title">Listado de Usuarios</span></h1></div>
-  <div class="w-80">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <div class="container-title">
+    <h1 class="text-center"><span class="title">Listado de Usuarios</span></h1>
+  </div>
+
+  <div class="container w-80">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8 table table-striped table-hover table-bordered"
+    >
       <ng-container matColumnDef="nombre">
         <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="telefono">
-        <th mat-header-cell *matHeaderCellDef>Teléfono</th>
-        <td mat-cell *matCellDef="let element">{{ element.telefono }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="direccion">
-        <th mat-header-cell *matHeaderCellDef>Dirección</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.direccion.direccion }}
-        </td>
+        <td mat-cell *matCellDef="let usuario">{{ usuario.nombre }}</td>
       </ng-container>
 
       <ng-container matColumnDef="username">
         <th mat-header-cell *matHeaderCellDef>Username</th>
-        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+        <td mat-cell *matCellDef="let usuario">{{ usuario.username }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
-        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      <ng-container matColumnDef="boton">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let usuario">
+          <button
+            matButton="outlined"
+            (click)="abrirModal(usuario.idUsuario)"
+            class="btn btn-sm btn-primary"
+          >
+            Ver más
+          </button>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
   </div>
+</div>
+
+<div class="modal-personalizado" *ngIf="modalVisible">
+  <mat-card class="carta-usuario" appearance="outlined">
+    <mat-card-header class="mb-3 align-buttons">
+      <div>
+        <mat-card-title>{{ usuario.nombre }}</mat-card-title>
+        <mat-card-subtitle>{{ rolPredom }}</mat-card-subtitle>
+      </div>
+      <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="mb-2">
+        <mat-icon class="me-3">phone</mat-icon>{{ usuario.telefono }}
+      </div>
+      <div class="mb-2">
+        <mat-icon class="me-3">place</mat-icon>{{ usuario.direccion.direccion }}
+      </div>
+      <div class="mb-2">
+        <mat-icon class="me-3">mail_outline</mat-icon>{{ usuario.email }}
+      </div>
+      <div class="mb-2">
+        <mat-icon class="me-3">person</mat-icon>{{ usuario.username }}
+      </div>
+    </mat-card-content>
+
+    <button type="button" class="btn btn-sm btn-secondary close-button mb-3" (click)="cerrarModal()">
+      Cerrar
+    </button>
+  </mat-card>
 </div>

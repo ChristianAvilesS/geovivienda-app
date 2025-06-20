@@ -5,20 +5,32 @@ import { InmuebleService } from '../../../../../services/inmueble.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inmueble } from '../../../../../models/inmueble';
 import { MatListModule } from '@angular/material/list';
+import { InmuebleUsuarioService } from '../../../../../services/inmueble-usuario.service';
+import { InmuebleUsuario } from '../../../../../models/inmueble-usuario';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-informacion-inmueble',
-  imports: [MatDialogModule, MatListModule],
+  imports: [MatDialogModule, MatListModule, MatIconModule],
   templateUrl: './informacion-inmueble.component.html',
   styleUrl: './informacion-inmueble.component.css',
 })
 export class InformacionInmuebleComponent {
   private map!: Map;
+  inmuebleUsuario: InmuebleUsuario = new InmuebleUsuario();
 
   constructor(
-    inmuebleService: InmuebleService,
+    private inmuebleUsuarioService: InmuebleUsuarioService,
     @Inject(MAT_DIALOG_DATA) public inmueble: Inmueble
   ) {}
+
+  ngOnInit() {
+    this.inmuebleUsuarioService
+      .buscarDuenioPorInmueble(this.inmueble.idInmueble)
+      .subscribe((data) => {
+        this.inmuebleUsuario = data;
+      });
+  }
 
   ngAfterViewInit(): void {
     this.map = new maplibregl.Map({
@@ -46,10 +58,6 @@ export class InformacionInmuebleComponent {
       )
       .addTo(this.map);
 
-    // Opcional: abrir el popup automáticamente
-    marker.togglePopup();
-
-    // Recalcular tamaño después de que el modal se abra
     setTimeout(() => this.map.resize(), 300);
   }
 }

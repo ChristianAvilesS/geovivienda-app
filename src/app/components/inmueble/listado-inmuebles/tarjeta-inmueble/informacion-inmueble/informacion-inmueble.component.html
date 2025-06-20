@@ -1,4 +1,9 @@
-<h2 mat-dialog-title class="text-center">Ver detalles del inmueble</h2>
+<div class="title-container">
+  <h2 mat-dialog-title class="text-center">Ver detalles del inmueble</h2>
+  <button matMiniFab mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 
 <mat-dialog-content class="mat-typography">
   <div class="d-flex flex-column gap-4">
@@ -26,10 +31,10 @@
       <h5 class="mb-2">Información del propietario</h5>
       <mat-list>
         <mat-list-item>
-          <strong>Nombre:</strong>&nbsp;{{ inmueble.nombre }}
+          <strong>Nombre:</strong>&nbsp;{{ inmuebleUsuario.usuario.nombre }}
         </mat-list-item>
         <mat-list-item>
-          <strong>Teléfono:</strong>&nbsp;{{ inmueble.nombre }}
+          <strong>Teléfono:</strong>&nbsp;{{ inmuebleUsuario.usuario.telefono }}
         </mat-list-item>
       </mat-list>
     </section>
@@ -50,7 +55,9 @@
   </div>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Aceptar</button>
+<mat-dialog-actions align="end" class="gap-2">
+  <button class="btn btn-secondary" mat-dialog-close>Alquilar</button>
+  <button class="btn btn-primary" [mat-dialog-close]="true" cdkFocusInitial>
+    Comprar
+  </button>
 </mat-dialog-actions>
