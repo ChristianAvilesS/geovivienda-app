@@ -1,0 +1,68 @@
+.bg-img {
+  width: 100%;
+}
+
+.barraBusqueda{
+  position: absolute;
+  top: 14rem; /* Ajusta según sea necesario */
+  left: 10vw; /* Ajusta según sea necesario */
+  border: 2px solid black;
+  width: 80vw;
+  height: 3.81171875vw;
+  display: flex;
+  align-items: center; /* Alinea verticalmente los elementos */
+  background-color: rgba(10, 102, 58, 0.28);
+
+}
+
+#buttonRegion{
+  border: 2px solid black;
+  display: inline-block;
+  vertical-align: middle; /* Alinea verticalmente los elementos */
+  height: 3.8109375vw;
+  width: 7.905729166666667vw;
+  color: #0A663A;
+  font-family: Cabin, sans serif;
+  font-size: 1.5625vw;
+}
+
+#buttonCiudad{
+  border: 2px solid black;
+  display: inline-block;
+  vertical-align: middle; /* Alinea verticalmente los elementos */
+  height: 3.8109375vw;
+  width: 7.905729166666667vw;
+  color: #0A663A;
+  font-family: Cabin, sans serif;
+  font-size: 1.5625vw;
+}
+
+#buttonTipo{
+  border: 2px solid black;
+  display: inline-block;
+  vertical-align: middle; /* Alinea verticalmente los elementos */
+  height: 3.8109375vw;
+  width: 7.905729166666667vw;
+  color: #0A663A;
+  font-family: Cabin, sans serif;
+  font-size: 1.5625vw;
+}
+
+.text-overlay {
+  position: absolute;
+  top: 25vw; /* Ajusta según sea necesario */
+  left: 50%; /* Ajusta según sea necesario */
+  transform: translate(-50%, -50%); /* Centra el texto */
+  color: #0A663A;
+  background-color: none; /* Fondo semi-transparente */
+  padding: 10px;
+  border-radius: 5px; /* Opcional: bordes redondeados */
+  text-align: center; /* Opcional: centra el texto */
+  font-size: 4vw; /* Ajusta según sea necesario */
+}
+
+#geoViviendaFondo{
+  background-color: none;
+  font-family: Jost, sans-serif;
+  font-weight: 700;
+}

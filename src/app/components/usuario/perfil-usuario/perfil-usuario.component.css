@@ -1,0 +1,15 @@
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: space-between;
+}
+
+mat-form-field {
+  width: 40%;
+}
+
+form {
+  justify-content: center;
+}

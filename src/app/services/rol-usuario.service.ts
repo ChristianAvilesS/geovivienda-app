@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { RolUsuario } from '../models/rol-usuario';
 import { RolUsuarioId } from '../models/ids/rol-usuario-id';
+import { RolPredominanteDTO } from '../models/dtos/rol-predominante-dto';
 const base_url = environment.base;
 
 @Injectable({
@@ -36,13 +37,18 @@ export class RolUsuarioService {
       .set('idUsuario', `${id.idUsuario}`)
       .set('idRol', `${id.idRol}`);
 
-    return this.http.get<RolUsuario>(this.url + '/buscar', { params });
+    return this.http.get<RolUsuario>(`${this.url}/buscar`, { params });
   }
 
   eliminar(id: RolUsuarioId) {
     const params = new HttpParams()
       .set('idUsuario', `${id.idUsuario}`)
       .set('idRol', `${id.idRol}`);
+
     return this.http.delete(this.url, { params });
+  }
+
+  obtenerRolPredominante(id: number) {
+    return this.http.get<RolPredominanteDTO>(`${this.url}/rol_predom/${id}`);
   }
 }
