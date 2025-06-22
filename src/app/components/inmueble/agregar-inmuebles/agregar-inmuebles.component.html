@@ -83,16 +83,7 @@
         <mat-label>Dirección</mat-label>
         <input matInput formControlName="direccion" readonly />
       </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>ID Usuario Dueño</mat-label>
-        <input matInput formControlName="usuarioDuenio" />
-        <mat-error *ngIf="form.get('usuarioDuenio')?.hasError('required')">
-          El ID del usuario dueño es obligatorio.
-        </mat-error>
-      </mat-form-field>
-
-      <button mat-raised-button color="primary" type="submit">
+      <button mat-raised-button class="btn btn-primary" type="submit">
         Guardar Inmueble
       </button>
     </div>
