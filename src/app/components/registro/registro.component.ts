@@ -15,6 +15,8 @@ import {
 import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../services/usuario.service';
 import { RolService } from '../../services/rol.service';
+import { SesionUsuarioService } from '../../services/sesion-usuario.service';
+import { JwtRequest } from '../../models/jwt-request';
 
 @Component({
   selector: 'app-registro',
@@ -33,15 +35,14 @@ import { RolService } from '../../services/rol.service';
 export class RegistroComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   id: number = 0;
-  edicion: boolean = false;
   usuario: Usuario = new Usuario();
   rolId: number = 0;
-  status: boolean = false;
   roles: { id: number; value: string }[] = [];
 
   constructor(
     private userServ: UsuarioService,
     private rolS: RolService,
+    private sessionS: SesionUsuarioService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {}
@@ -49,16 +50,16 @@ export class RegistroComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       nombre: ['', Validators.required],
-      telefono: ['', Validators.required, Validators.pattern('^[0-9]{9}$')],
+      telefono: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
       direccion: ['', Validators.required],
       username: ['', [Validators.required, Validators.maxLength(20)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      passwordVerificar: ['', Validators.required],
+      passwordVerificar: ['', [Validators.required, Validators.minLength(8)]],
       rol: ['', Validators.required],
     });
 
-    this.rolS.listar().subscribe((data) => {
+    this.rolS.listarRolesSinAdmin().subscribe((data) => {
       data.forEach((rolObt) => {
         this.roles.push({ id: rolObt.idRol, value: rolObt.rol });
       });
@@ -66,9 +67,12 @@ export class RegistroComponent implements OnInit {
   }
 
   aceptar() {
+    console.log("Estoy entrando a la verificación del form");
     if (this.form.valid) {
-      if (this.form.value.password !== this.form.value.passwordVerificar)
+      if (this.form.value.password !== this.form.value.passwordVerificar) {
+        console.log('Error');
         return;
+      }
       this.usuario.nombre = this.form.value.nombre;
       this.usuario.telefono = this.form.value.telefono;
       this.usuario.direccion.direccion = this.form.value.direccion;
@@ -78,14 +82,16 @@ export class RegistroComponent implements OnInit {
 
       this.rolId = this.form.value.rol;
 
-      this.userServ.insertar(this.usuario, this.rolId).subscribe((response) => {
-        this.id = response.idUsuario;
-        this.userServ.listar().subscribe((data) => {
-          this.userServ.setLista(data);
-        });
+      console.log('Antes de insertar');
+      this.userServ.insertar(this.usuario, this.rolId).subscribe(() => {
+        console.log('Entré a insertar');
+        var jwt = new JwtRequest();
+        jwt.username = this.usuario.username;
+        jwt.password = this.usuario.password;
+        this.sessionS.iniciarSesion(jwt).subscribe(() => {
+          this.router.navigate(['']);
+        })
       });
     }
-
-    this.router.navigate(['usuarios/listado']);
   }
 }
