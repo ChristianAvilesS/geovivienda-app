@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
-import { ListadoMediospagoComponent } from './listado-mediospago/listado-mediospago.component';
 
 @Component({
   selector: 'app-mediopago',
-  imports: [RouterOutlet,ListadoMediospagoComponent],
+  imports: [RouterOutlet],
   templateUrl: './mediopago.component.html',
   styleUrl: './mediopago.component.css'
 })

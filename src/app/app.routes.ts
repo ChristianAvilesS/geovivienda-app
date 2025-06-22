@@ -10,6 +10,9 @@ import { PerfilUsuarioComponent } from './components/usuario/perfil-usuario/perf
 import { RolComponent } from './components/rol/rol.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { InicioSesionComponent } from './components/inicio-sesion/inicio-sesion.component';
+import { ListadoMediospagoComponent } from './components/mediopago/listado-mediospago/listado-mediospago.component';
+import { InsertareditarMediopagoComponent } from './components/mediopago/insertareditar-mediopago/insertareditar-mediopago.component';
+import { MediopagoComponent } from './components/mediopago/mediopago.component';
 
 
 export const routes: Routes = [
@@ -52,4 +55,13 @@ export const routes: Routes = [
     component: InicioComponent,
   },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  {
+    path:'mediospago',
+    component:MediopagoComponent  ,
+    children: [
+      {path:'', component: ListadoMediospagoComponent },
+      {path:'insertar', component: InsertareditarMediopagoComponent},
+      {path:'editar/:id', component: InsertareditarMediopagoComponent}
+    ],
+  }
 ];
