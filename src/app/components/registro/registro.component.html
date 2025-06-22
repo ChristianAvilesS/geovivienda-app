@@ -41,8 +41,8 @@
       <div class="mb-3">
         <mat-form-field class="example-full-width">
           <mat-label>Correo electrónico</mat-label>
-          <input matInput placeholder="Ex. pepe06@mail.com" formControlName="email" />
-          <mat-error *ngIf="form.get('email')?.hasError('email')">
+          <input type="email" matInput placeholder="Ex. pepe06@mail.com" formControlName="email" />
+          <mat-error *ngIf="form.get('email')?.hasError('email') || form.get('email')?.hasError('required')">
             El email ingresado no es válido!!
           </mat-error>
         </mat-form-field>
@@ -60,7 +60,7 @@
       </div>
 
       <!-- Password -->
-      <div class="mb-3" *ngIf="!edicion">
+      <div class="mb-3">
         <mat-form-field class="example-full-width">
           <mat-label>Contraseña</mat-label>
           <input
@@ -72,14 +72,14 @@
           <mat-error *ngIf="form.get('password')?.hasError('required') || form.get('password')?.hasError('minLength')">
             La contraseña debe de tener por lo menos 8 caracteres
           </mat-error>
-          <mat-error *ngIf="form.errors?.['passwordMismatch'] && form.touched">
+          <mat-error *ngIf="form.get('password')?.hasError('required')">
             Las contraseñas no coinciden
           </mat-error>
         </mat-form-field>
       </div>
 
       <!-- Confirm Password -->
-      <div class="mb-3" *ngIf="!edicion">
+      <div class="mb-3">
         <mat-form-field class="example-full-width">
           <mat-label>Confirmar Contraseña</mat-label>
           <input
@@ -90,9 +90,6 @@
           />
           <mat-error *ngIf="form.get('passwordVerificar')?.hasError('required')">
             Confirme su contraseña
-          </mat-error>
-          <mat-error *ngIf="form.errors?.['passwordMismatch'] && form.touched">
-            Las contraseñas no coinciden
           </mat-error>
         </mat-form-field>
       </div>
