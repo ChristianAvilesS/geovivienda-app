@@ -1,6 +1,6 @@
 .main-container {
   flex: 1;
-  background: linear-gradient(180deg, #A4E267 0%, #BFE564 33%, #F0EA5F 65%, #14CC74 100%);
+  background-color: #feffef;
   min-height: 10rem;
   overflow-y: auto;
 }

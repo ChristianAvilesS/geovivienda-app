@@ -6,17 +6,32 @@
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item [routerLink]="['/']">Inicio</button>
+        <button mat-menu-item [routerLink]="['/inmuebles/listado']">
+          Inmuebles
+        </button>
+        @if(estaLogeado) {
+        <button mat-menu-item [routerLink]="['/inmuebles/agregar']">
+          Agregar
+        </button>
+
+        @if (esAdmin) {
         <button mat-menu-item [routerLink]="['/usuarios/listado']">
           Usuarios
         </button>
         <button mat-menu-item [routerLink]="['/roles']">Roles</button>
-        <button mat-menu-item [routerLink]="['/inmuebles/listado']">
-          Inmuebles
+        <button mat-menu-item [routerLink]="['/medios-pago/listado']">
+          Medios de Pago
         </button>
+<<<<<<< HEAD
         <button mat-menu-item [routerLink]="['/mediospago']">Medios de Pago</button>
         @if(estaLogeado){<button mat-menu-item (click)="cerrarSesion()">
           Cerrar Sesión</button
         >}
+=======
+        }
+        <button mat-menu-item (click)="cerrarSesion()">Cerrar Sesión</button>
+        }
+>>>>>>> master
       </mat-menu>
     </div>
 
