@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   linkPerfil: string = '/usuarios/perfil';
   estaLogeado: boolean = false;
+  esAdmin: boolean = false;
 
   constructor(
     private loginS: SesionUsuarioService,
@@ -35,6 +36,7 @@ export class NavbarComponent implements OnInit {
     this.sesionS.logeado$.subscribe((estado) => {
       this.estaLogeado = estado;
       this.cd.detectChanges();
+      this.esAdmin = this.sesionS.decodeToken().role.includes('ADMIN');
     });
   }
 

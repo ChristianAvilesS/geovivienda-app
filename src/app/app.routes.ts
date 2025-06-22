@@ -10,7 +10,9 @@ import { PerfilUsuarioComponent } from './components/usuario/perfil-usuario/perf
 import { RolComponent } from './components/rol/rol.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { InicioSesionComponent } from './components/inicio-sesion/inicio-sesion.component';
-
+import { MediopagoComponent } from './components/mediopago/mediopago.component';
+import { ListadoMediospagoComponent } from './components/mediopago/listado-mediospago/listado-mediospago.component';
+import { InsertareditarMediopagoComponent } from './components/mediopago/insertareditar-mediopago/insertareditar-mediopago.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +24,15 @@ export const routes: Routes = [
         path: 'perfil',
         component: PerfilUsuarioComponent,
       },
+    ],
+  },
+  {
+    path: 'medios-pago',
+    component: MediopagoComponent,
+    children: [
+      { path: 'listado', component: ListadoMediospagoComponent },
+      { path: 'ediciones', component: InsertareditarMediopagoComponent },
+      { path: 'ediciones/:id', component: InsertareditarMediopagoComponent },
     ],
   },
   { path: 'roles', component: RolComponent },

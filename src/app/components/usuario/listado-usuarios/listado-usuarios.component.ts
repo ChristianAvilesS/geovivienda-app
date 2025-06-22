@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { RolUsuarioService } from '../../../services/rol-usuario.service';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 
-
 @Component({
   selector: 'app-listado-usuarios',
   imports: [
@@ -29,6 +28,7 @@ export class ListadoUsuariosComponent implements OnInit, AfterViewInit {
   usuario: Usuario = new Usuario();
   rolPredom: string = '';
   modalVisible: boolean = false;
+  verEliminados: boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -40,6 +40,7 @@ export class ListadoUsuariosComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.usuarioService.listar().subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -57,14 +58,26 @@ export class ListadoUsuariosComponent implements OnInit, AfterViewInit {
   }
 
   abrirModal(id: number) {
-    console.log(this.modalVisible);
     this.modalVisible = true;
-    console.log(this.modalVisible);
     this.obtenerDatos(id);
   }
 
   cerrarModal() {
     this.modalVisible = false;
     this.usuario = new Usuario();
+  }
+
+  cambiarEstado() {
+    this.verEliminados = !this.verEliminados;
+    if (this.verEliminados) {
+      this.usuarioService.listar().subscribe((data) => {
+        this.dataSource.data = data;
+      });
+    }
+    else {
+      this.usuarioService.listarNoEliminados().subscribe((data) => {
+        this.dataSource.data = data;
+      });
+    }
   }
 }
