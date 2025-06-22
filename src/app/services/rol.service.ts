@@ -41,4 +41,8 @@ export class RolService {
   eliminar(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }
+
+  listarRolesSinAdmin(): Observable<Rol[]> {
+    return this.http.get<Rol[]>(`${this.url}/roles-clientes`);
+  }
 }
