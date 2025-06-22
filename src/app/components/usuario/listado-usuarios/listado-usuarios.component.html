@@ -3,6 +3,12 @@
     <h1 class="text-center"><span class="title">Listado de Usuarios</span></h1>
   </div>
 
+  <div class="container text-center mb-2">
+    <button matButton="outlined" class="btn btn-sm btn-secondary" (click)="cambiarEstado()">
+      {{ !verEliminados ? "Filtrar Eliminados" : "Ver todo" }}
+    </button>
+  </div>
+
   <div class="container w-80">
     <table
       mat-table
@@ -35,7 +41,11 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+    <mat-paginator
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 15]"
+      showFirstLastButtons
+    ></mat-paginator>
   </div>
 </div>
 
@@ -46,7 +56,12 @@
         <mat-card-title>{{ usuario.nombre }}</mat-card-title>
         <mat-card-subtitle>{{ rolPredom }}</mat-card-subtitle>
       </div>
-      <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+      <button
+        matButton="outlined"
+        type="button"
+        class="btn-close"
+        (click)="cerrarModal()"
+      ></button>
     </mat-card-header>
 
     <mat-card-content>
@@ -64,7 +79,12 @@
       </div>
     </mat-card-content>
 
-    <button type="button" class="btn btn-sm btn-secondary close-button mb-3" (click)="cerrarModal()">
+    <button
+      matButton="outlined"
+      type="button"
+      class="btn btn-sm btn-secondary close-button"
+      (click)="cerrarModal()"
+    >
       Cerrar
     </button>
   </mat-card>

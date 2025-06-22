@@ -41,16 +41,28 @@ export class SesionUsuarioService {
   }
 
   decodeToken() {
-    return this.payload;
+    const token = this.getToken();
+    if (token && token.split('.').length === 3) {
+      try {
+        return jwtDecode<Payload>(token);
+      } catch (e) {
+        
+      }
+    }
+    return new Payload();
   }
   estaLogeado(): boolean {
     return typeof window !== 'undefined' && !!localStorage.getItem('token');
   }
 
-  getIdUsuario(): number | null {
+  getToken(): string | null {
+    return typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  }
+
+  getIdUsuario(): number {
     const token = localStorage.getItem('token');
-    if (!token) return null;
+    if (!token) return 0;
     const decoded: any = jwtDecode(token);
-    return decoded.idUsuario || null;
+    return decoded.idUsuario;
   }
 }
