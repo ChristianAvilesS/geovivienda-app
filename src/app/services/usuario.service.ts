@@ -43,4 +43,8 @@ export class UsuarioService {
   eliminar(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }
+
+  listarNoEliminados(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.url}/no-eliminados`);
+  }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -15,8 +15,7 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { RolUsuarioService } from '../../../services/rol-usuario.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmarEliminarComponent } from '../../util/confirmar-eliminar/confirmar-eliminar.component';
-import { jwtDecode } from 'jwt-decode';
-import { Payload } from '../../../models/dtos/payload';
+import { SesionUsuarioService } from '../../../services/sesion-usuario.service';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -43,18 +42,10 @@ export class PerfilUsuarioComponent implements OnInit {
     private userServ: UsuarioService,
     private rolUserServ: RolUsuarioService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private dialog: MatDialog
-  ) {}
-
-  getIdUsuario(): number {
-    const token = localStorage.getItem('token');
-    if (!token) return 0;
-
-    const decoded: Payload = jwtDecode(token);
-    console.log(decoded);
-    return decoded.idUsuario;
-  }
+    private dialog: MatDialog,
+    private sessionS: SesionUsuarioService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -66,7 +57,10 @@ export class PerfilUsuarioComponent implements OnInit {
       rol: ['', Validators.required],
     });
 
-    this.id = this.getIdUsuario();
+    this.id = this.sessionS.getIdUsuario();
+    if (this.id == 0) {
+      this.router.navigate(['inicio']);
+    }
     this.userServ.buscarPorId(this.id).subscribe((user) => {
       this.usuario = user;
 
