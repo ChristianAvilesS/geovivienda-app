@@ -26,6 +26,7 @@ import { Imagen } from '../../../models/imagen';
 
 // MapLibre
 import * as maplibregl from 'maplibre-gl';
+import { SesionUsuarioService } from '../../../services/sesion-usuario.service';
 
 @Component({
   selector: 'app-agregar-inmuebles',
@@ -44,6 +45,7 @@ export class AgregarInmueblesComponent implements OnInit, AfterViewInit {
   form: FormGroup = new FormGroup({});
   inmueble: Inmueble = new Inmueble();
   inmuebleUsuario: InmuebleUsuario = new InmuebleUsuario();
+  usuarioDuenioId: number = 0;
   imagenesSeleccionadas: File[] = [];
   direccion: string = '';
   map!: maplibregl.Map;
@@ -59,6 +61,7 @@ export class AgregarInmueblesComponent implements OnInit, AfterViewInit {
     private inmuebleService: InmuebleService,
     private inmuebleUsuarioService: InmuebleUsuarioService,
     private imagenService: ImagenesService,
+    private sesioService: SesionUsuarioService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -75,6 +78,8 @@ export class AgregarInmueblesComponent implements OnInit, AfterViewInit {
       longitud: [''],
       usuarioDuenio: ['', Validators.required],
     });
+
+    this.usuarioDuenioId = this.sesioService.getIdUsuario();
   }
 
   ngAfterViewInit(): void {
@@ -136,7 +141,7 @@ export class AgregarInmueblesComponent implements OnInit, AfterViewInit {
     this.inmuebleService.insertar(this.inmueble).subscribe((inmuebleData) => {
       // Asignar relación usuario-inmueble
       this.inmuebleUsuario.id.idInmueble = inmuebleData.idInmueble;
-      this.inmuebleUsuario.id.idUsuario = Number(this.form.value.usuarioDuenio);
+      this.inmuebleUsuario.id.idUsuario = Number(this.usuarioDuenioId);
       this.inmuebleUsuario.inmueble.idInmueble = inmuebleData.idInmueble;
       this.inmuebleUsuario.usuario.idUsuario = Number(
         this.form.value.usuarioDuenio
