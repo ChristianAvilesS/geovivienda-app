@@ -33,3 +33,10 @@ td, th {
   text-align: center;
   vertical-align: middle;
 }
+
+mat-paginator {
+  justify-self: center;
+  width: 50%;
+  border: black 1px solid;
+  border-radius: 3rem;
+}
