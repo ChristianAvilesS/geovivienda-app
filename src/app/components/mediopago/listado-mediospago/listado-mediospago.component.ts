@@ -20,15 +20,19 @@ export class ListadoMediospagoComponent implements OnInit {
 
   ngOnInit(): void {
     this.mS.list().subscribe(data=>{
-      this.dataSource=new MatTableDataSource(data)
+      const ordenado = data.sort((a, b) => a.idMedio - b.idMedio);
+      this.dataSource = new MatTableDataSource(ordenado);
     })
     this.mS.getList().subscribe(data=>{
-      this.dataSource=new MatTableDataSource(data)
+      const ordenado = data.sort((a, b) => a.idMedio - b.idMedio);
+      this.dataSource = new MatTableDataSource(ordenado);
     })
   }
 
   eliminar(id:number){
+    console.log('Eliminando medio de pago con ID:', id);
     this.mS.deleteM(id).subscribe((data)=>{
+      console.log('Eliminado correctamente');
       this.mS.list().subscribe((data)=>{
         this.mS.setList(data)
       })
