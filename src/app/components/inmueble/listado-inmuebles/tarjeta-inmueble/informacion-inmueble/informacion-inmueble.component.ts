@@ -29,6 +29,7 @@ export class InformacionInmuebleComponent {
       .buscarDuenioPorInmueble(this.inmueble.idInmueble)
       .subscribe((data) => {
         this.inmuebleUsuario = data;
+        console.log(this.inmuebleUsuario.usuario);
       });
   }
 

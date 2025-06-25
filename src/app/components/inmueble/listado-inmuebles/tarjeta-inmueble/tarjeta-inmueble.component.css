@@ -1,5 +1,5 @@
 .custom-card {
-  height: 500px;
+  height: 400px;
   width: 100%;
   max-width: 400px;
   display: flex;
@@ -28,12 +28,16 @@
 
 .carrusel {
   width: 100%;
-  height: 250px;
+  height: 180px;
   overflow: hidden;
 }
 
 .carousel-image {
   width: 100%;
-  height: 250px;
+  height: 180px;
   object-fit: cover;
+}
+
+.boton-accion {
+  width: 100%;
 }

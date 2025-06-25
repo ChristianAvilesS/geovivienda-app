@@ -1,5 +1,7 @@
 <div class="title-container">
-  <h2 mat-dialog-title class="text-center">Ver detalles del inmueble</h2>
+  <h2 mat-dialog-title class="text-center fw-bold">
+    Ver detalles del inmueble
+  </h2>
   <button matMiniFab mat-dialog-close>
     <mat-icon>close</mat-icon>
   </button>
@@ -34,7 +36,7 @@
           <strong>Nombre:</strong>&nbsp;{{ inmuebleUsuario.usuario.nombre }}
         </mat-list-item>
         <mat-list-item>
-          <strong>Teléfono:</strong>&nbsp;{{ inmuebleUsuario.usuario.telefono }}
+          <strong>Correo:</strong>&nbsp;{{ inmuebleUsuario.usuario.email }}
         </mat-list-item>
       </mat-list>
     </section>
@@ -49,6 +51,7 @@
           height: 300px;
           border-radius: 8px;
           overflow: hidden;
+          border: 3px solid #0a663a;
         "
       ></div>
     </section>
