@@ -58,9 +58,35 @@
   </div>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end" class="gap-2">
-  <button class="btn btn-secondary" mat-dialog-close>Alquilar</button>
-  <button class="btn btn-primary" [mat-dialog-close]="true" cdkFocusInitial>
-    Comprar
-  </button>
+<mat-dialog-actions align="end">
+  <div class="gap-2 d-flex" *ngIf="esDuenio">
+    <button
+      mat-dialog-close
+      class="btn btn-secondary boton-secundario"
+      [routerLink]="['/inmuebles/editar/', inmueble.idInmueble]"
+      routerLinkActive="router-link-active"
+    >
+      Editar
+    </button>
+    <button
+      mat-dialog-close
+      class="btn btn-primary boton-primario"
+      (click)="eliminar(inmueble.idInmueble)"
+      routerLinkActive="router-link-active"
+    >
+      Eliminar
+    </button>
+  </div>
+  <div class="gap-2 d-flex" *ngIf="!esDuenio">
+    <button class="btn btn-secondary boton-secundario" mat-dialog-close>
+      Alquilar
+    </button>
+    <button
+      class="btn btn-primary boton-primario"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+    >
+      Comprar
+    </button>
+  </div>
 </mat-dialog-actions>

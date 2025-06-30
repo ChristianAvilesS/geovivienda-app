@@ -3,13 +3,13 @@
 }
 
 .header-nav {
-  background-color: #0A663A;
+  background-color: #0a663a;
   width: 100vw;
-  height: 4rem;
+  height: 3rem;
 }
 
 mat-toolbar {
-  background-color: #0A663A;
+  background-color: #0a663a;
   padding: 0 20px;
 }
 
@@ -27,4 +27,16 @@ mat-toolbar {
 
 .btn-round {
   border-radius: 100px;
+}
+
+.login {
+  background-color: transparent;
+  color: #eee;
+  border-color: #f0ea5f;
+}
+
+.login:hover {
+  background-color: #f0ea5f;
+  color: #333;
+  border-color: #f0ea5f;
 }

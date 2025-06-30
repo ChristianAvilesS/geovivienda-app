@@ -10,12 +10,24 @@ body {
   min-height: 100vh;
 }
 
-.btn {
+.boton-primario {
   background-color: #0a663a;
   border: transparent;
 }
 
-.btn:hover {
+.boton-primario:hover {
   background-color: #0a663a6c;
   border: transparent;
+}
+
+.boton-secundario {
+  background-color: #f0ea5f;
+  border: transparent;
+  color: #333;
+}
+
+.boton-secundario:hover {
+  background-color: #b1ad38;
+  border: transparent;
+  color: #333;
 }

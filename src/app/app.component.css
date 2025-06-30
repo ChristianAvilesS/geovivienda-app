@@ -1,26 +1,28 @@
-.main-container {
-  flex: 1;
-  background-color: #feffef;
-  min-height: 10rem;
-  overflow-y: auto;
-}
-
-app-header {
-  height: 8rem;
-}
-
-app-footer {
-  height: 5rem;
-}
-
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
+  padding: 0;
 }
-
 
 .layout-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+app-header {
+  height: 15vh;
+  flex-shrink: 0;
+}
+
+.main-container {
+  flex: 1;
+  background-color: #feffef;
+  overflow-y: auto;
+}
+
+app-footer {
+  height: 7vh;
+  flex-shrink: 0;
 }

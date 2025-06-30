@@ -1,7 +1,11 @@
 <mat-card class="custom-card" appearance="outlined">
-  <mat-card-header>
-    <mat-card-title>{{ inmueble.nombre }}</mat-card-title>
-    <mat-card-subtitle>{{ inmueble.direccion.direccion }}</mat-card-subtitle>
+  <mat-card-header class="header-card">
+    <mat-card-title>
+      {{ inmueble.nombre }}
+    </mat-card-title>
+    <mat-card-subtitle class="card-subtitle-limit">
+      {{ inmueble.direccion.direccion }}
+    </mat-card-subtitle>
   </mat-card-header>
 
   <div
@@ -22,7 +26,11 @@
       ></button>
     </div>
 
-    <div class="carousel-inner">
+    <div class="error-images" *ngIf="imagenes?.length == 0">
+      <p>No hay imágenes</p>
+    </div>
+
+    <div class="carousel-inner" *ngIf="imagenes.length > 0">
       <div
         *ngFor="let img of imagenes; let i = index"
         class="carousel-item"
@@ -62,6 +70,8 @@
   </mat-card-content>
 
   <mat-card-actions class="d-grid">
-    <button class="btn btn-primary" (click)="openDialog()">Ver detalles</button>
+    <button class="btn btn-primary boton-primario" (click)="openDialog()">
+      Ver detalles
+    </button>
   </mat-card-actions>
 </mat-card>

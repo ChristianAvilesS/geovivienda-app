@@ -15,7 +15,7 @@ export class InmuebleService {
   constructor(private http: HttpClient) {}
 
   listar() {
-    return this.http.get<Inmueble[]>(this.url);
+    return this.http.get<Inmueble[]>(this.url + '/listado-logico');
   }
 
   insertar(inmueble: Inmueble) {
@@ -40,5 +40,14 @@ export class InmuebleService {
 
   getLista() {
     return this.listaCambio.asObservable();
+  }
+
+  obtenerCercaUsuario(long: number, lat: number) {
+    return this.http.get<Inmueble[]>(this.url + '/inmuebles_cerca_usuario', {
+      params: {
+        lon: long,
+        lat: lat,
+      },
+    });
   }
 }
