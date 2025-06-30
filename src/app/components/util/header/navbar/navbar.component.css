@@ -25,8 +25,8 @@ mat-toolbar {
   align-items: center;
 }
 
-.btn-round {
-  border-radius: 100px;
+.white-icon {
+  color: #ffffff;
 }
 
 .login {

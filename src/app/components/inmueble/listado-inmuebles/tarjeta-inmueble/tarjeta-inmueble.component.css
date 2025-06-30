@@ -18,8 +18,10 @@
 .card-content-scroll {
   flex: 1;
   overflow-y: hidden;
+  overflow-x: hidden;
   position: relative;
   padding: 0.8rem;
+  white-space: normal;
 }
 
 .card-content-scroll::after {

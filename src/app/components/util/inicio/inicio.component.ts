@@ -12,6 +12,8 @@ import { InmuebleService } from '../../../services/inmueble.service';
 import { Inmueble } from '../../../models/inmueble';
 import { SesionUsuarioService } from '../../../services/sesion-usuario.service';
 
+import { MatButtonModule } from '@angular/material/button';
+
 const apiKey = environment.apiKeyMaps;
 
 @Component({
@@ -19,6 +21,7 @@ const apiKey = environment.apiKeyMaps;
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css',
   standalone: true,
+  imports: [MatButtonModule],
 })
 export class InicioComponent implements OnInit {
   long: number = -77.0428; // por defecto Lima

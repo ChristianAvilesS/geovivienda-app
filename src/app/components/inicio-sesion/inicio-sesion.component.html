@@ -1,4 +1,6 @@
-<div class="container p-3">
+<div
+  class="container p-3 d-flex flex-column justify-content-center align-items-center"
+>
   <div class="text-center">
     <h1>Iniciar Sesión</h1>
   </div>
@@ -8,7 +10,7 @@
       <div class="mb-3">
         <mat-form-field class="example-full-width">
           <mat-label>Username</mat-label>
-          <input matInput placeholder="Ex. ceas96" formControlName="username"/>
+          <input matInput placeholder="Ex. ceas96" formControlName="username" />
           <mat-error *ngIf="form.get('username')?.hasError('required')">
             El usuario ingresado no es válido!!
           </mat-error>
@@ -25,14 +27,19 @@
             formControlName="password"
             type="password"
           />
-          <mat-error *ngIf="form.get('password')?.hasError('required') || form.get('password')?.hasError('minLength')">
+          <mat-error
+            *ngIf="
+              form.get('password')?.hasError('required') ||
+              form.get('password')?.hasError('minLength')
+            "
+          >
             La contraseña debe de tener por lo menos 8 caracteres
           </mat-error>
         </mat-form-field>
       </div>
 
-      <div class="mt-3 text-center">
-        <button mat-raised-button>Iniciar Sesión</button>
+      <div class="mt-3 text-center d-flex">
+        <button class="w-100" mat-flat-button>Iniciar Sesión</button>
       </div>
     </form>
   </div>

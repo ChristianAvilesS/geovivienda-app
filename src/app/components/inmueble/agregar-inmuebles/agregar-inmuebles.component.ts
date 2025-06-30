@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 // Servicios y modelos
 import { InmuebleService } from '../../../services/inmueble.service';
@@ -38,6 +39,7 @@ import { SesionUsuarioService } from '../../../services/sesion-usuario.service';
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatButtonModule,
   ],
   providers: [provideNativeDateAdapter()],
 })
