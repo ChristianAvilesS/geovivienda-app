@@ -5,7 +5,10 @@
     </h2>
     <div class="info-inmueble">
       <div class="info-nombreTipo">
-        <mat-form-field class="input-formularios nombre" appearance="outline">
+        <mat-form-field
+          class="input-formularios nombre form-label"
+          appearance="outline"
+        >
           <mat-label>Nombre</mat-label>
           <input matInput placeholder="Nombre" formControlName="nombre" />
           <mat-error *ngIf="form.get('nombre')?.hasError('required')">
@@ -178,7 +181,7 @@
         <mat-label>Dirección</mat-label>
         <input matInput formControlName="direccion" readonly />
       </mat-form-field>
-      <button class="btn btn-primary boton-primario" type="submit">
+      <button mat-flat-button type="submit">
         {{ !edicion ? "Guardar Inmueble" : "Editar Inmueble" }}
       </button>
     </div>

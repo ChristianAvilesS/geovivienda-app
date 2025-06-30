@@ -7,9 +7,17 @@
 }
 
 mat-form-field {
-  width: 40%;
+  width: 100%;
 }
 
 form {
-  justify-content: center;
+  padding: 4rem;
+  border-radius: 20px;
+  background-color: #eee;
+  box-shadow: 0 0 10px 0;
+  width: 45rem;
+}
+
+.btn-danger {
+  background-color: rgb(163, 28, 28) !important;
 }

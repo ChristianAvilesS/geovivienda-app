@@ -29,20 +29,18 @@
     </div>
 
     @if (estaLogeado) {
-    <button mat-button class="btn btn-light btn-sm btn-round">
-      <mat-icon [routerLink]="['usuarios/perfil']">person</mat-icon>
+    <button mat-icon-button>
+      <mat-icon class="white-icon" [routerLink]="['usuarios/perfil']"
+        >person</mat-icon
+      >
     </button>
+
     } @else {
     <div class="d-flex gap-3">
-      <button
-        class="btn btn-primary boton-secundario"
-        [routerLink]="['inicio-sesion']"
-      >
+      <button mat-raised-button [routerLink]="['inicio-sesion']">
         Iniciar Sesión
       </button>
-      <button class="btn btn-primary login" [routerLink]="['registro']">
-        Registrar
-      </button>
+      <button mat-flat-button [routerLink]="['registro']">Registrar</button>
     </div>
     }
   </mat-toolbar>

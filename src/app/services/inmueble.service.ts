@@ -3,7 +3,9 @@ import { environment } from '../environments/environments';
 import { Inmueble } from '../models/inmueble';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 const base_url = environment.base;
+const apiKey = environment.apiKeyMaps;
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +51,24 @@ export class InmuebleService {
         lat: lat,
       },
     });
+  }
+
+  obtenerCercaDireccion(dir: string, rango: number) {
+    return this.http.get<Inmueble[]>(this.url + '/inmuebles_en_direccion', {
+      params: {
+        dir: dir,
+        rango: rango,
+      },
+    });
+  }
+
+  autocompletadoDirecciones(value: string) {
+    return this.http
+      .get<any>(
+        `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
+          value
+        )}&format=json&apiKey=${apiKey}`
+      )
+      .pipe(map((res) => res.results.map((r: any) => r.formatted as string)));
   }
 }

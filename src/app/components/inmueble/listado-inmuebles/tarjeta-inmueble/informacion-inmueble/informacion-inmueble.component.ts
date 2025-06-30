@@ -7,6 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { InmuebleUsuarioService } from '../../../../../services/inmueble-usuario.service';
 import { InmuebleUsuario } from '../../../../../models/inmueble-usuario';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { InmuebleService } from '../../../../../services/inmueble.service';
 import { CommonModule } from '@angular/common';
@@ -23,6 +24,7 @@ const apiKeyMaps = environment.apiKeyMaps;
     MatIconModule,
     RouterLink,
     CommonModule,
+    MatButtonModule,
   ],
   templateUrl: './informacion-inmueble.component.html',
   styleUrl: './informacion-inmueble.component.css',

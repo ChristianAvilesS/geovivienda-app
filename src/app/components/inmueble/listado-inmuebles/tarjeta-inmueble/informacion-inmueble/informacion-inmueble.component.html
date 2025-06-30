@@ -62,15 +62,16 @@
   <div class="gap-2 d-flex" *ngIf="esDuenio">
     <button
       mat-dialog-close
-      class="btn btn-secondary boton-secundario"
+      mat-flat-button
       [routerLink]="['/inmuebles/editar/', inmueble.idInmueble]"
       routerLinkActive="router-link-active"
+      color="tertiary"
     >
       Editar
     </button>
     <button
       mat-dialog-close
-      class="btn btn-primary boton-primario"
+      mat-flat-button
       (click)="eliminar(inmueble.idInmueble)"
       routerLinkActive="router-link-active"
     >
@@ -78,14 +79,8 @@
     </button>
   </div>
   <div class="gap-2 d-flex" *ngIf="!esDuenio">
-    <button class="btn btn-secondary boton-secundario" mat-dialog-close>
-      Alquilar
-    </button>
-    <button
-      class="btn btn-primary boton-primario"
-      [mat-dialog-close]="true"
-      cdkFocusInitial
-    >
+    <button mat-flat-button mat-dialog-close>Alquilar</button>
+    <button mat-flat-button [mat-dialog-close]="true" cdkFocusInitial>
       Comprar
     </button>
   </div>
