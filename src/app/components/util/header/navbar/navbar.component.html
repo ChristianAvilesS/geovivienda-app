@@ -1,8 +1,8 @@
 <div class="header-nav">
   <mat-toolbar class="flex-align">
     <div>
-      <button matIconButton [matMenuTriggerFor]="menu">
-        <mat-icon class="self-center">menu</mat-icon>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon class="text-white self-center">menu</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item [routerLink]="['/']">Inicio</button>
@@ -29,23 +29,18 @@
     </div>
 
     @if (estaLogeado) {
-    <button matIconButton class="btn btn-light btn-sm btn-round">
+    <button mat-button class="btn btn-light btn-sm btn-round">
       <mat-icon [routerLink]="['usuarios/perfil']">person</mat-icon>
     </button>
     } @else {
-    <div>
+    <div class="d-flex gap-3">
       <button
-        matIconButton
-        class="btn btn-light btn-sm me-3"
+        class="btn btn-primary boton-secundario"
         [routerLink]="['inicio-sesion']"
       >
         Iniciar Sesión
       </button>
-      <button
-        matIconButton
-        class="btn btn-light btn-sm"
-        [routerLink]="['registro']"
-      >
+      <button class="btn btn-primary login" [routerLink]="['registro']">
         Registrar
       </button>
     </div>

@@ -27,4 +27,8 @@ export class ImagenesService {
   guardarImagen(imagen: Imagen) {
     return this.http.post(this.url, imagen);
   }
+
+  eliminarImagen(id: number) {
+    return this.http.delete(this.url+"/"+id);
+  }
 }
