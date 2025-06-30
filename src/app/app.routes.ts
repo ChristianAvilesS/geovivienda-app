@@ -31,7 +31,7 @@ export const routes: Routes = [
     component: MediopagoComponent,
     children: [
       { path: 'listado', component: ListadoMediospagoComponent },
-      { path: 'ediciones', component: InsertareditarMediopagoComponent },
+      { path: 'insertar', component: InsertareditarMediopagoComponent },
       { path: 'ediciones/:id', component: InsertareditarMediopagoComponent },
     ],
   },
@@ -63,4 +63,5 @@ export const routes: Routes = [
     component: InicioComponent,
   },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+
 ];
