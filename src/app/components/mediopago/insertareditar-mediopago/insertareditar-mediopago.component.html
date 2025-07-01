@@ -8,11 +8,10 @@
     <mat-form-field class="example-full-width" *ngIf="edicion">       
       <mat-label>ID</mat-label>
       <input matInput formControlName="idMedio" readonly/>
-      <mat-error *ngIf="form.get('idMedio')?.hasError('required')">
-        El id del medio de pago es obligatorio!!
-      </mat-error>
     </mat-form-field>
+
     <br />
+
     <mat-form-field class="example-full-width">
       <mat-label>Medio de Pago</mat-label>
       <input matInput placeholder="Ex. Debito" formControlName="medioPago" />
@@ -22,7 +21,7 @@
     </mat-form-field>
     <br />
 
-    <button mat-raised-button class="btn-verde">
+    <button mat-raised-button class="btn-verde" type="submit">
       {{ edicion ? 'Actualizar' : 'Registrar' }}
     </button>
   </form>

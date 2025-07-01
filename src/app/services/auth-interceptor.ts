@@ -6,6 +6,9 @@ export const authInterceptorFn: HttpInterceptorFn = (req, next) => {
   const sesionUsuarioService = inject(SesionUsuarioService);
   const token = sesionUsuarioService.getToken();
 
+  if (req.url.includes('api.geoapify.com')) {
+    return next(req);
+  }
 
   if (token) {
     req = req.clone({
