@@ -1,75 +1,173 @@
 <div class="contenedor">
-  <h2>Agregar Inmueble</h2>
   <form [formGroup]="form" (submit)="insertarInmueble()">
+    <h2 class="text-center">
+      {{ !edicion ? "Agregar Inmueble" : "Editar Inmueble" }}
+    </h2>
     <div class="info-inmueble">
-      <mat-form-field class="input-agregar nombre">
-        <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Nombre" formControlName="nombre" />
-        <mat-error *ngIf="form.get('nombre')?.hasError('required')">
-          El nombre es obligatorio.
-        </mat-error>
-      </mat-form-field>
+      <div class="info-nombreTipo">
+        <mat-form-field
+          class="input-formularios nombre form-label"
+          appearance="outline"
+        >
+          <mat-label>Nombre</mat-label>
+          <input matInput placeholder="Nombre" formControlName="nombre" />
+          <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+            El nombre es obligatorio.
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field class="input-agregar tipo">
-        <mat-label>Tipo de inmueble</mat-label>
-        <mat-select formControlName="tipo">
-          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
-            {{ tipo.viewValue }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('tipo')?.hasError('required')">
-          El tipo es obligatorio.
-        </mat-error>
-      </mat-form-field>
+        <mat-form-field
+          class="input-formularios tipo form-label"
+          appearance="outline"
+        >
+          <mat-label>Tipo de inmueble</mat-label>
+          <mat-select formControlName="tipo">
+            <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('tipo')?.hasError('required')">
+            El tipo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-      <mat-form-field class="input-agregar descripcion">
-        <mat-label>Descripción</mat-label>
-        <textarea
-          matInput
-          placeholder="Descripción"
-          formControlName="descripcion"
-        ></textarea>
-        <mat-error *ngIf="form.get('descripcion')?.hasError('required')">
-          La descripción es obligatoria.
-        </mat-error>
-      </mat-form-field>
+      <div class="info-descripcion">
+        <mat-form-field
+          class="input-formularios descripcion"
+          appearance="outline"
+        >
+          <mat-label>Descripción</mat-label>
+          <textarea
+            matInput
+            placeholder="Descripción"
+            formControlName="descripcion"
+          ></textarea>
+          <mat-error *ngIf="form.get('descripcion')?.hasError('required')">
+            La descripción es obligatoria.
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-      <mat-form-field class="input-agregar precio">
-        <mat-label>Precio</mat-label>
-        <input
-          matInput
-          placeholder="Precio"
-          type="number"
-          formControlName="precio"
-        />
-        <mat-error *ngIf="form.get('precio')?.hasError('required')">
-          El precio es obligatorio.
-        </mat-error>
-      </mat-form-field>
+      <div class="info-precioArea">
+        <mat-form-field class="input-formularios precio" appearance="outline">
+          <mat-label>Precio</mat-label>
+          <input
+            matInput
+            placeholder="Precio"
+            type="number"
+            formControlName="precio"
+          />
+          <mat-error *ngIf="form.get('precio')?.hasError('required')">
+            El precio es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="form.get('precio')?.hasError('min')">
+            El precio debe ser mayor que 0.
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field class="input-agregar area">
-        <mat-label>Área</mat-label>
-        <input
-          matInput
-          placeholder="Área"
-          type="number"
-          formControlName="area"
-        />
-        <mat-error *ngIf="form.get('area')?.hasError('required')">
-          El área es obligatoria.
-        </mat-error>
-      </mat-form-field>
+        <mat-form-field class="input-formularios area" appearance="outline">
+          <mat-label>Área</mat-label>
+          <input
+            matInput
+            placeholder="Área"
+            type="number"
+            formControlName="area"
+          />
+          <mat-error *ngIf="form.get('area')?.hasError('required')">
+            El área es obligatoria.
+          </mat-error>
+          <mat-error *ngIf="form.get('area')?.hasError('min')">
+            El área debe ser mayor que 0.
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-      <div class="input-agregar imagen">
-        <label for="fileInput" class="form-label">Seleccionar imágenes:</label>
-        <input
-          class="form-control"
-          type="file"
-          id="fileInput"
-          (change)="onFilesSelected($event)"
-          multiple
-          accept="image/*"
-        />
+      <div class="info-imagen">
+        <div class="input-formularios imagen">
+          <label for="fileInput" class="form-label"
+            >Seleccionar imágenes:</label
+          >
+          <input
+            class="form-control"
+            type="file"
+            id="fileInput"
+            (change)="onFilesSelected($event)"
+            multiple
+            accept="image/*"
+          />
+        </div>
+
+        <div *ngIf="edicion && imagenesGuardadas.length > 0">
+          <label class="form-label">Imágenes actuales:</label>
+          <div class="d-flex flex-wrap gap-2">
+            <div
+              *ngFor="let img of imagenesGuardadas"
+              style="position: relative; display: inline-block"
+            >
+              <img
+                [src]="img.url"
+                alt="Imagen guardada"
+                style="width: 120px; border-radius: 8px; object-fit: cover"
+              />
+              <button
+                type="button"
+                (click)="eliminarImagenGuardada(img.idImagen)"
+                style="
+                  position: absolute;
+                  top: -6px;
+                  right: -6px;
+                  background: red;
+                  color: white;
+                  border: none;
+                  border-radius: 50%;
+                  width: 20px;
+                  height: 20px;
+                  font-size: 12px;
+                  cursor: pointer;
+                "
+                title="Eliminar"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="imagenPreviewsNuevas.length > 0">
+        <label class="form-label">Vista previa de nuevas imágenes:</label>
+        <div class="d-flex flex-wrap gap-2">
+          <div
+            *ngFor="let preview of imagenPreviewsNuevas; let i = index"
+            style="position: relative; display: inline-block"
+          >
+            <img
+              [src]="preview"
+              alt="Imagen seleccionada"
+              style="width: 120px; border-radius: 8px; object-fit: cover"
+            />
+            <button
+              type="button"
+              (click)="eliminarImagenNueva(i)"
+              style="
+                position: absolute;
+                top: -6px;
+                right: -6px;
+                background: red;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                font-size: 12px;
+                cursor: pointer;
+              "
+            >
+              ×
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -79,12 +177,12 @@
         style="height: 300px; width: 100%; margin-bottom: 16px"
       ></div>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Dirección</mat-label>
         <input matInput formControlName="direccion" readonly />
       </mat-form-field>
-      <button mat-raised-button class="btn btn-primary" type="submit">
-        Guardar Inmueble
+      <button mat-flat-button type="submit">
+        {{ !edicion ? "Guardar Inmueble" : "Editar Inmueble" }}
       </button>
     </div>
   </form>

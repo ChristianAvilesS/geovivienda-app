@@ -1,21 +1,22 @@
-<div class="container p-3">
-  <div class="text-center mb-3">
+<div
+  class="container p-3 d-flex flex-column justify-content-center align-items-center"
+>
+  <div class="text-center mb-3 d-flex flex-column">
     <h1>Mi Perfil</h1>
-    <div class="text-center flex-container">
+    <div class="text-center flex-container d-flex">
       <button
-        matButton="outlined"
+        mat-flat-button
         [hidden]="modoEdicion"
         type="button"
-        class="btn btn-sm btn-primary"
         (click)="habilitarEdicion()"
       >
         Modificar datos
       </button>
       <button
-        matButton="outlined"
+        mat-flat-button
         [hidden]="!modoEdicion"
         type="button"
-        class="btn btn-sm btn-danger"
+        class="btn-danger"
         (click)="eliminarCuenta()"
       >
         Eliminar cuenta
@@ -32,7 +33,8 @@
             <input
               matInput
               placeholder="Ex. Pepe Perez"
-              formControlName="nombre" [readonly]="!modoEdicion"
+              formControlName="nombre"
+              [readonly]="!modoEdicion"
             />
             <mat-error *ngIf="form.get('nombre')?.hasError('required')">
               Tu nombre es obligatorio!!
@@ -47,7 +49,8 @@
             <input
               matInput
               placeholder="Ex. Avenida Cesar Canevaro 1139, Lince, 15073, Peru"
-              formControlName="direccion" [readonly]="!modoEdicion"
+              formControlName="direccion"
+              [readonly]="!modoEdicion"
             />
             <mat-error *ngIf="form.get('direccion')?.hasError('required')">
               Tu dirección es obligatoria!!
@@ -62,7 +65,8 @@
             <input
               matInput
               placeholder="Ex. 987654321"
-              formControlName="telefono" [readonly]="!modoEdicion"
+              formControlName="telefono"
+              [readonly]="!modoEdicion"
             />
             <mat-error *ngIf="form.get('telefono')?.hasError('required')">
               Tu teléfono es obligatorio!!
@@ -77,7 +81,8 @@
             <input
               matInput
               placeholder="Ex. pepe06@mail.com"
-              formControlName="email" [readonly]="!modoEdicion"
+              formControlName="email"
+              [readonly]="!modoEdicion"
             />
             <mat-error *ngIf="form.get('email')?.hasError('email')">
               El email ingresado no es válido!!
@@ -89,7 +94,7 @@
         <div class="mb-3" [hidden]="modoEdicion">
           <mat-form-field>
             <mat-label>Username</mat-label>
-            <input matInput formControlName="username" [readonly]="true"/>
+            <input matInput formControlName="username" [readonly]="true" />
           </mat-form-field>
         </div>
 
@@ -97,13 +102,13 @@
         <div class="mb-3" [hidden]="modoEdicion">
           <mat-form-field>
             <mat-label>Rol</mat-label>
-            <input matInput formControlName="rol" [readonly]="true"/>
+            <input matInput formControlName="rol" [readonly]="true" />
           </mat-form-field>
         </div>
       </div>
 
       <div class="mt-3 text-center" [hidden]="!modoEdicion">
-        <button mat-raised-button>Guardar cambios</button>
+        <button mat-flat-button>Guardar cambios</button>
       </div>
     </form>
   </div>

@@ -5,3 +5,11 @@
 mat-form-field {
   width: 30%;
 }
+
+form {
+  padding: 4rem;
+  border-radius: 20px;
+  background-color: #eee;
+  box-shadow: 0 0 10px 0;
+  width: 45rem;
+}

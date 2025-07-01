@@ -1,12 +1,62 @@
-<div class="p-4 d-flex flex-column">
-  <div class="text-center">
-    <h1>Listado de inmuebles</h1>
+<div class="d-flex flex-column cards-container">
+  <div class="d-flex justify-content-between px-4">
+    <div class="d-flex justify-content-center align-items-center">
+      <h2>Listado de inmuebles</h2>
+    </div>
+    <div class="w-50 d-flex gap-3">
+      <div class="w-100 d-flex">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Buscar dirección</mat-label>
+          <input
+            type="text"
+            matInput
+            [formControl]="direccionControl"
+            [matAutocomplete]="auto"
+            placeholder="Ej. Av. Arequipa 123, Lima"
+          />
+          <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+            <mat-option
+              *ngFor="let direccion of direccionesFiltradas$ | async"
+              [value]="direccion"
+            >
+              {{ direccion }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <button mat-fab extended class="btn-fitrar" (click)="openDialog()">
+        <mat-icon>filter_list</mat-icon>
+        Filtrar
+      </button>
+    </div>
   </div>
-  <div class="contenedor-grid-tarjetas">
-    <app-tarjeta-inmueble
-      *ngFor="let inmueble of inmuebles"
-      [inmueble]="inmueble"
+  <div *ngIf="inmueblesOriginales.length > 0">
+    <div class="contenedor-grid-tarjetas">
+      <app-tarjeta-inmueble
+        *ngFor="let inmueble of inmuebles"
+        [inmueble]="inmueble"
+      >
+      </app-tarjeta-inmueble>
+    </div>
+    <mat-paginator
+      class="paginador"
+      [length]="inmueblesOriginales.length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[]"
+      [hidePageSize]="true"
+      [pageIndex]="pageIndex"
+      (page)="onPageChange($event)"
     >
-    </app-tarjeta-inmueble>
+    </mat-paginator>
+  </div>
+
+  <div
+    *ngIf="inmueblesOriginales.length === 0"
+    class="d-flex flex-column justify-content-center align-items-center mt-5"
+    style="min-height: 200px"
+  >
+    <h5 class="text-center fst-italic mt-3 text-muted">
+      No hay inmuebles disponibles
+    </h5>
   </div>
 </div>

@@ -22,7 +22,7 @@ export class MediopagoService {
     return this.http.post(this.url, mP);
   }
   update(mP: MedioPago) {
-    return this.http.put(this.url, mP);
+    return this.http.put(`${this.url}/${mP.idMedio}`, mP);
   }
   deleteM(id: number) {
     return this.http.delete(`${this.url}/${id}`);

@@ -39,12 +39,7 @@ export class TarjetaInmuebleComponent {
           this.imagenes = data;
           console.log('Imágenes:', data);
         },
-        error: (err) => {
-          console.error('Error al cargar imágenes:', err);
-        },
       });
-    } else {
-      console.warn('Inmueble no válido:', value);
     }
   }
 

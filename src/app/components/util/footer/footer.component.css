@@ -1,9 +1,8 @@
 .footer-fijo {
-  background-color: #0A663A;
+  background-color: #0a663a;
   width: 100vw;
-  height: 5rem;
-  font-size: 1rem;
-  padding: 0 20px;
+  height: 3rem;
+  padding: 0 2rem;
   margin: 0;
   font-family: Jost, sans-serif;
   display: flex;
@@ -16,27 +15,25 @@
   z-index: 799;
 }
 
-.flex-col {
+.footer-fijo div {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
-h3, h4 {
-  color: #F4EE60;
+h3,
+h4 {
+  font-size: 1rem;
+  color: #f4ee60;
+  margin: 0;
 }
 
 h4 > mat-icon {
   color: black;
 }
 
-
-img.logo_x {
-  width: 12%;
-}
-
-
-img.logo {
-  width: 20%;
+img {
+  width: 24px;
+  height: 24px;
 }

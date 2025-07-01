@@ -1,42 +1,37 @@
-/*Estilos generales*/
+/* ============================================
+   1. ESTILOS GENERALES
+============================================ */
 * {
   box-sizing: border-box;
   margin: 0;
 }
 
-/* Fondo */
-.fondoMain {
-  background: linear-gradient(180deg, #A4E267 0%, #BFE564 33%, #F0EA5F 65%, #14CC74 100%);
-  width: 100%;
-  min-height: 100vh; /* Altura mínima de toda la pantalla */
-  padding: 0; /* Sin padding para que el header toque los bordes */
-}
-
-/* Header*/
+/* ============================================
+   2. HEADER
+============================================ */
 #cabecera {
   background-color: #F0EA5F;
-  height: 12vh; /* Altura */
+  height: 12vh;
   text-align: center;
-  font-size: 2.5rem; /* Tamaño de fuente */
+  font-size: 2.5rem;
   padding: 10px 20px;
   font-family: Jost, sans-serif;
-  font-weight: 850; /* Grosor texto*/
+  font-weight: 850;
   clear: both;
   overflow: hidden;
-  display: flex; /* Alinea logo y título horizontalmente */
-  justify-content: center; /* Centra el contenido */
-  align-items: center; /* Alinea verticalmente */
-  gap: 15px; /* Espacio entre logo y título */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 
-/* Contenedor del logo */
 #logo {
   display: flex;
   align-items: center;
 }
 
 #logo img {
-  border-radius: 8px; /* Esquinas redondeadas del logo */
+  border-radius: 8px;
 }
 
 #tituloGeo {
@@ -45,15 +40,32 @@
   white-space: nowrap;
 }
 
-/* Titulo*/
+/* ============================================
+   3. FONDO GENERAL
+============================================ */
+.fondoMain {
+  background: linear-gradient(180deg, #A4E267 0%, #BFE564 33%, #F0EA5F 65%, #14CC74 100%);
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* ============================================
+   4. TÍTULO CENTRAL
+============================================ */
+.titulo-container {
+  position: relative;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
 .titulo-pagina {
   border-radius: 8px;
   padding: 20px;
-  margin: 20px;
+  margin: 20px auto;
   text-align: center;
 }
 
-/* Titulo/estilo */
 .titulo-pagina h1 {
   font-family: Jost, sans-serif;
   font-weight: 850;
@@ -64,11 +76,24 @@
 }
 
 /* ============================================
-   TABLA Y CONTENEDOR
+   5. BOTÓN AGREGAR MEDIO DE PAGO
 ============================================ */
-/* Contenedor principal de la tabla */
+.btn-agregar {
+  background-color: #2e7d32 !important;
+  color: #ffeb3b !important;
+  font-weight: bold;
+  padding: 8px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  gap: 4px;
+}
+
+/* ============================================
+   6. TABLA Y CONTENEDOR
+============================================ */
 .container-tabla {
-  max-width: 900px; /* Ancho máximo de la tabla */
+  max-width: 900px;
   margin: auto;
   padding: 20px;
   background: white;
@@ -76,20 +101,18 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* Estilo de la tabla Material */
 .tabla-estilizada {
   width: 100%;
   border-collapse: collapse;
-  background-color: white; /* Fondo blanco de la tabla */
+  background-color: white;
 }
 
-/* Encabezados de la tabla */
 .mat-header-cell {
-  background-color: #2c660a !important; /* CAMBIADO: Verde oscuro para mejor contraste */
-  color: white!important; /* CAMBIADO: Texto blanco sobre fondo verde */
+  background-color: #2c660a !important;
+  color: white !important;
   font-weight: bold;
   font-size: 16px;
-  font-family: Jost, sans-serif; /* AGREGADO: Misma fuente del sitio */
+  font-family: Jost, sans-serif;
 }
 
 .mat-cell {
@@ -102,34 +125,75 @@ button mat-icon {
   font-size: 20px;
 }
 
-.mat-button {
-  margin: 0 4px; 
+/* ============================================
+   7. BOTONES DE ACCIÓN (Actualizar / Eliminar)
+============================================ */
+.btn-accion {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Responsive */
+/* Icono dentro del botón */
+.btn-accion mat-icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  font-size: 22px !important;
+  margin: 0 !important;
+}
+
+/* Botón actualizar */
+.btn-accion.actualizar {
+  background-color: #2e7d32 !important;
+  color: #ffeb3b !important;
+}
+
+/* Botón eliminar */
+.btn-accion.eliminar {
+  background-color: #b71c1c !important;
+  color: #fff59d !important;
+}
+
+/* Efectos hover */
+.btn-accion.actualizar:hover {
+  background-color: #256d27 !important;
+}
+
+.btn-accion.eliminar:hover {
+  background-color: #931212 !important;
+}
+
+
+/* ============================================
+   8. RESPONSIVE
+============================================ */
 @media (max-width: 768px) {
-  /* Header más pequeño en móviles */
   #cabecera {
     height: 6vh;
     font-size: 1.8rem;
     padding: 8px 15px;
   }
-  
-  /* Logo más pequeño en móviles */
+
   #logo img {
     width: 60px;
     height: 60px;
   }
-  
-  /* Título más pequeño en móviles */
+
   .titulo-pagina h1 {
     font-size: 1.8rem;
   }
-  
-  /* Tabla con menos padding en móviles */
+
   .container-tabla {
     margin: 10px;
     padding: 15px;
   }
 }
-

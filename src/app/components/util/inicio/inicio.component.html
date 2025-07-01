@@ -1,13 +1,52 @@
-<section>
-  <div>
-    <img src="assets/fondo.png" class="bg-img">
-    <section class="barraBusqueda">
-      <button id="buttonRegion">Region</button>
-      <button id="buttonCiudad">Ciudad</button>
-      <button id="buttonTipo">Tipo</button>
-    </section>
-    <div class="text-overlay">
-      <p id="geoViviendaFondo">GeoViviendas</p>
+<section class="d-flex align-items-center justify-content-center section-cta">
+  <div class="text-center">
+    <h2 class="display-4 fw-bold">Encuentra tu próximo hogar en Lima</h2>
+    <p class="lead">
+      Compra, alquila o publica tus inmuebles de forma rápida y segura.
+    </p>
+    <a routerLink="/inmuebles/listado" mat-flat-button class="btn-lg mt-3"
+      >Ver inmuebles</a
+    >
+  </div>
+</section>
+
+<section class="text-center section-whatis">
+  <h3>¿Qué es GeoVivienda?</h3>
+  <p class="mt-3">
+    GeoVivienda es una plataforma peruana que conecta compradores, vendedores e
+    inquilinos con propiedades en Lima. Fácil, rápida y segura.
+  </p>
+</section>
+
+<section class="section-whyus">
+  <div class="container text-center">
+    <h4 class="mb-4">¿Por qué elegirnos?</h4>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5>✔ Geolocalización precisa</h5>
+        <p>Ubica inmuebles en el mapa con información real y actualizada.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>✔ Publica gratis</h5>
+        <p>Sube tus propiedades sin pagar comisiones ni mensualidades.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>✔ 100% digital</h5>
+        <p>Regístrate, contacta y publica sin salir de casa.</p>
+      </div>
     </div>
   </div>
+</section>
+
+<section class="bg-light text-center section-map">
+  <h4 class="mb-4">Explora inmuebles en Lima</h4>
+  <div id="my-map"></div>
+</section>
+
+<section class="py-5 text-center section-action">
+  <h4>¿Tienes un inmueble para alquilar o vender?</h4>
+  <p>Empieza a llegar a cientos de personas en minutos.</p>
+  <a routerLink="/inmuebles/crear" class="mt-2" mat-flat-button
+    >Publicar ahora</a
+  >
 </section>

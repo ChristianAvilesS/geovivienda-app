@@ -1,0 +1,23 @@
+@use "./custom-theme";
+@use "sass:map";
+@use "./src_theme-colors.scss" as custom;
+
+// ====================
+// Reset & layout base
+// ====================
+html,
+body {
+  height: 100%;
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+button.btn-tertiary {
+  background-color: #f0ea5f;
+  color: #333; // ajusta contraste si quieres
+}
