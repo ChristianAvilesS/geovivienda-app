@@ -7,20 +7,36 @@
 }
 
 form {
-  border: 1px solid #bbb;
   padding: 1rem;
   border-radius: 20px;
+  background-color: #eee;
+  box-shadow: 0 0 10px 0;
+  width: 45rem;
 }
 
 .info-inmueble {
-  display: grid;
-  grid-template-areas:
-    "nombre tipo"
-    "descripcion descripcion"
-    "precio area"
-    "imagen imagen";
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  padding: 1rem;
+  padding: 2rem;
+}
+
+.info-nombreTipo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.info-descripcion {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.info-precioArea {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 }
 
 .info-ubicacion {
@@ -30,26 +46,8 @@ form {
   padding: 1rem;
 }
 
-.nombre {
-  grid-area: nombre;
-}
-
-.tipo {
-  grid-area: tipo;
-}
-
-.descripcion {
-  grid-area: descripcion;
-}
-
-.precio {
-  grid-area: precio;
-}
-
-.area {
-  grid-area: area;
-}
-
-.imagen {
-  grid-area: imagen;
+::ng-deep
+  .mat-mdc-form-field.mat-mdc-form-field-type-filled
+  .mdc-text-field--filled {
+  background-color: transparent !important;
 }

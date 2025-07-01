@@ -13,21 +13,20 @@
   top: 0;
   left: 0;
   z-index: 800;
-
 }
 
 .header-logo {
   background-color: #f0ea5f;
   width: 100vw;
-  height: 4rem;
+  height: 3rem;
 }
-
 
 .img-header {
   height: 40px;
 }
 
 .title {
-  color: #0A663A;
-  font-size: 40px;
+  color: #0a663a;
+  font-size: 30px;
+  margin: 0;
 }

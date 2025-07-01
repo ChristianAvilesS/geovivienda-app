@@ -45,9 +45,7 @@ export class SesionUsuarioService {
     if (token && token.split('.').length === 3) {
       try {
         return jwtDecode<Payload>(token);
-      } catch (e) {
-        
-      }
+      } catch (e) {}
     }
     return new Payload();
   }
@@ -63,6 +61,7 @@ export class SesionUsuarioService {
     const token = localStorage.getItem('token');
     if (!token) return 0;
     const decoded: any = jwtDecode(token);
+    console.log(decoded);
     return decoded.idUsuario;
   }
 }

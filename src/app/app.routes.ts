@@ -56,6 +56,10 @@ export const routes: Routes = [
         path: 'agregar',
         component: AgregarInmueblesComponent,
       },
+      {
+        path: 'editar/:id',
+        component: AgregarInmueblesComponent,
+      },
     ],
   },
   {

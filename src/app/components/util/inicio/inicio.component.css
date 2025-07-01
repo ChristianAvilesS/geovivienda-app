@@ -1,68 +1,74 @@
-.bg-img {
+.section-cta {
+  background-image: url("../../../../../public/assets/fondo.png"); /* reemplaza con tu imagen real */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  position: relative;
+  height: 80vh;
+}
+.section-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* oscurece la imagen para resaltar texto */
+  opacity: 0.6;
+  z-index: 1;
+}
+.section-cta > div {
+  position: relative;
+  z-index: 2;
 }
 
-.barraBusqueda{
-  position: absolute;
-  top: 14rem; /* Ajusta según sea necesario */
-  left: 10vw; /* Ajusta según sea necesario */
-  border: 2px solid black;
-  width: 80vw;
-  height: 3.81171875vw;
+.section-whatis {
+  background-color: #0a663a;
+  width: 100%;
+  height: 30vh;
+  padding: 2rem;
   display: flex;
-  align-items: center; /* Alinea verticalmente los elementos */
-  background-color: rgba(10, 102, 58, 0.28);
-
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ddd;
 }
 
-#buttonRegion{
-  border: 2px solid black;
-  display: inline-block;
-  vertical-align: middle; /* Alinea verticalmente los elementos */
-  height: 3.8109375vw;
-  width: 7.905729166666667vw;
-  color: #0A663A;
-  font-family: Cabin, sans serif;
-  font-size: 1.5625vw;
+.section-whyus {
+  background-color: #f0ea5f;
+  width: 100%;
+  height: 30vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #333;
 }
 
-#buttonCiudad{
-  border: 2px solid black;
-  display: inline-block;
-  vertical-align: middle; /* Alinea verticalmente los elementos */
-  height: 3.8109375vw;
-  width: 7.905729166666667vw;
-  color: #0A663A;
-  font-family: Cabin, sans serif;
-  font-size: 1.5625vw;
+.section-map {
+  padding: 2rem;
 }
 
-#buttonTipo{
-  border: 2px solid black;
-  display: inline-block;
-  vertical-align: middle; /* Alinea verticalmente los elementos */
-  height: 3.8109375vw;
-  width: 7.905729166666667vw;
-  color: #0A663A;
-  font-family: Cabin, sans serif;
-  font-size: 1.5625vw;
+#my-map {
+  height: 400px;
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 16px; /* Bordes curvos */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  background-color: white; /* Fondo blanco */
+  overflow: hidden; /* Para que el mapa no sobresalga */
 }
 
-.text-overlay {
-  position: absolute;
-  top: 25vw; /* Ajusta según sea necesario */
-  left: 50%; /* Ajusta según sea necesario */
-  transform: translate(-50%, -50%); /* Centra el texto */
-  color: #0A663A;
-  background-color: none; /* Fondo semi-transparente */
-  padding: 10px;
-  border-radius: 5px; /* Opcional: bordes redondeados */
-  text-align: center; /* Opcional: centra el texto */
-  font-size: 4vw; /* Ajusta según sea necesario */
-}
-
-#geoViviendaFondo{
-  background-color: none;
-  font-family: Jost, sans-serif;
-  font-weight: 700;
+.section-action {
+  background-color: #f0ea5f;
+  width: 100%;
+  height: 30vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #333;
 }
