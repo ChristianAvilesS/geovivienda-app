@@ -5,7 +5,7 @@
 .header-nav {
   background-color: #0a663a;
   width: 100vw;
-  height: 3rem;
+  height: 7.5vh;
 }
 
 mat-toolbar {
@@ -25,10 +25,6 @@ mat-toolbar {
   align-items: center;
 }
 
-.white-icon {
-  color: #ffffff;
-}
-
 .login {
   background-color: transparent;
   color: #eee;
@@ -39,4 +35,22 @@ mat-toolbar {
   background-color: #f0ea5f;
   color: #333;
   border-color: #f0ea5f;
+}
+
+.btn-circle {
+  border-radius: 100%;
+}
+
+.btn-white {
+  background-color: transparent;
+  background-color: #feffef;
+  color: black;
+  border: black 2px solid;
+  padding: 0;
+  margin: 0;
+}
+
+.btn-white:hover {
+  background-color: white;
+  border-width: 3px;
 }

@@ -17,7 +17,7 @@ import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
     MatPaginatorModule,
   ],
   templateUrl: './listado-roles.component.html',
-  styleUrl: './listado-roles.component.css',
+  styleUrls: ['./listado-roles.component.css','./listado-roles.component.scss'],
 })
 export class ListadoRolesComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Rol> = new MatTableDataSource();
