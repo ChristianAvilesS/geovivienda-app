@@ -1,34 +1,20 @@
-<div class="container p-4 rounded border border-dark shadow bg-white">
-  <h2 class="text-center mb-4">{{ tipoContrato }}</h2>
+<div class="contrato-container">
+  <h2 class="titulo-contrato">{{ tipoContrato }}</h2>
 
-  <!-- Sección de visualización del contrato -->
-  <div class="contrato-texto mb-4">
-    <div *ngFor="let pagina of getTextoContratoPorPaginas(); let i = index" class="mb-5 page-break">
-      <h5>Página {{ i + 1 }}</h5>
-      <pre class="text-justify text-wrap white-space-pre-wrap">
-{{ pagina }}
-      </pre>
+  <div class="text-end mb-3">
+    <button class="boton-verde" (click)="descargarPDF()">Descargar PDF</button>
+  </div>
+
+  <div class="contenido-contrato">
+    <div *ngFor="let pagina of getTextoContratoPorPaginas(); let i = index" class="pagina">
+      <pre>{{ pagina }}</pre>
     </div>
   </div>
 
-  <!-- Checkbox de aceptación -->
-  <div class="form-check mb-3">
-    <input
-      type="checkbox"
-      class="form-check-input"
-      id="aceptarContrato"
-      [(ngModel)]="aceptado"
-    />
-    <label class="form-check-label" for="aceptarContrato">
-      Acepto los términos y condiciones del contrato.
-    </label>
-  </div>
-
-  <!-- Botones -->
-  <div class="d-flex justify-content-end gap-2">
-    <button class="btn btn-outline-secondary" (click)="descargarPDF()">Descargar PDF</button>
-    <button class="btn btn-primary" [disabled]="!aceptado" (click)="continuarPago()">
-      Continuar con el pago
-    </button>
+  <div class="d-flex justify-content-end gap-3 mt-4">
+    <button class="boton-verde" mat-dialog-close>Cancelar</button>
+    <button class="boton-verde" (click)="continuarPago()">Aceptar y continuar</button>
   </div>
 </div>
+
+

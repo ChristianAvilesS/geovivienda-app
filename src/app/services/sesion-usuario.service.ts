@@ -7,6 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Payload } from '../models/dtos/payload';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
+import { Usuario } from '../models/usuario';
 
 const base_url = environment.base;
 
@@ -64,4 +65,9 @@ export class SesionUsuarioService {
     console.log(decoded);
     return decoded.idUsuario;
   }
+
+  getUsuarioActual(): Observable<Usuario> {
+  const id = this.getIdUsuario();
+  return this.http.get<Usuario>(`${base_url}/usuarios/${id}`);
+}
 }
