@@ -13,6 +13,11 @@ import { InmuebleService } from '../../../../../services/inmueble.service';
 import { CommonModule } from '@angular/common';
 import { SesionUsuarioService } from '../../../../../services/sesion-usuario.service';
 import { environment } from '../../../../../environments/environments';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Comentario } from '../../../../../models/comentario';
+import { ComentarioService } from '../../../../../services/comentario.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 const apiKeyMaps = environment.apiKeyMaps;
 
@@ -25,6 +30,10 @@ const apiKeyMaps = environment.apiKeyMaps;
     RouterLink,
     CommonModule,
     MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './informacion-inmueble.component.html',
   styleUrl: './informacion-inmueble.component.css',
@@ -32,13 +41,16 @@ const apiKeyMaps = environment.apiKeyMaps;
 export class InformacionInmuebleComponent {
   private map!: Map;
   inmuebleUsuario: InmuebleUsuario = new InmuebleUsuario();
-
+  comentarioform: FormGroup = new FormGroup({});
+  comentario: Comentario = new Comentario();
   esDuenio: boolean = false;
 
   constructor(
     private inmuebleService: InmuebleService,
     private inmuebleUsuarioService: InmuebleUsuarioService,
     private sesionService: SesionUsuarioService,
+    private comentarioService: ComentarioService,
+    private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public inmueble: Inmueble
   ) {}
 
@@ -57,6 +69,20 @@ export class InformacionInmuebleComponent {
           this.esDuenio = data.esDuenio;
         }
       });
+    this.comentarioform = this.formBuilder.group({
+        comentario: [''],});
+  }
+
+  insertarComentario() {
+    console.log(this.inmueble)
+    this.comentario.descripcion = this.comentarioform.value.comentario;
+    this.comentario.inmueble.idInmueble = this.inmueble.idInmueble;
+    this.comentario.usuario.idUsuario = this.sesionService.getIdUsuario();
+    this.comentarioService.insertar(this.comentario).subscribe(() => {
+      this.comentarioService.listarporinmueble(this.inmueble.idInmueble).subscribe((data) => {
+        this.comentarioService.setLista(data);
+      });
+    });
   }
 
   ngAfterViewInit(): void {
