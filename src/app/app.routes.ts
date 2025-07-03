@@ -13,6 +13,11 @@ import { InicioSesionComponent } from './components/inicio-sesion/inicio-sesion.
 import { MediopagoComponent } from './components/mediopago/mediopago.component';
 import { ListadoMediospagoComponent } from './components/mediopago/listado-mediospago/listado-mediospago.component';
 import { InsertareditarMediopagoComponent } from './components/mediopago/insertareditar-mediopago/insertareditar-mediopago.component';
+import { ReportesComponent } from './components/reportes/reportes.component';
+import { ReporteEstadoUsuariosComponent } from './components/reportes/reporte-estado-usuarios/reporte-estado-usuarios.component';
+import { ReportePorcentajeTiposComponent } from './components/reportes/reporte-porcentaje-tipos/reporte-porcentaje-tipos.component';
+import { ReporteContratosComponent } from './components/reportes/reporte-contratos/reporte-contratos.component';
+import { ReporteRecaudacionMediosComponent } from './components/reportes/reporte-recaudacion-medios/reporte-recaudacion-medios.component';
 
 export const routes: Routes = [
   {
@@ -65,6 +70,10 @@ export const routes: Routes = [
   {
     path: 'inicio',
     component: InicioComponent,
+  },
+  {
+    path: 'reportes',
+    component: ReportesComponent
   },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
 

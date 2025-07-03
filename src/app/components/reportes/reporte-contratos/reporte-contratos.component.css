@@ -1,0 +1,44 @@
+.title-container {
+  text-align: center;
+  margin: 20px;
+}
+
+.chart-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative; /* <-- Necesario para Chart.js */
+  background-color: #feffef;
+  border-radius: 25px;
+  max-width: 500px;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    width: 100%; /* Ajusta el ancho para pantallas más pequeñas */
+    padding: 10px; /* Reduce el padding en pantallas más pequeñas */
+  }
+}
+
+
+.example-full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 60%;
+}
+
+form {
+  padding: 1.5rem 1rem;
+  margin:0 auto;
+  border-radius: 20px;
+  background-color: #eee;
+  box-shadow: 0 0 10px 0;
+  width: 90%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
