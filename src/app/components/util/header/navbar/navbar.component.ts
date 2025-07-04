@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule, Router } from '@angular/router';
 import { SesionUsuarioService } from '../../../../services/sesion-usuario.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,7 @@ import { SesionUsuarioService } from '../../../../services/sesion-usuario.servic
     MatToolbarModule,
     MatMenuModule,
     RouterModule,
+    CommonModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -22,6 +24,7 @@ export class NavbarComponent implements OnInit {
   linkPerfil: string = '/usuarios/perfil';
   estaLogeado: boolean = false;
   esAdmin: boolean = false;
+  esVendedor: boolean = false;
 
   constructor(
     private loginS: SesionUsuarioService,
@@ -36,6 +39,7 @@ export class NavbarComponent implements OnInit {
       this.estaLogeado = estado;
       this.cd.detectChanges();
       this.esAdmin = this.sesionS.decodeToken().role.includes('ADMIN');
+      this.esVendedor = this.sesionS.decodeToken().role.includes('VENDEDOR');
     });
   }
 

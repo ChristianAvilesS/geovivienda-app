@@ -64,4 +64,16 @@ export class SesionUsuarioService {
     console.log(decoded);
     return decoded.idUsuario;
   }
+
+  getRoles(): string[] {
+    const token = this.getToken();
+    if (!token) return [];
+
+    try {
+      const decoded = jwtDecode<Payload>(token);
+      return decoded.role ? decoded.role.split(',') : [];
+    } catch (e) {
+      return [];
+    }
+  }
 }

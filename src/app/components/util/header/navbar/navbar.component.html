@@ -25,24 +25,33 @@
 
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item [routerLink]="['/']">Inicio</button>
+  <button mat-menu-item [routerLink]="['/']">
+    <mat-icon>home</mat-icon> Inicio
+  </button>
   <button mat-menu-item [routerLink]="['/inmuebles/listado']">
-    Inmuebles
+    <mat-icon>home_work</mat-icon> Inmuebles
   </button>
   @if(estaLogeado) {
-  <button mat-menu-item [routerLink]="['/inmuebles/agregar']">
-    Agregar
+  <button mat-menu-item [routerLink]="['/inmuebles/agregar']" *ngIf="esVendedor">
+    <mat-icon>add_home</mat-icon> Agregar
   </button>
 
   @if (esAdmin) {
   <button mat-menu-item [routerLink]="['/usuarios/listado']">
-    Usuarios
+    <mat-icon>person</mat-icon> Usuarios
   </button>
-  <button mat-menu-item [routerLink]="['/roles']">Roles</button>
+  <button mat-menu-item [routerLink]="['/usuarios/agregar-admin']">
+    <mat-icon>person_add</mat-icon> Agregar administrador
+  </button>
+  <button mat-menu-item [routerLink]="['/roles']">
+    <mat-icon>admin_panel_settings</mat-icon> Roles
+  </button>
   <button mat-menu-item [routerLink]="['/medios-pago/listado']">
-    Medios de Pago
+    <mat-icon>credit_card</mat-icon> Medios de Pago
   </button>
-  <button mat-menu-item [routerLink]="['/reportes']">Reportes</button>
+  <button mat-menu-item [routerLink]="['/reportes']">
+    <mat-icon>insert_chart_outlined</mat-icon> Reportes
+  </button>
   }
   }
 </mat-menu>

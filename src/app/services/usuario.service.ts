@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../models/usuario';
 import { UsuarioDevueltoDTO } from '../models/dtos/usuario-devuelto-dto';
+import { CambioPasswordDto } from '../models/dtos/cambio-password-dto';
 const base_url = environment.base;
 
 @Injectable({
@@ -46,5 +47,9 @@ export class UsuarioService {
 
   listarNoEliminados(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${this.url}/no-eliminados`);
+  }
+
+  cambiarPassword(cambP: CambioPasswordDto): Observable<boolean> {
+    return this.http.patch<boolean>(`${this.url}/cambiar-password`, cambP);
   }
 }

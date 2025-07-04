@@ -14,33 +14,46 @@ import { MediopagoComponent } from './components/mediopago/mediopago.component';
 import { ListadoMediospagoComponent } from './components/mediopago/listado-mediospago/listado-mediospago.component';
 import { InsertareditarMediopagoComponent } from './components/mediopago/insertareditar-mediopago/insertareditar-mediopago.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
-import { ReporteEstadoUsuariosComponent } from './components/reportes/reporte-estado-usuarios/reporte-estado-usuarios.component';
-import { ReportePorcentajeTiposComponent } from './components/reportes/reporte-porcentaje-tipos/reporte-porcentaje-tipos.component';
-import { ReporteContratosComponent } from './components/reportes/reporte-contratos/reporte-contratos.component';
-import { ReporteRecaudacionMediosComponent } from './components/reportes/reporte-recaudacion-medios/reporte-recaudacion-medios.component';
+import { seguridadGuard } from './guards/seguridad.guard';
+import { CambiarPasswordComponent } from './components/usuario/cambiar-password/cambiar-password.component';
+import { AgregarAdminComponent } from './components/usuario/agregar-admin/agregar-admin.component';
 
 export const routes: Routes = [
   {
     path: 'usuarios',
     component: UsuarioComponent,
     children: [
-      { path: 'listado', component: ListadoUsuariosComponent },
+      {
+        path: 'listado',
+        component: ListadoUsuariosComponent,
+        canActivate: [seguridadGuard],
+        data: { roles: ['ADMIN'] },
+      },
       {
         path: 'perfil',
         component: PerfilUsuarioComponent,
       },
+      { path: 'cambiar-password', component: CambiarPasswordComponent },
+      { path: 'agregar-admin', component: AgregarAdminComponent },
     ],
   },
   {
     path: 'medios-pago',
     component: MediopagoComponent,
+    canActivate: [seguridadGuard],
+    data: { roles: ['ADMIN'] },
     children: [
       { path: 'listado', component: ListadoMediospagoComponent },
       { path: 'insertar', component: InsertareditarMediopagoComponent },
       { path: 'ediciones/:id', component: InsertareditarMediopagoComponent },
     ],
   },
-  { path: 'roles', component: RolComponent },
+  {
+    path: 'roles',
+    component: RolComponent,
+    canActivate: [seguridadGuard],
+    data: { roles: ['ADMIN'] },
+  },
   { path: 'registro', component: RegistroComponent },
   { path: 'inicio-sesion', component: InicioSesionComponent },
   {
@@ -60,10 +73,14 @@ export const routes: Routes = [
       {
         path: 'agregar',
         component: AgregarInmueblesComponent,
+        canActivate: [seguridadGuard],
+        data: { roles: ['VENDEDOR', 'ADMIN'] },
       },
       {
         path: 'editar/:id',
         component: AgregarInmueblesComponent,
+        canActivate: [seguridadGuard],
+        data: { roles: ['VENDEDOR', 'ADMIN'] },
       },
     ],
   },
@@ -73,8 +90,9 @@ export const routes: Routes = [
   },
   {
     path: 'reportes',
-    component: ReportesComponent
+    component: ReportesComponent,
+    canActivate: [seguridadGuard],
+    data: { roles: ['ADMIN'] },
   },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-
 ];
