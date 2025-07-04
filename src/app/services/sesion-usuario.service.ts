@@ -66,6 +66,17 @@ export class SesionUsuarioService {
     return decoded.idUsuario;
   }
 
+  getRoles(): string[] {
+    const token = this.getToken();
+    if (!token) return [];
+
+    try {
+      const decoded = jwtDecode<Payload>(token);
+      return decoded.role ? decoded.role.split(',') : [];
+    } catch (e) {
+      return [];
+    }
+  }
   getUsuarioActual(): Observable<Usuario> {
   const id = this.getIdUsuario();
   return this.http.get<Usuario>(`${base_url}/usuarios/${id}`);

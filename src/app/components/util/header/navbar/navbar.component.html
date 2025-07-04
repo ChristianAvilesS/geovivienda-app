@@ -4,34 +4,11 @@
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon class="text-white self-center">menu</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="['/']">Inicio</button>
-        <button mat-menu-item [routerLink]="['/inmuebles/listado']">
-          Inmuebles
-        </button>
-        @if(estaLogeado) {
-        <button mat-menu-item [routerLink]="['/inmuebles/agregar']">
-          Agregar
-        </button>
-
-        @if (esAdmin) {
-        <button mat-menu-item [routerLink]="['/usuarios/listado']">
-          Usuarios
-        </button>
-        <button mat-menu-item [routerLink]="['/roles']">Roles</button>
-        <button mat-menu-item [routerLink]="['/medios-pago/listado']">
-          Medios de Pago
-        </button>
-        }
-        <button mat-menu-item (click)="cerrarSesion()">Cerrar Sesión</button>
-        }
-      </mat-menu>
     </div>
 
     @if (estaLogeado) {
-    <button mat-icon-button>
-      <mat-icon class="white-icon" [routerLink]="['usuarios/perfil']"
-        >person</mat-icon
+    <button mat-icon-button class="btn-white btn-circle">
+      <mat-icon [matMenuTriggerFor]="menuUsuario">person</mat-icon
       >
     </button>
 
@@ -40,8 +17,49 @@
       <button mat-raised-button [routerLink]="['inicio-sesion']">
         Iniciar Sesión
       </button>
-      <button mat-flat-button [routerLink]="['registro']">Registrar</button>
+      <button mat-raised-button [routerLink]="['registro']">Registrar</button>
     </div>
     }
   </mat-toolbar>
 </div>
+
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item [routerLink]="['/']">
+    <mat-icon>home</mat-icon> Inicio
+  </button>
+  <button mat-menu-item [routerLink]="['/inmuebles/listado']">
+    <mat-icon>home_work</mat-icon> Inmuebles
+  </button>
+  @if(estaLogeado) {
+  <button mat-menu-item [routerLink]="['/inmuebles/agregar']" *ngIf="esVendedor">
+    <mat-icon>add_home</mat-icon> Agregar
+  </button>
+
+  @if (esAdmin) {
+  <button mat-menu-item [routerLink]="['/usuarios/listado']">
+    <mat-icon>person</mat-icon> Usuarios
+  </button>
+  <button mat-menu-item [routerLink]="['/usuarios/agregar-admin']">
+    <mat-icon>person_add</mat-icon> Agregar administrador
+  </button>
+  <button mat-menu-item [routerLink]="['/roles']">
+    <mat-icon>admin_panel_settings</mat-icon> Roles
+  </button>
+  <button mat-menu-item [routerLink]="['/medios-pago/listado']">
+    <mat-icon>credit_card</mat-icon> Medios de Pago
+  </button>
+  <button mat-menu-item [routerLink]="['/reportes']">
+    <mat-icon>insert_chart_outlined</mat-icon> Reportes
+  </button>
+  }
+  }
+</mat-menu>
+
+
+<mat-menu #menuUsuario="matMenu">
+  <button mat-menu-item [routerLink]="['usuarios/perfil']">
+    Ver Perfil
+  </button>
+  <button mat-menu-item (click)="cerrarSesion()">Cerrar Sesión</button>
+</mat-menu>

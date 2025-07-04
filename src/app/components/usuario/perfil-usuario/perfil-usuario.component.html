@@ -8,23 +8,43 @@
         mat-flat-button
         [hidden]="modoEdicion"
         type="button"
+        class="me-3"
         (click)="habilitarEdicion()"
       >
         Modificar datos
       </button>
       <button
         mat-flat-button
-        [hidden]="!modoEdicion"
+        [hidden]="!modoEdicion || cambiarRolB"
         type="button"
         class="btn-danger"
         (click)="eliminarCuenta()"
       >
         Eliminar cuenta
       </button>
+
+      <button
+        mat-flat-button
+        [hidden]="modoEdicion"
+        type="button"
+        class="me-3"
+        (click)="irCambiarPassword()"
+      >
+        Cambiar contraseña
+      </button>
+
+      <button
+        mat-flat-button
+        [hidden]="modoEdicion"
+        type="button"
+        (click)="empezarCambioRol()"
+      >
+        Cambiar rol
+      </button>
     </div>
   </div>
   <div>
-    <form [formGroup]="form" (submit)="guardar()">
+    <form [formGroup]="form" (submit)="guardar()" *ngIf="!cambiarRolB">
       <div>
         <!-- Full Name -->
         <div class="mb-3">
@@ -109,6 +129,26 @@
 
       <div class="mt-3 text-center" [hidden]="!modoEdicion">
         <button mat-flat-button>Guardar cambios</button>
+      </div>
+    </form>
+
+    <form [formGroup]="form2" class="example-form form" (submit)="cambiarRol()" *ngIf="cambiarRolB">
+      <div>
+        <mat-form-field>
+          <mat-label>Nuevo Rol</mat-label>
+          <mat-select formControlName="rol">
+            @for (r of roles; track r.id) {
+            <mat-option [value]="r.id">{{ r.value }}</mat-option>
+            }
+          </mat-select>
+          <mat-error *ngIf="form.get('rol')?.hasError('required')">
+            El rol es obligatorio!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="mt-3 text-center d-flex">
+        <button class="w-100" mat-flat-button>Cambiar Rol</button>
       </div>
     </form>
   </div>

@@ -3,7 +3,7 @@ import { Rol } from './rol';
 import { Usuario } from './usuario';
 
 export class RolUsuario {
-  id: RolUsuarioId = new RolUsuarioId();
+  idRolUsuario: RolUsuarioId = new RolUsuarioId();
   usuario: Usuario = new Usuario();
   rol: Rol = new Rol();
 }
