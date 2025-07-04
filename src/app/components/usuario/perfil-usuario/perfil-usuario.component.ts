@@ -16,6 +16,10 @@ import { RolUsuarioService } from '../../../services/rol-usuario.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmarEliminarComponent } from '../../util/confirmar-eliminar/confirmar-eliminar.component';
 import { SesionUsuarioService } from '../../../services/sesion-usuario.service';
+import { RolUsuario } from '../../../models/rol-usuario';
+import { RolService } from '../../../services/rol.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -26,6 +30,7 @@ import { SesionUsuarioService } from '../../../services/sesion-usuario.service';
     MatButtonModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatSelectModule,
   ],
   templateUrl: './perfil-usuario.component.html',
   styleUrl: './perfil-usuario.component.css',
@@ -38,14 +43,23 @@ export class PerfilUsuarioComponent implements OnInit {
   rol: string = '';
   status: boolean = false;
 
+  // Para cambio de rol
+  form2: FormGroup = new FormGroup({});
+  rolUsuario: RolUsuario = new RolUsuario();
+  rolId: number = 0;
+  roles: { id: number; value: string }[] = [];
+  cambiarRolB: boolean = false;
+
   constructor(
     private userServ: UsuarioService,
     private rolUserServ: RolUsuarioService,
+    private rolS: RolService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private sessionS: SesionUsuarioService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -79,6 +93,18 @@ export class PerfilUsuarioComponent implements OnInit {
           });
         });
     });
+
+    this.form2 = this.formBuilder.group({
+      rol: ['', Validators.required],
+    });
+
+    this.rolS.listarRolesSinAdmin().subscribe((data) => {
+      data.forEach((rolObt) => {
+        this.roles.push({ id: rolObt.idRol, value: rolObt.rol });
+      });
+    });
+
+    this.rolUsuario.idRolUsuario.idUsuario = this.id;
   }
 
   habilitarEdicion() {
@@ -97,6 +123,9 @@ export class PerfilUsuarioComponent implements OnInit {
       this.userServ.actualizar(this.usuario).subscribe(() => {
         this.userServ.listar().subscribe((data) => {
           this.userServ.setLista(data);
+        });
+        this.snackBar.open('Se actualizó el perfil correctamente', 'Cerrar', {
+          duration: 1000,
         });
       });
 
@@ -119,5 +148,33 @@ export class PerfilUsuarioComponent implements OnInit {
         });
       }
     });
+  }
+
+  empezarCambioRol() {
+    this.modoEdicion = true;
+    this.cambiarRolB = true;
+  }
+
+  cambiarRol() {
+    if (this.form.valid) {
+      this.rolUsuario.idRolUsuario.idRol = this.form2.value.rol;
+
+      this.rolUserServ.insertar(this.rolUsuario).subscribe(() => {
+        this.sessionS.cerrarSesion();
+        this.snackBar.open(
+          'Rol actualizado correctamente. Redireccionando a inicio y cerrando sesión',
+          'Cerrar',
+          {
+            duration: 1000,
+          }
+        );
+        this.cambiarRolB = false;
+        this.router.navigate(['']);
+      });
+    }
+  }
+
+  irCambiarPassword() {
+    this.router.navigate(['usuarios/cambiar-password']);
   }
 }
