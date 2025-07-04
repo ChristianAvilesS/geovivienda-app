@@ -1,0 +1,20 @@
+<div class="contrato-container">
+  <h2 class="titulo-contrato">{{ tipoContrato }}</h2>
+
+  <div class="text-end mb-3">
+    <button class="boton-verde" (click)="descargarPDF()">Descargar PDF</button>
+  </div>
+
+  <div class="contenido-contrato">
+    <div *ngFor="let pagina of getTextoContratoPorPaginas(); let i = index" class="pagina">
+      <pre>{{ pagina }}</pre>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-3 mt-4">
+    <button class="boton-verde" mat-dialog-close>Cancelar</button>
+    <button class="boton-verde" (click)="continuarPago()">Aceptar y continuar</button>
+  </div>
+</div>
+
+
