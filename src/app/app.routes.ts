@@ -17,6 +17,7 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { seguridadGuard } from './guards/seguridad.guard';
 import { CambiarPasswordComponent } from './components/usuario/cambiar-password/cambiar-password.component';
 import { AgregarAdminComponent } from './components/usuario/agregar-admin/agregar-admin.component';
+import { loginBlockGuard } from './guards/login-block.guard';
 
 export const routes: Routes = [
   {
@@ -54,8 +55,16 @@ export const routes: Routes = [
     canActivate: [seguridadGuard],
     data: { roles: ['ADMIN'] },
   },
-  { path: 'registro', component: RegistroComponent },
-  { path: 'inicio-sesion', component: InicioSesionComponent },
+  {
+    path: 'registro',
+    component: RegistroComponent,
+    canActivate: [loginBlockGuard],
+  },
+  {
+    path: 'inicio-sesion',
+    component: InicioSesionComponent,
+    canActivate: [loginBlockGuard],
+  },
   {
     path: 'inmuebles',
     component: InmuebleComponent,

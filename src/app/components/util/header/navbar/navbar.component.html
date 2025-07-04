@@ -32,7 +32,7 @@
     <mat-icon>home_work</mat-icon> Inmuebles
   </button>
   @if(estaLogeado) {
-  <button mat-menu-item [routerLink]="['/inmuebles/agregar']" *ngIf="esVendedor">
+  <button mat-menu-item [routerLink]="['/inmuebles/agregar']" *ngIf="esVendedor || esAdmin">
     <mat-icon>add_home</mat-icon> Agregar
   </button>
 
