@@ -3,32 +3,33 @@
   right: 20px;
   bottom: 20px;
   z-index: 999;
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
+}
 
-  .layout-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-  app-header {
-    height: 15vh;
-    flex-shrink: 0;
-  }
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-  .main-container {
-    flex: 1;
-    background-color: #feffef;
-    overflow-y: auto;
-  }
+app-header {
+  height: 15vh;
+  flex-shrink: 0;
+}
 
-  app-footer {
-    height: 7vh;
-    flex-shrink: 0;
-  }
+.main-container {
+  flex: 1;
+  background-color: #feffef;
+  overflow-y: auto;
+}
+
+app-footer {
+  height: 7vh;
+  flex-shrink: 0;
 }

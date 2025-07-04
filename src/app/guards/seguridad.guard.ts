@@ -8,6 +8,14 @@ export const seguridadGuard = (route: ActivatedRouteSnapshot) => {
   const router = inject(Router);
 
   if (!login.estaLogeado()) {
+    const snackBar = inject(MatSnackBar);
+    snackBar.open(
+      'No tiene permisos para entrar a esta página, no ha hecho login.',
+      'Cerrar',
+      {
+        duration: 3000,
+      }
+    );
     router.navigate(['/inicio']);
     return false;
   }
