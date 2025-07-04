@@ -35,7 +35,7 @@ import { FiltradoInmueblesComponent } from './filtrado-inmuebles/filtrado-inmueb
     MatButtonModule,
   ],
   templateUrl: './listado-inmuebles.component.html',
-  styleUrl: './listado-inmuebles.component.css',
+  styleUrls: ['./listado-inmuebles.component.css','./listado-inmuebles.component.scss'],
 })
 export class ListadoInmueblesComponent {
   inmueblesOriginales: Inmueble[] = [];

@@ -122,4 +122,13 @@ export class InformacionInmuebleComponent {
       });
     });
   }
+
+  get esAlquiler(): boolean {
+    return this.inmueble.estado?.toLowerCase() === 'por rentar'
+  }
+
+  get esVenta(): boolean {
+    return this.inmueble.estado?.toLowerCase() === 'disponible'
+  }
+
 }

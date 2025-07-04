@@ -20,7 +20,10 @@ import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
     MatPaginatorModule,
   ],
   templateUrl: './listado-usuarios.component.html',
-  styleUrl: './listado-usuarios.component.css',
+  styleUrls: [
+    './listado-usuarios.component.css',
+    './listado-usuarios.component.scss',
+  ],
 })
 export class ListadoUsuariosComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Usuario> = new MatTableDataSource();
@@ -73,8 +76,7 @@ export class ListadoUsuariosComponent implements OnInit, AfterViewInit {
       this.usuarioService.listar().subscribe((data) => {
         this.dataSource.data = data;
       });
-    }
-    else {
+    } else {
       this.usuarioService.listarNoEliminados().subscribe((data) => {
         this.dataSource.data = data;
       });

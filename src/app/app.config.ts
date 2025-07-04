@@ -1,4 +1,8 @@
-import { ApplicationConfig, inject, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -13,16 +17,15 @@ import {
 } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { authInterceptorFn } from './services/auth-interceptor';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(
-      withFetch(),
-      withInterceptors([authInterceptorFn])
-    ),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptorFn])),
     provideAnimations(),
+    provideCharts(withDefaultRegisterables()),
   ],
 };
