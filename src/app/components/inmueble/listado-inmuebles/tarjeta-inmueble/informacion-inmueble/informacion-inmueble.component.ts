@@ -1,4 +1,5 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, signal } from '@angular/core';
+import { ValoracionService } from './../../../../../services/valoracion.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import maplibregl, { Map } from 'maplibre-gl';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -13,6 +14,20 @@ import { InmuebleService } from '../../../../../services/inmueble.service';
 import { CommonModule } from '@angular/common';
 import { SesionUsuarioService } from '../../../../../services/sesion-usuario.service';
 import { environment } from '../../../../../environments/environments';
+import { Valoracion } from '../../../../../models/valoracion';
+import { MatCardModule } from '@angular/material/card';
+import { ValoracionPromedio } from '../../../../../models/dtos/valoracion-promedio-dto';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { Comentario } from '../../../../../models/comentario';
+import { ComentarioService } from '../../../../../services/comentario.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const apiKeyMaps = environment.apiKeyMaps;
 
@@ -25,6 +40,12 @@ const apiKeyMaps = environment.apiKeyMaps;
     RouterLink,
     CommonModule,
     MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './informacion-inmueble.component.html',
   styleUrl: './informacion-inmueble.component.css',
@@ -32,8 +53,25 @@ const apiKeyMaps = environment.apiKeyMaps;
 export class InformacionInmuebleComponent {
   private map!: Map;
   inmuebleUsuario: InmuebleUsuario = new InmuebleUsuario();
-
+  comentarioform: FormGroup = new FormGroup({});
+  comentario: Comentario = new Comentario();
   esDuenio: boolean = false;
+  comentarios: Comentario[] = [];
+  readonly panelOpenState = signal(false);
+  existeComentario: boolean = false;
+  comentarioActual: Comentario = new Comentario();
+
+  valoracionSeleccionada: number = 0;
+  valoracionGuardada: boolean = false;
+  estrellas: number[] = [1, 2, 3, 4, 5];
+  promedioValoracion: number = 0;
+  totalValoraciones: number = 0;
+  valoraciones: Valoracion[] = [];
+  valoracionesMostradas: Valoracion[] = [];
+  valoracionesPorPagina = 3;
+
+  usuarioYaValoro: boolean = false;
+  valoracionUsuario: Valoracion | null = null;
 
   estaLogeado: boolean = false;
 
@@ -41,10 +79,27 @@ export class InformacionInmuebleComponent {
     private inmuebleService: InmuebleService,
     private inmuebleUsuarioService: InmuebleUsuarioService,
     private sesionService: SesionUsuarioService,
+    private valoracionService: ValoracionService,
+    private sesioService: SesionUsuarioService,
+    private comentarioService: ComentarioService,
+    private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public inmueble: Inmueble
   ) {}
 
   ngOnInit() {
+    this.comentarioService
+      .listarporUsuarioInmueble(
+        this.sesionService.getIdUsuario(),
+        this.inmueble.idInmueble
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.existeComentario = true;
+          this.comentarioActual = data;
+        }
+      });
+    console.log(this.existeComentario);
+
     this.inmuebleUsuarioService
       .buscarDuenioPorInmueble(this.inmueble.idInmueble)
       .subscribe((data) => {
@@ -55,12 +110,77 @@ export class InformacionInmuebleComponent {
     this.inmuebleUsuarioService
       .buscarDuenioPorInmueble(this.inmueble.idInmueble)
       .subscribe((data) => {
+        this.inmuebleUsuario = data;
         if (this.sesionService.getIdUsuario() == data.usuario.idUsuario) {
           this.esDuenio = data.esDuenio;
         }
       });
 
     this.estaLogeado = this.sesionService.estaLogeado();
+    this.valoracionService
+      .obtenerListaValoracionPromedio()
+      .subscribe((data: ValoracionPromedio[]) => {
+        const valoracion = data.find(
+          (v) => v.nombreInmueble === this.inmueble.nombre
+        );
+        if (valoracion) {
+          this.promedioValoracion = Math.round(valoracion.valoracion * 10) / 10;
+          // También puedes calcular el total de valoraciones basado en las que tienes
+          this.totalValoraciones = this.valoraciones.length;
+        }
+      });
+
+    this.valoracionService.listValoracion().subscribe((res: Valoracion[]) => {
+      this.valoraciones = res.filter(
+        (v) => v.inmueble.idInmueble === this.inmueble.idInmueble
+      );
+      this.valoracionesMostradas = this.valoraciones.slice(
+        0,
+        this.valoracionesPorPagina
+      );
+    });
+
+    this.cargarValoraciones();
+    this.verificarValoracionUsuario();
+    this.comentarioform = this.formBuilder.group({
+      comentario: [''],
+    });
+
+    this.comentarioService
+      .listarporinmueble(this.inmueble.idInmueble)
+      .subscribe((data) => {
+        this.comentarios = data;
+        this.comentarioService.setLista(data);
+      });
+  }
+
+  insertarComentario() {
+    console.log(this.inmueble);
+    if (this.existeComentario) {
+      this.comentario.idComentario = this.comentarioActual.idComentario;
+    }
+    this.comentario.descripcion = this.comentarioform.value.comentario;
+    this.comentario.inmueble.idInmueble = this.inmueble.idInmueble;
+    this.comentario.usuario.idUsuario = this.sesionService.getIdUsuario();
+    if (this.existeComentario) {
+      this.comentarioService.actualizar(this.comentario).subscribe(() => {
+        this.comentarioService
+          .listarporinmueble(this.inmueble.idInmueble)
+          .subscribe((data) => {
+            this.comentarioService.setLista(data);
+            this.existeComentario = true;
+          });
+      });
+    } else {
+      this.comentarioService.insertar(this.comentario).subscribe(() => {
+        this.comentarioService
+          .listarporinmueble(this.inmueble.idInmueble)
+          .subscribe((data) => {
+            this.comentarioService.setLista(data);
+            this.existeComentario = true;
+          });
+      });
+    }
   }
 
   ngAfterViewInit(): void {
@@ -107,5 +227,96 @@ export class InformacionInmuebleComponent {
 
   get esVenta(): boolean {
     return this.inmueble.estado?.toLowerCase() === 'disponible';
+  }
+
+  private cargarValoraciones() {
+    // Cargar promedio de valoraciones
+    this.valoracionService
+      .obtenerListaValoracionPromedio()
+      .subscribe((data: ValoracionPromedio[]) => {
+        console.log('Nombre inmueble actual:', this.inmueble.nombre);
+        console.log('Valoraciones promedio recibidas:', data);
+        const valoracion = data.find(
+          (v) => v.nombreInmueble === this.inmueble.nombre
+        );
+        if (valoracion) {
+          this.promedioValoracion = Math.round(valoracion.valoracion * 10) / 10;
+        }
+      });
+
+    // Cargar lista de valoraciones
+    this.valoracionService.listValoracion().subscribe((res: Valoracion[]) => {
+      this.valoraciones = res.filter(
+        (v) => v.inmueble.idInmueble === this.inmueble.idInmueble
+      );
+      this.valoracionesMostradas = this.valoraciones.slice(
+        0,
+        this.valoracionesPorPagina
+      );
+      this.totalValoraciones = this.valoraciones.length;
+    });
+  }
+
+  guardarValoracion() {
+    if (this.usuarioYaValoro) return;
+
+    const valoracion = new Valoracion();
+    valoracion.rating = this.valoracionSeleccionada;
+    valoracion.inmueble.idInmueble = this.inmueble.idInmueble;
+    valoracion.usuario.idUsuario = this.sesionService.getIdUsuario();
+
+    console.log('Valoración a guardar:', this.valoracionUsuario);
+    this.valoracionService.insertarValoracion(valoracion).subscribe({
+      next: (val) => {
+        this.valoracionUsuario = val;
+        this.usuarioYaValoro = true;
+        this.cargarValoraciones();
+      },
+      error: (err) => console.error('Error al guardar valoración:', err),
+    });
+  }
+
+  private verificarValoracionUsuario() {
+    const idUsuario = this.sesionService.getIdUsuario();
+    if (idUsuario) {
+      this.valoracionService.listValoracion().subscribe((res: Valoracion[]) => {
+        const valoracionExistente = res.find(
+          (v) =>
+            v.inmueble.idInmueble === this.inmueble.idInmueble &&
+            v.usuario.idUsuario === idUsuario
+        );
+
+        if (valoracionExistente) {
+          this.usuarioYaValoro = true;
+          this.valoracionUsuario = valoracionExistente;
+          this.valoracionSeleccionada = valoracionExistente.rating;
+        }
+      });
+    }
+  }
+
+  eliminarValoracion() {
+    console.log(this.valoracionUsuario);
+
+    if (!this.valoracionUsuario) return;
+    console.log('ID a eliminar:', this.valoracionUsuario?.idValoracion);
+
+    this.valoracionService
+
+      .eliminarValoracion(this.valoracionUsuario.idValoracion)
+      .subscribe({
+        next: () => {
+          this.usuarioYaValoro = false;
+          this.valoracionUsuario = null;
+          this.valoracionSeleccionada = 0;
+          this.cargarValoraciones();
+        },
+        error: (err) => console.error('Error al eliminar valoración:', err),
+      });
+  }
+
+  verMasValoraciones() {
+    const next = this.valoracionesMostradas.length + this.valoracionesPorPagina;
+    this.valoracionesMostradas = this.valoraciones.slice(0, next);
   }
 }
