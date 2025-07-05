@@ -213,6 +213,7 @@ export class InformacionInmuebleComponent {
     valoracion.inmueble.idInmueble = this.inmueble.idInmueble;
     valoracion.usuario.idUsuario = this.sesionService.getIdUsuario();
 
+    console.log('Valoración a guardar:', this.valoracionUsuario);
     this.valoracionService.insertarValoracion(valoracion).subscribe({
       next: (val) => {
         this.valoracionUsuario = val;
@@ -243,9 +244,14 @@ export class InformacionInmuebleComponent {
   }
 
   eliminarValoracion() {
+    console.log(this.valoracionUsuario);
+
+
     if (!this.valoracionUsuario) return;
+    console.log('ID a eliminar:', this.valoracionUsuario?.idValoracion);
 
     this.valoracionService
+
       .eliminarValoracion(this.valoracionUsuario.idValoracion)
       .subscribe({
         next: () => {

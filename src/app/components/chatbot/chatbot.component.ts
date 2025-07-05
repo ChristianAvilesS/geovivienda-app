@@ -3,11 +3,13 @@ import { CommonModule, NgIf, NgFor, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-chatbot',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgIf, NgFor, NgClass],
+  imports: [CommonModule, FormsModule, NgIf, NgFor, NgClass, MatButtonModule, MatIconModule],
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.css'],
 })
@@ -39,7 +41,7 @@ export class ChatbotComponent {
         {
           role: 'user',
           content:
-            'Eres un asistente útil de Geoviviendas. Solo responde preguntas sobre la aplicación.',
+            'Eres un asistente útil de Geoviviendas una aplicacion web que sirve para buscar casas o departamentos para alquilarlar o venderlas si eres un ARRENDATARIO o VENDEDOR y como COMPRADOR poder alquilar o comorar, es una app web completa que permite valorar inmuebles, editar el usuario y los inmuebles, login y cuenta con un mapa donde encontrar los inmuebles. Solo responde preguntas sobre la aplicación. No des información adicional. Si no sabes la respuesta, di "No deseo joven, gracias.".',
         },
         ...this.messages.map((msg) => ({
           role: msg.sender === 'user' ? 'user' : 'assistant',
@@ -53,7 +55,7 @@ export class ChatbotComponent {
         this.http.post('https://openrouter.ai/api/v1/chat/completions', body, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer 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`,
+            Authorization: `Bearer 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`,
             'HTTP-Referer': 'https://localhost:4200/',
             'X-Title': 'geovivienda-app',
           },
