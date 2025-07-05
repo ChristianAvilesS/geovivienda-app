@@ -17,6 +17,11 @@ import { environment } from '../../../../../environments/environments';
 import { Valoracion } from '../../../../../models/valoracion';
 import { MatCardModule } from '@angular/material/card';
 import { ValoracionPromedio } from '../../../../../models/dtos/valoracion-promedio-dto';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Comentario } from '../../../../../models/comentario';
+import { ComentarioService } from '../../../../../services/comentario.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 const apiKeyMaps = environment.apiKeyMaps;
 
@@ -30,6 +35,10 @@ const apiKeyMaps = environment.apiKeyMaps;
     CommonModule,
     MatButtonModule,
     MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './informacion-inmueble.component.html',
   styleUrl: './informacion-inmueble.component.css',
@@ -37,7 +46,8 @@ const apiKeyMaps = environment.apiKeyMaps;
 export class InformacionInmuebleComponent {
   private map!: Map;
   inmuebleUsuario: InmuebleUsuario = new InmuebleUsuario();
-
+  comentarioform: FormGroup = new FormGroup({});
+  comentario: Comentario = new Comentario();
   esDuenio: boolean = false;
 
   valoracionSeleccionada: number = 0;
@@ -58,7 +68,8 @@ export class InformacionInmuebleComponent {
     private sesionService: SesionUsuarioService,
     private valoracionService: ValoracionService,
     private sesioService: SesionUsuarioService,
-
+    private comentarioService: ComentarioService,
+    private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public inmueble: Inmueble
   ) {}
 
@@ -104,6 +115,20 @@ export class InformacionInmuebleComponent {
 
     this.cargarValoraciones();
     this.verificarValoracionUsuario();
+    this.comentarioform = this.formBuilder.group({
+        comentario: [''],});
+  }
+
+  insertarComentario() {
+    console.log(this.inmueble)
+    this.comentario.descripcion = this.comentarioform.value.comentario;
+    this.comentario.inmueble.idInmueble = this.inmueble.idInmueble;
+    this.comentario.usuario.idUsuario = this.sesionService.getIdUsuario();
+    this.comentarioService.insertar(this.comentario).subscribe(() => {
+      this.comentarioService.listarporinmueble(this.inmueble.idInmueble).subscribe((data) => {
+        this.comentarioService.setLista(data);
+      });
+    });
   }
 
   ngAfterViewInit(): void {

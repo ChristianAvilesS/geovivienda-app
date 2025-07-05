@@ -143,6 +143,31 @@
         "
       ></div>
     </section>
+
+    <!-- Comentario -->
+     <section>
+      <h3 class="mb-2">Comentario</h3>
+      <form [formGroup]="comentarioform" (submit)="insertarComentario()">
+        <mat-form-field appearance="outline" class="w-100">
+        <textarea
+        matInput
+        placeholder="Escribe tu comentario aquí..."
+        name="comentario"
+        formControlName="comentario"
+        required
+        rows="4"
+      ></textarea>
+      </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+        >
+          Enviar Comentario
+        </button>
+    </form>
+     
+     </section>
   </div>
 </mat-dialog-content>
 
