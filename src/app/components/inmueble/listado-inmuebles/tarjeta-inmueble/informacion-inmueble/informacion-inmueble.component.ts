@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, signal } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import maplibregl, { Map } from 'maplibre-gl';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -18,6 +18,7 @@ import { Comentario } from '../../../../../models/comentario';
 import { ComentarioService } from '../../../../../services/comentario.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 const apiKeyMaps = environment.apiKeyMaps;
 
@@ -32,6 +33,7 @@ const apiKeyMaps = environment.apiKeyMaps;
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    MatExpansionModule,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -44,6 +46,10 @@ export class InformacionInmuebleComponent {
   comentarioform: FormGroup = new FormGroup({});
   comentario: Comentario = new Comentario();
   esDuenio: boolean = false;
+  comentarios: Comentario[] = [];
+  readonly panelOpenState = signal(false);
+  existeComentario: boolean = false;
+  comentarioActual: Comentario = new Comentario();
 
   constructor(
     private inmuebleService: InmuebleService,
@@ -55,6 +61,18 @@ export class InformacionInmuebleComponent {
   ) {}
 
   ngOnInit() {
+    
+    this.comentarioService.listarporUsuarioInmueble(
+      this.sesionService.getIdUsuario(),
+      this.inmueble.idInmueble
+    ).subscribe((data) => {
+      if (data) {
+        this.existeComentario = true;
+        this.comentarioActual = data;
+      }
+    });
+    console.log(this.existeComentario);
+
     this.inmuebleUsuarioService
       .buscarDuenioPorInmueble(this.inmueble.idInmueble)
       .subscribe((data) => {
@@ -71,19 +89,38 @@ export class InformacionInmuebleComponent {
       });
     this.comentarioform = this.formBuilder.group({
         comentario: [''],});
+
+    this.comentarioService.listarporinmueble(this.inmueble.idInmueble).subscribe((data) => {
+      this.comentarios = data;
+      this.comentarioService.setLista(data);
+    });
   }
 
   insertarComentario() {
     console.log(this.inmueble)
+    if(this.existeComentario){
+      this.comentario.idComentario = this.comentarioActual.idComentario;
+    }
     this.comentario.descripcion = this.comentarioform.value.comentario;
     this.comentario.inmueble.idInmueble = this.inmueble.idInmueble;
     this.comentario.usuario.idUsuario = this.sesionService.getIdUsuario();
+    if (this.existeComentario) {
+    this.comentarioService.actualizar(this.comentario).subscribe(() => {
+      this.comentarioService.listarporinmueble(this.inmueble.idInmueble).subscribe((data) => {
+        this.comentarioService.setLista(data);
+        this.existeComentario = true;
+      });
+    });
+  } else {
+    
     this.comentarioService.insertar(this.comentario).subscribe(() => {
       this.comentarioService.listarporinmueble(this.inmueble.idInmueble).subscribe((data) => {
         this.comentarioService.setLista(data);
+        this.existeComentario = true;
       });
     });
   }
+}
 
   ngAfterViewInit(): void {
     this.map = new maplibregl.Map({
