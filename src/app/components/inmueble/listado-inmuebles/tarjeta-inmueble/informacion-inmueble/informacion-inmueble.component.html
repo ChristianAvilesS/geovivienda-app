@@ -41,6 +41,94 @@
       </mat-list>
     </section>
 
+    <!-- Valoración promedio -->
+    <section>
+      <h5 class="mb-2">Valoración promedio</h5>
+      <div class="d-flex align-items-center gap-2">
+        <ng-container *ngFor="let estrella of estrellas">
+          <mat-icon
+            [ngClass]="{
+              'text-warning': estrella <= promedioValoracion,
+              'text-muted': estrella > promedioValoracion
+            }"
+          >
+            star
+          </mat-icon>
+        </ng-container>
+        <span *ngIf="promedioValoracion > 0">
+          {{ promedioValoracion }} ({{ valoraciones.length }} valoraciones)
+        </span>
+        <span *ngIf="promedioValoracion === 0">Sin valoraciones aún</span>
+      </div>
+    </section>
+
+    <!-- Sección de valoración del usuario -->
+    <section *ngIf="!esDuenio">
+      <h5 class="mt-3 mb-2">Tu valoración</h5>
+      <div class="d-flex align-items-center gap-2">
+        <!-- Estrellas para seleccionar valoración -->
+        <mat-icon
+          *ngFor="let estrella of estrellas"
+          class="cursor-pointer"
+          [ngClass]="{
+            'text-warning': estrella <= valoracionSeleccionada,
+            'text-muted': estrella > valoracionSeleccionada
+          }"
+          (click)="!usuarioYaValoro && (valoracionSeleccionada = estrella)"
+        >
+          star
+        </mat-icon>
+
+        <!-- Botón que cambia según el estado -->
+        <button
+          mat-stroked-button
+          color="primary"
+          class="ms-2"
+          (click)="usuarioYaValoro ? eliminarValoracion() : guardarValoracion()"
+          [disabled]="!usuarioYaValoro && valoracionSeleccionada === 0"
+        >
+          {{ usuarioYaValoro ? "Eliminar" : "Enviar" }}
+        </button>
+      </div>
+
+      <!-- Mensaje de confirmación -->
+      <div *ngIf="usuarioYaValoro" class="mt-2 text-success">
+        ¡Gracias por tu valoración!
+      </div>
+    </section>
+
+    <!-- Lista de valoraciones -->
+    <section *ngIf="valoraciones.length > 0">
+      <h5 class="mt-4 mb-2">Valoraciones</h5>
+      <div *ngFor="let val of valoracionesMostradas">
+        <mat-card class="mb-2 p-2">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ val.usuario.nombre }}</strong>
+            </div>
+            <div class="d-flex">
+              <mat-icon
+                *ngFor="let estrella of estrellas"
+                [ngClass]="{
+                  'text-warning': estrella <= val.rating,
+                  'text-muted': estrella > val.rating
+                }"
+                >star</mat-icon
+              >
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <button
+        *ngIf="valoracionesMostradas.length < valoraciones.length"
+        mat-flat-button
+        color="primary"
+        (click)="verMasValoraciones()"
+      >
+        Ver más valoraciones
+      </button>
+    </section>
+
     <!-- Mapa -->
     <section>
       <h5 class="mb-2">Ubicación</h5>
@@ -79,11 +167,11 @@
     </button>
   </div>
   <div class="gap-2 d-flex" *ngIf="!esDuenio">
-  <button *ngIf="esAlquiler" mat-flat-button [mat-dialog-close]="'alquiler'">
-    Alquilar
-  </button>
-  <button *ngIf="esVenta" mat-flat-button [mat-dialog-close]="'venta'">
-    Comprar
-  </button>
-</div>
+    <button *ngIf="esAlquiler" mat-flat-button [mat-dialog-close]="'alquiler'">
+      Alquilar
+    </button>
+    <button *ngIf="esVenta" mat-flat-button [mat-dialog-close]="'venta'">
+      Comprar
+    </button>
+  </div>
 </mat-dialog-actions>
