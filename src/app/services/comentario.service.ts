@@ -33,4 +33,13 @@ export class ComentarioService {
     getLista() {
       return this.listaCambio.asObservable();
     }
+  
+    listarporUsuarioInmueble(idUsuario: number, idInmueble: number) {
+      return this.http.get<Comentario>(this.url+ '/buscarporusarioinmueble', { params:{idUsuario: idUsuario, idInmueble: idInmueble} });
+    }
+    
+  actualizar(comentario: Comentario) {
+      return this.http.put<Comentario>(this.url, comentario);
+    }
+
 }
