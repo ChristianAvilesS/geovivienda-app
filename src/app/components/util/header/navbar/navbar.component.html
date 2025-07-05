@@ -8,8 +8,7 @@
 
     @if (estaLogeado) {
     <button mat-icon-button class="btn-white btn-circle">
-      <mat-icon [matMenuTriggerFor]="menuUsuario">person</mat-icon
-      >
+      <mat-icon [matMenuTriggerFor]="menuUsuario">person</mat-icon>
     </button>
 
     } @else {
@@ -23,7 +22,6 @@
   </mat-toolbar>
 </div>
 
-
 <mat-menu #menu="matMenu">
   <button mat-menu-item [routerLink]="['/']">
     <mat-icon>home</mat-icon> Inicio
@@ -32,7 +30,11 @@
     <mat-icon>home_work</mat-icon> Inmuebles
   </button>
   @if(estaLogeado) {
-  <button mat-menu-item [routerLink]="['/inmuebles/agregar']" *ngIf="esVendedor || esAdmin">
+  <button
+    mat-menu-item
+    [routerLink]="['/inmuebles/agregar']"
+    *ngIf="esVendedor || esAdmin"
+  >
     <mat-icon>add_home</mat-icon> Agregar
   </button>
 
@@ -52,14 +54,10 @@
   <button mat-menu-item [routerLink]="['/reportes']">
     <mat-icon>insert_chart_outlined</mat-icon> Reportes
   </button>
-  }
-  }
+  } }
 </mat-menu>
 
-
 <mat-menu #menuUsuario="matMenu">
-  <button mat-menu-item [routerLink]="['usuarios/perfil']">
-    Ver Perfil
-  </button>
+  <button mat-menu-item [routerLink]="['usuarios/perfil']">Ver Perfil</button>
   <button mat-menu-item (click)="cerrarSesion()">Cerrar Sesión</button>
 </mat-menu>

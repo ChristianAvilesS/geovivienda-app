@@ -18,13 +18,17 @@ import {
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { authInterceptorFn } from './services/auth-interceptor';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { loadingInterceptorFn } from './services/loading-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptorFn])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptorFn, loadingInterceptorFn])
+    ),
     provideAnimations(),
     provideCharts(withDefaultRegisterables()),
   ],

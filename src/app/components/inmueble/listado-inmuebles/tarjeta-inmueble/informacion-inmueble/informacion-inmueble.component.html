@@ -29,7 +29,7 @@
     </section>
 
     <!-- Información del propietario -->
-    <section>
+    <section *ngIf="estaLogeado">
       <h5 class="mb-2">Información del propietario</h5>
       <mat-list>
         <mat-list-item>
@@ -59,7 +59,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <div class="gap-2 d-flex" *ngIf="esDuenio">
+  <div class="gap-2 d-flex" *ngIf="esDuenio || estaLogeado">
     <button
       mat-dialog-close
       mat-flat-button
@@ -78,12 +78,12 @@
       Eliminar
     </button>
   </div>
-  <div class="gap-2 d-flex" *ngIf="!esDuenio">
-  <button *ngIf="esAlquiler" mat-flat-button [mat-dialog-close]="'alquiler'">
-    Alquilar
-  </button>
-  <button *ngIf="esVenta" mat-flat-button [mat-dialog-close]="'venta'">
-    Comprar
-  </button>
-</div>
+  <div class="gap-2 d-flex" *ngIf="!esDuenio && estaLogeado">
+    <button *ngIf="esAlquiler" mat-flat-button [mat-dialog-close]="'alquiler'">
+      Alquilar
+    </button>
+    <button *ngIf="esVenta" mat-flat-button [mat-dialog-close]="'venta'">
+      Comprar
+    </button>
+  </div>
 </mat-dialog-actions>

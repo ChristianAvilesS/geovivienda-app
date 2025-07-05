@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environments';
 import { Inmueble } from '../models/inmueble';
 import { Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { FiltradoInmuebleDTO } from '../models/dtos/filtrado-inmuebles-dto';
 const base_url = environment.base;
 const apiKey = environment.apiKeyMaps;
 
@@ -70,5 +71,49 @@ export class InmuebleService {
         )}&format=json&apiKey=${apiKey}`
       )
       .pipe(map((res) => res.results.map((r: any) => r.formatted as string)));
+  }
+
+  filtrar(paramsDto: FiltradoInmuebleDTO) {
+    const params: any = {
+      latitud: paramsDto.latitud,
+      longitud: paramsDto.longitud,
+      radio: paramsDto.radio,
+    };
+
+    if (paramsDto.minArea != null) {
+      params.minArea = paramsDto.minArea;
+    }
+    if (paramsDto.maxArea != null) {
+      params.maxArea = paramsDto.maxArea;
+    }
+    if (paramsDto.minPrecio != null) {
+      params.minPrecio = paramsDto.minPrecio;
+    }
+    if (paramsDto.maxPrecio != null) {
+      params.maxPrecio = paramsDto.maxPrecio;
+    }
+    if (paramsDto.tipo != null && paramsDto.tipo !== '') {
+      params.tipo = paramsDto.tipo;
+    }
+
+    console.log('Parámetros enviados:', params);
+
+    return this.http.get<Inmueble[]>(`${this.url}/filtrado`, { params });
+  }
+
+  mostrarFavoritos(idUsuario: number) {
+    return this.http.get<Inmueble[]>(this.url + '/favoritos', {
+      params: {
+        idUsuario: idUsuario,
+      },
+    });
+  }
+
+  listarPorUsuario(idUsuario: number) {
+    return this.http.get<Inmueble[]>(this.url + '/listarporusuario', {
+      params: {
+        idUsuario: idUsuario,
+      },
+    });
   }
 }

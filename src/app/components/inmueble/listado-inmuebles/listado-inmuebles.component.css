@@ -3,11 +3,17 @@
   padding: 0.9rem;
 }
 
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 10rem;
+  gap: 1rem;
+}
+
 .contenedor-grid-tarjetas {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
-  padding: 1rem;
 }
 
 .paginador {

@@ -35,6 +35,8 @@ export class InformacionInmuebleComponent {
 
   esDuenio: boolean = false;
 
+  estaLogeado: boolean = false;
+
   constructor(
     private inmuebleService: InmuebleService,
     private inmuebleUsuarioService: InmuebleUsuarioService,
@@ -57,6 +59,8 @@ export class InformacionInmuebleComponent {
           this.esDuenio = data.esDuenio;
         }
       });
+
+    this.estaLogeado = this.sesionService.estaLogeado();
   }
 
   ngAfterViewInit(): void {
@@ -98,11 +102,10 @@ export class InformacionInmuebleComponent {
   }
 
   get esAlquiler(): boolean {
-    return this.inmueble.estado?.toLowerCase() === 'por rentar'
+    return this.inmueble.estado?.toLowerCase() === 'por rentar';
   }
 
   get esVenta(): boolean {
-    return this.inmueble.estado?.toLowerCase() === 'disponible'
+    return this.inmueble.estado?.toLowerCase() === 'disponible';
   }
-
 }

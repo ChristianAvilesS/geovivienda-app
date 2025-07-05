@@ -64,6 +64,9 @@
           <mat-error *ngIf="form.get('precio')?.hasError('min')">
             El precio debe ser mayor que 0.
           </mat-error>
+          <mat-error *ngIf="form.get('precio')?.hasError('max')">
+            El precio no debe ser mayor que 3 millones.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="input-formularios area" appearance="outline">
@@ -79,6 +82,9 @@
           </mat-error>
           <mat-error *ngIf="form.get('area')?.hasError('min')">
             El área debe ser mayor que 0.
+          </mat-error>
+          <mat-error *ngIf="form.get('precio')?.hasError('max')">
+            El precio no debe ser mayor que 1000 metros.
           </mat-error>
         </mat-form-field>
       </div>
