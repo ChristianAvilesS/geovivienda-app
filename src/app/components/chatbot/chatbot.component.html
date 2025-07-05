@@ -3,7 +3,9 @@
 <div class="chatbot-panel" *ngIf="isOpen">
   <div class="chatbot-header">
     <span>Geoviviendas Bot</span>
-    <button (click)="toggleChat()">✖</button>
+    <button mat-icon-button (click)="toggleChat()">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 
   <div class="chatbot-messages">
