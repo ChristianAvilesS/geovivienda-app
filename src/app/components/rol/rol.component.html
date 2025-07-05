@@ -1,9 +1,9 @@
 <app-listado-roles></app-listado-roles>
-<div>
+<div class="mt-3">
   <form [formGroup]="form" (submit)="guardar()">
     <div class="flex-container">
       <!-- Role-->
-      <div class="mb-3">
+      <div class="container-centrado">
         <mat-form-field>
           <mat-label>Rol</mat-label>
           <input
@@ -15,9 +15,8 @@
             El nombre del rol es obligatorio!
           </mat-error>
         </mat-form-field>
+        <button mat-raised-button class="btn text-center">Agregar Rol</button>
       </div>
-
-      <button mat-raised-button class="text-center">Agregar Rol</button>
     </div>
   </form>
 </div>

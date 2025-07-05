@@ -79,9 +79,11 @@
     </button>
   </div>
   <div class="gap-2 d-flex" *ngIf="!esDuenio">
-    <button mat-flat-button mat-dialog-close>Alquilar</button>
-    <button mat-flat-button [mat-dialog-close]="true" cdkFocusInitial>
-      Comprar
-    </button>
-  </div>
+  <button *ngIf="esAlquiler" mat-flat-button [mat-dialog-close]="'alquiler'">
+    Alquilar
+  </button>
+  <button *ngIf="esVenta" mat-flat-button [mat-dialog-close]="'venta'">
+    Comprar
+  </button>
+</div>
 </mat-dialog-actions>

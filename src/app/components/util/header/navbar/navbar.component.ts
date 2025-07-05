@@ -3,9 +3,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { SesionUsuarioService } from '../../../../services/sesion-usuario.service';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
     MatToolbarModule,
     MatMenuModule,
     RouterModule,
+    CommonModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit {
   linkPerfil: string = '/usuarios/perfil';
   estaLogeado: boolean = false;
   esAdmin: boolean = false;
+  esVendedor: boolean = false;
 
   constructor(
     private loginS: SesionUsuarioService,
@@ -37,6 +39,7 @@ export class NavbarComponent implements OnInit {
       this.estaLogeado = estado;
       this.cd.detectChanges();
       this.esAdmin = this.sesionS.decodeToken().role.includes('ADMIN');
+      this.esVendedor = this.sesionS.decodeToken().role.includes('VENDEDOR');
     });
   }
 

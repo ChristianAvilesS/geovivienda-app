@@ -1,0 +1,42 @@
+::ng-deep .paginador .mat-mdc-icon-button {
+  background-color: #f4ee60; // Azul primario
+  margin: 0 4px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+::ng-deep .paginador .mat-mdc-icon-button:hover {
+  background-color: #e9e458;
+}
+
+::ng-deep .paginador .mat-mdc-select-value {
+  color: white;
+  font-weight: bold;
+}
+
+::ng-deep .paginador .mat-mdc-select-arrow {
+  color: white;
+}
+
+// Estilos Parte 2
+
+::ng-deep .paginador .mat-mdc-icon-button {
+  background-color: #f4ee60;
+  color: black;
+  margin: 0 4px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Hover */
+::ng-deep .paginador .mat-mdc-icon-button:hover:not([disabled]) {
+  background-color: #e9e458;
+}
+
+/* Estado deshabilitado */
+::ng-deep .paginador .mat-mdc-icon-button.mat-mdc-button-disabled {
+  background-color: #f4ee60; // Gris claro o lo que desees
+  color: #353535;
+  cursor: not-allowed;
+  opacity: 0.7;
+}

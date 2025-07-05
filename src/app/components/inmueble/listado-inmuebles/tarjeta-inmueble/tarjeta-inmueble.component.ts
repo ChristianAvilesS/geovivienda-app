@@ -7,6 +7,10 @@ import { ImagenesService } from '../../../../services/imagenes.service';
 import { Imagen } from '../../../../models/imagen';
 import { MatDialog } from '@angular/material/dialog';
 import { InformacionInmuebleComponent } from './informacion-inmueble/informacion-inmueble.component';
+import { SesionUsuarioService } from '../../../../services/sesion-usuario.service';
+import { InmuebleUsuarioService } from '../../../../services/inmueble-usuario.service';
+import { ContratoInmueblesComponent } from '../../contrato-inmuebles/contrato-inmuebles.component';
+import { InmuebleUsuario } from '../../../../models/inmueble-usuario';
 
 @Component({
   selector: 'app-tarjeta-inmueble',
@@ -16,19 +20,55 @@ import { InformacionInmuebleComponent } from './informacion-inmueble/informacion
 })
 export class TarjetaInmuebleComponent {
   imagenes: Imagen[] = [];
+  inmuebleUsuario: InmuebleUsuario = new InmuebleUsuario();
 
   private _inmueble!: Inmueble;
 
   readonly dialog = inject(MatDialog);
+  private sesionService = inject(SesionUsuarioService);
+  private inmuebleusuarioService = inject(InmuebleUsuarioService);
 
   openDialog() {
     const dialogRef = this.dialog.open(InformacionInmuebleComponent, {
       data: this.inmueble,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe((modalidadElegida) => {
+      console.log(`Dialog result: ${modalidadElegida}`);
+
+      if (modalidadElegida === 'alquiler' || modalidadElegida === 'venta') {
+        console.log('Usuario quiere ' + modalidadElegida);
+
+        this.sesionService.getUsuarioActual().subscribe((comprador) => {
+          this.inmuebleusuarioService
+            .buscarDuenioPorInmueble(this.inmueble.idInmueble)
+            .subscribe((data) => {
+              this.inmuebleUsuario = data;
+              const vendedor = this.inmuebleUsuario.usuario;
+
+              this.dialog.open(ContratoInmueblesComponent, {
+                data: {
+                  inmueble: this.inmueble,
+                  comprador,
+                  vendedor,
+                  fechaFirma: new Date(),
+                  fechaVencimiento: this.calcularVencimiento(modalidadElegida),
+                },
+                width: '800px',
+              });
+            });
+        });
+      }
     });
+  }
+  calcularVencimiento(modalidad: string): Date {
+    const fecha = new Date();
+    if (modalidad === 'alquiler') {
+      fecha.setMonth(fecha.getMonth() + 6); // 6 meses
+    } else {
+      fecha.setFullYear(fecha.getFullYear() + 1); // 1 año para venta
+    }
+    return fecha;
   }
 
   @Input() set inmueble(value: Inmueble) {

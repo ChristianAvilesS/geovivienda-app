@@ -48,18 +48,15 @@ export class InsertareditarMediopagoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((data:Params)=>{
-      this.id=data['id']
-      this.edicion=data['id']!=null
-      //actualizar trae data
-      this.init()
-    }
-
-    )
-
     this.form = this.fb.group({
-    idMedio: [''],
-    medioPago: ['',Validators.required],
+      idMedio: [''],
+      medioPago: ['', Validators.required],
+    });
+
+    this.route.params.subscribe((data: Params) => {
+      this.id = data['id'];
+      this.edicion = this.id != null;
+      this.init();
     });
   }
 
@@ -80,20 +77,25 @@ export class InsertareditarMediopagoComponent implements OnInit {
           });
         });
       }
-      this.router.navigate(['mediopago']);
+      this.router.navigate(['/medios-pago/listado']);
   }
 }
 
 init(){
   if(this.edicion){
-    this.mS.findById(this.id).subscribe(data=>{
-      this.form = new FormGroup({
-        idMedio:new FormControl(data.idMedio),
-        medioPago: new FormControl(data.medioPago),
+    this.mS.findById(this.id).subscribe({
+      next: (data) => {
+        console.log('Datos recibidos:', data); 
+        this.form.patchValue({
+            idMedio: data.idMedio,
+            medioPago: data.medioPago,
+        });
+      },
+      error: (error) => {
+        console.error('Error al cargar datos:', error);
+      }
     });
-  });
-}
-
+  }
 }
 
 }

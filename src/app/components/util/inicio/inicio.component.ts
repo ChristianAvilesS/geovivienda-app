@@ -1,9 +1,9 @@
 import {
   Component,
   Inject,
-  AfterViewInit,
   PLATFORM_ID,
   OnInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as maplibregl from 'maplibre-gl';
@@ -13,6 +13,7 @@ import { Inmueble } from '../../../models/inmueble';
 import { SesionUsuarioService } from '../../../services/sesion-usuario.service';
 
 import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 
 const apiKey = environment.apiKeyMaps;
 
@@ -21,7 +22,7 @@ const apiKey = environment.apiKeyMaps;
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css',
   standalone: true,
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, RouterModule],
 })
 export class InicioComponent implements OnInit {
   long: number = -77.0428; // por defecto Lima
@@ -33,11 +34,16 @@ export class InicioComponent implements OnInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private inmuebleService: InmuebleService,
-    private sesionService: SesionUsuarioService
+    private sesionService: SesionUsuarioService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.logeado = this.sesionService.estaLogeado();
+    this.sesionService.logeado$.subscribe((estado) => {
+      this.logeado = estado;
+      this.cd.detectChanges();
+    });
 
     if (!isPlatformBrowser(this.platformId)) return;
 
@@ -88,7 +94,7 @@ export class InicioComponent implements OnInit {
           const popupHtml = `
             <b>${inmueble.nombre}</b><br/>
             ${inmueble.direccion.direccion}<br/>
-            <small>${inmueble.tipo} - S/ ${inmueble.precioBase}</small><br/>           
+            <small>${inmueble.tipo} - S/ ${inmueble.precioBase}</small><br/>
           `;
 
           new maplibregl.Marker({ color: 'red' })
