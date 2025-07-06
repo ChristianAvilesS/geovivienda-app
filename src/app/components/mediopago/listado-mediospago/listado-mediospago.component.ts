@@ -35,10 +35,11 @@ export class ListadoMediospagoComponent implements OnInit, AfterViewInit {
     this.mS.list().subscribe((data) => {
       const ordenado = data.sort((a, b) => a.idMedio - b.idMedio);
       this.dataSource = new MatTableDataSource(ordenado);
+      this.dataSource.paginator = this.paginator;
     });
     this.mS.getList().subscribe((data) => {
       const ordenado = data.sort((a, b) => a.idMedio - b.idMedio);
-      this.dataSource = new MatTableDataSource(ordenado);
+      this.dataSource.data = ordenado;
       this.dataSource.paginator = this.paginator;
     });
   }
