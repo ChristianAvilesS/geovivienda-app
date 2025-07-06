@@ -19,6 +19,7 @@ import { authInterceptorFn } from './services/auth-interceptor';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { loadingInterceptorFn } from './services/loading-interceptor';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,5 +33,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideCharts(withDefaultRegisterables()),
     provideNativeDateAdapter(),
+    provideNgxMask()
   ],
 };

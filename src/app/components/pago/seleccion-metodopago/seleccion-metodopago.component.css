@@ -9,7 +9,8 @@
   min-height: 90vh;
 }
 
-.pago-izquierda, .pago-derecha {
+.pago-izquierda,
+.pago-derecha {
   background-color: #ffffff;
   border-radius: 10px;
   padding: 25px;
@@ -58,6 +59,10 @@
 .metodo input[type="checkbox"] {
   margin-left: 10px;
   transform: scale(1.2);
+}
+
+input {
+  accent-color: #28a745;
 }
 
 .btn-continuar {

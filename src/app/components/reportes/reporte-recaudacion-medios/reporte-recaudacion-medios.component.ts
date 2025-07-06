@@ -1,9 +1,5 @@
 import { ReportesService } from '../../../services/reportes.service';
-import {
-  ChartDataset,
-  ChartOptions,
-  ChartType,
-} from 'chart.js';
+import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { Component, OnInit } from '@angular/core';
 
@@ -30,7 +26,7 @@ export class ReporteRecaudacionMediosComponent implements OnInit {
       this.chartData = [
         {
           data: data.map((item) => item.importe),
-          label: 'Dinero recaudado por tipo de medio de pago',
+          label: 'Dinero recaudado',
           backgroundColor: [
             '#0a663a', // Verde base
             '#f0ea5f', // Amarillo complementario (tu otro color base)
@@ -44,4 +40,3 @@ export class ReporteRecaudacionMediosComponent implements OnInit {
     });
   }
 }
-

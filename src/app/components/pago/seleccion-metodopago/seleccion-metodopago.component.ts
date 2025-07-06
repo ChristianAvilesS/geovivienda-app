@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,14 +10,14 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-seleccion-metodopago',
   imports: [CommonModule, FormsModule, MatButtonModule],
   templateUrl: './seleccion-metodopago.component.html',
-  styleUrl: './seleccion-metodopago.component.css'
+  styleUrl: './seleccion-metodopago.component.css',
 })
 export class SeleccionMetodoPagoComponent implements OnInit {
-  listaMetodos = []=[
+  listaMetodos = ([] = [
     { idMedio: 2, medioPago: 'visa' },
     { idMedio: 4, medioPago: 'mastercard' },
-    { idMedio: 1, medioPago: 'transferencia' }
-  ]
+    { idMedio: 1, medioPago: 'transferencia' },
+  ]);
   contrato: any;
   inmueble: any;
   comprador: any;
@@ -25,26 +25,21 @@ export class SeleccionMetodoPagoComponent implements OnInit {
   monto: number = 0;
   metodoSeleccionado!: MedioPago;
 
-  constructor(private router: Router,private pagoDataService: PagoDataService) {}
+  constructor(
+    private router: Router,
+    private pagoDataService: PagoDataService
+  ) {}
 
   ngOnInit(): void {
     const state = history.state;
-    if (!state || !state.contrato || !state.inmueble) {
-    alert('Contrato no encontrado. Redirigiendo...');
-    this.router.navigate(['/']);
-    return;
-   }
     this.contrato = state.contrato;
     this.inmueble = state.inmueble;
     this.comprador = state.comprador;
     this.vendedor = state.vendedor;
     this.monto = state.monto;
-
-    console.log('Contrato recibido:', JSON.stringify(this.contrato, null, 2));
-    console.log('Inmueble recibido:', JSON.stringify(this.inmueble, null, 2));
   }
 
-  seleccionarMetodo(metodo: MedioPago):void {
+  seleccionarMetodo(metodo: MedioPago): void {
     this.metodoSeleccionado = metodo;
   }
 
@@ -57,14 +52,14 @@ export class SeleccionMetodoPagoComponent implements OnInit {
     console.log('Navegando con método:', this.metodoSeleccionado);
 
     this.pagoDataService.setDatosPago({
-    contrato: { id: this.contrato.id },
-    inmueble: this.inmueble,
-    comprador: this.comprador,
-    vendedor: this.vendedor,
-    monto: this.monto,
-    medioPago: this.metodoSeleccionado,
-  });
+      contrato: { id: this.contrato.id },
+      inmueble: this.inmueble,
+      comprador: this.comprador,
+      vendedor: this.vendedor,
+      monto: this.monto,
+      medioPago: this.metodoSeleccionado,
+    });
 
-  this.router.navigate(['/pagos/formulario-pago']);
+    this.router.navigate(['/pagos/formulario-pago']);
   }
 }

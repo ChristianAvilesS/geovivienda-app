@@ -1,29 +1,57 @@
 <div class="formulario-container">
-  <h2>Formulario de {{ medioPagoSeleccionado?.medioPago | titlecase }}</h2>
-  <p class="monto-pagar">Monto a pagar: <strong>S/. {{ datosPago?.monto | number:'1.2-2' }}</strong></p>
+  <h2>Formulario de {{ medioPagoSeleccionado.medioPago | titlecase }}</h2>
+  <p class="monto-pagar">
+    Monto a pagar:
+    <strong>S/. {{ datosPago?.monto | number : "1.2-2" }}</strong>
+  </p>
 
   <form *ngIf="pagoForm" [formGroup]="pagoForm" (ngSubmit)="enviarPago()">
     <!-- Visa o Mastercard -->
-    <div *ngIf="medioPagoSeleccionado?.medioPago === 'visa' || medioPagoSeleccionado?.medioPago === 'mastercard'">
+    <div
+      *ngIf="
+        medioPagoSeleccionado?.medioPago === 'visa' ||
+        medioPagoSeleccionado?.medioPago === 'mastercard'
+      "
+      class="d-grid gap-4"
+    >
       <div class="campo-par">
         <div>
-          <label>Número de Tarjeta</label>
-          <input type="text" formControlName="numeroTarjeta" />
+          <mat-form-field>
+            <mat-label>Número de Tarjeta</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="numeroTarjeta"
+              maxlength="16"
+            />
+          </mat-form-field>
         </div>
         <div>
-          <label>Nombre del Titular</label>
-          <input type="text" formControlName="nombreTitular" />
+          <mat-form-field>
+            <mat-label>Nombre del Titular</mat-label>
+            <input matInput type="text" formControlName="nombreTitular" />
+          </mat-form-field>
         </div>
       </div>
 
       <div class="campo-par">
         <div>
-          <label>Fecha de Expiración</label>
-          <input type="month" formControlName="fechaExpiracion" />
+          <mat-form-field class="w-full">
+            <mat-label>Fecha de Expiración</mat-label>
+            <input
+              matInput
+              type="text"
+              mask="00/0000"
+              formControlName="fechaExpiracion"
+              placeholder="MM/YYYY"
+            />
+          </mat-form-field>
         </div>
         <div>
-          <label>CVV</label>
-          <input type="text" formControlName="cvv" maxlength="3" />
+          <mat-form-field>
+            <mat-label>CVV</mat-label>
+            <input matInput type="text" formControlName="cvv" maxlength="3" />
+          </mat-form-field>
         </div>
       </div>
     </div>
@@ -32,68 +60,77 @@
     <div *ngIf="medioPagoSeleccionado?.medioPago === 'transferencia'">
       <div class="campo-par">
         <div>
-          <label>Banco</label>
-          <input type="text" formControlName="banco" />
+          <mat-form-field>
+            <mat-label>Banco</mat-label>
+            <input matInput type="text" formControlName="banco" />
+          </mat-form-field>
         </div>
         <div>
-          <label>Número de Cuenta</label>
-          <input type="text" formControlName="numeroCuenta" />
+          <mat-form-field>
+            <mat-label>Número de Cuenta</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="numeroCuenta"
+              minlength="10"
+              maxlength="20"
+            />
+          </mat-form-field>
         </div>
       </div>
 
       <div class="campo-par">
         <div>
-          <label>Nombre del Titular</label>
-          <input type="text" formControlName="nombreTitular" />
+          <mat-form-field>
+            <mat-label>Nombre del Titular</mat-label>
+            <input matInput type="text" formControlName="nombreTitular" />
+          </mat-form-field>
         </div>
         <div>
-          <label>Código de Transferencia</label>
-          <input type="text" formControlName="codigoTransferencia" />
+          <mat-form-field>
+            <mat-label>Código de Transferencia</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="codigoTransferencia"
+              maxlength="6"
+            />
+          </mat-form-field>
         </div>
       </div>
     </div>
 
     <!-- Descripción -->
     <div class="campo-unico">
-      <label>Descripción</label>
-      <textarea formControlName="descripcion" rows="3"></textarea>
+      <mat-form-field>
+        <mat-label>Descripción</mat-label>
+        <textarea matInput formControlName="descripcion" rows="3"></textarea>
+      </mat-form-field>
     </div>
 
     <!-- Moneda -->
     <div class="campo-moneda">
       <label>Moneda:</label>
-      <div class="radio-options">
-        <label>
-          <input
-            type="radio"
-            name="moneda"
-            value="PEN"
-            [checked]="pagoForm.get('tipoMoneda')?.value === 'PEN'"
-            (change)="pagoForm.get('tipoMoneda')?.setValue('PEN')"
-          />
-          PEN
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            name="moneda"
-            value="USD"
-            [checked]="pagoForm.get('tipoMoneda')?.value === 'USD'"
-            (change)="pagoForm.get('tipoMoneda')?.setValue('USD')"
-          />
-          USD
-        </label>
-      </div>
+      <mat-radio-group
+        formControlName="tipoMoneda"
+        class="radio-options"
+        aria-label="Selecciona la moneda"
+      >
+        <mat-radio-button value="PEN">PEN</mat-radio-button>
+        <mat-radio-button value="USD">USD</mat-radio-button>
+      </mat-radio-group>
     </div>
-       <div style="text-align: center; margin-top: 20px;" >
-          <button type="submit" mat-flat-button color="primary" [disabled]="pagoForm.invalid">
-            Pagar
-          </button>
-        </div>
+
+    <!-- Botón -->
+    <div style="text-align: center; margin-top: 20px">
+      <button
+        type="submit"
+        mat-flat-button
+        color="primary"
+        [disabled]="pagoForm.invalid"
+      >
+        Pagar
+      </button>
+    </div>
   </form>
 </div>
-
-
-
-

@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PagoDataService {
-  private datosPago: any = null;
+  private key = 'datosPago';
 
   setDatosPago(data: any): void {
-    this.datosPago = data;
+    sessionStorage.setItem(this.key, JSON.stringify(data));
   }
 
   getDatosPago(): any {
-    return this.datosPago;
+    const stored = sessionStorage.getItem(this.key);
+    return stored ? JSON.parse(stored) : null;
   }
 
   limpiarDatos(): void {
-    this.datosPago = null;
+    sessionStorage.removeItem(this.key);
   }
-
 }
