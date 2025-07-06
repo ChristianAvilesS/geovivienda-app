@@ -55,7 +55,13 @@ export const routes: Routes = [
     children: [
       { path: 'listado', component: ListadoMediospagoComponent },
       { path: 'insertar', component: InsertareditarMediopagoComponent },
-      { path: 'ediciones/:id', component: InsertareditarMediopagoComponent },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarMediopagoComponent,
+        data: {
+          renderMode: 'default',
+        },
+      },
     ],
   },
   {
@@ -85,6 +91,9 @@ export const routes: Routes = [
           {
             path: 'informacion/:id',
             component: InformacionInmuebleComponent,
+            data: {
+              renderMode: 'default',
+            },
           },
         ],
       },
@@ -98,7 +107,7 @@ export const routes: Routes = [
         path: 'editar/:id',
         component: AgregarInmueblesComponent,
         canActivate: [seguridadGuard],
-        data: { roles: ['VENDEDOR', 'ADMIN'] },
+        data: { renderMode: 'default', roles: ['VENDEDOR', 'ADMIN'] },
       },
     ],
   },
