@@ -2,7 +2,7 @@ import { Inmueble } from "./inmueble";
 import { Usuario } from "./usuario";
 
 export class Contrato{
-    id:number = 0;
+    id?:number;
     vendedor:Usuario = new Usuario();
     inmueble:Inmueble = new Inmueble();
     comprador:Usuario = new Usuario();

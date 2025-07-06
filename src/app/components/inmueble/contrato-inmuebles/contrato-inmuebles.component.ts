@@ -1,20 +1,31 @@
-import { Component, Input } from '@angular/core';
+import { Component} from '@angular/core';
 import { jsPDF } from 'jspdf';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
+import { ContratoService } from '../../../services/contrato.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Contrato } from '../../../models/contrato';
+import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-contrato-inmuebles',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,MatButtonModule],
   templateUrl: './contrato-inmuebles.component.html',
   styleUrl: './contrato-inmuebles.component.css'
 })
 export class ContratoInmueblesComponent {
   aceptado: boolean = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private contratoService: ContratoService,
+    private dialogRef: MatDialogRef<ContratoInmueblesComponent>,
+    private router: Router
+  ) {}
 
   get inmueble() {
     return this.data.inmueble;
@@ -56,10 +67,9 @@ getTextoContratoPorPaginas(): string[] {
   const precio = this.inmueble.precioBase.toFixed(2);
   const fechaFirma = this.fechaFirma.toLocaleDateString();
   const fechaVencimiento = this.fechaVencimiento.toLocaleDateString();
-  const ciudad = 'Lima'; // Puedes cambiar esto si deseas hacerlo dinámico
+  const ciudad = 'Lima';
 
   if (!this.esAlquiler) {
-    // CONTRATO DE COMPRAVENTA
     return [
 `
 CONTRATO DE COMPRAVENTA DE INMUEBLE
@@ -191,7 +201,7 @@ Ambas partes declaran haber leído el contenido del presente contrato, aceptando
       y += lineHeight;
     });
 
-    // Agregar firmas si estamos en la última página y hay espacio
+
     if (index === paginas.length - 1 && y + 30 < 280) {
       y += 20;
 
@@ -218,7 +228,38 @@ Ambas partes declaran haber leído el contenido del presente contrato, aceptando
   }
 
   continuarPago() {
-    alert('Contrato aceptado. Procediendo al pago...');
-    // Puedes cerrar el modal o redirigir al flujo de pago
+    const contrato: Contrato = {
+    descripcion: `${this.tipoContrato} entre ${this.vendedor.nombre} y ${this.comprador.nombre}`,
+    montoTotal: this.inmueble.precioBase,
+    comprador: this.comprador,
+    vendedor: this.vendedor,
+    inmueble: this.inmueble,
+    fechaFirma: this.fechaFirma,
+    fechaVencimiento: this.fechaVencimiento,
+    tipoContrato: this.tipoContrato,
+  };
+
+  this.contratoService.insert(contrato).subscribe({
+    next: (res) => {
+      alert('Contrato registrado correctamente. Redirigiendo al pago...');
+      this.dialogRef.close(true); // Puedes emitir true si quieres manejarlo desde quien lo abrió
+      this.router.navigate(['/pagos/seleccion-metodo-pago'], {
+        state: {
+          contrato: res,
+          inmueble: this.inmueble,
+          comprador: this.comprador,
+          vendedor: this.vendedor,
+          monto: this.inmueble.precioBase
+        }
+      });
+    },
+    error: (err) => {
+      console.error('Error al registrar el contrato:', err);
+      alert('Ocurrió un error al guardar el contrato.');
+    }
+  });
+  }
+  cerrar(): void {
+    this.dialogRef.close();
   }
 }

@@ -13,6 +13,10 @@ import { InicioSesionComponent } from './components/inicio-sesion/inicio-sesion.
 import { MediopagoComponent } from './components/mediopago/mediopago.component';
 import { ListadoMediospagoComponent } from './components/mediopago/listado-mediospago/listado-mediospago.component';
 import { InsertareditarMediopagoComponent } from './components/mediopago/insertareditar-mediopago/insertareditar-mediopago.component';
+import { SeleccionMetodoPagoComponent } from './components/pago/seleccion-metodopago/seleccion-metodopago.component';
+import { PagoComponent } from './components/pago/pago.component';
+import { FormularioMetodopagoComponent } from './components/pago/formulario-metodopago/formulario-metodopago.component';
+import { PagoExitosoComponent } from './components/pago/pago-exitoso/pago-exitoso.component';
 
 export const routes: Routes = [
   {
@@ -67,5 +71,14 @@ export const routes: Routes = [
     component: InicioComponent,
   },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  {
+    path: 'pagos',
+    component: PagoComponent,
+    children: [
+      { path: 'seleccion-metodo-pago', component: SeleccionMetodoPagoComponent },
+      { path: 'formulario-pago', component: FormularioMetodopagoComponent },
+      { path: 'pagoexitoso', component: PagoExitosoComponent}
+    ],
+  },
 
 ];

@@ -1,0 +1,99 @@
+<div class="formulario-container">
+  <h2>Formulario de {{ medioPagoSeleccionado?.medioPago | titlecase }}</h2>
+  <p class="monto-pagar">Monto a pagar: <strong>S/. {{ datosPago?.monto | number:'1.2-2' }}</strong></p>
+
+  <form *ngIf="pagoForm" [formGroup]="pagoForm" (ngSubmit)="enviarPago()">
+    <!-- Visa o Mastercard -->
+    <div *ngIf="medioPagoSeleccionado?.medioPago === 'visa' || medioPagoSeleccionado?.medioPago === 'mastercard'">
+      <div class="campo-par">
+        <div>
+          <label>Número de Tarjeta</label>
+          <input type="text" formControlName="numeroTarjeta" />
+        </div>
+        <div>
+          <label>Nombre del Titular</label>
+          <input type="text" formControlName="nombreTitular" />
+        </div>
+      </div>
+
+      <div class="campo-par">
+        <div>
+          <label>Fecha de Expiración</label>
+          <input type="month" formControlName="fechaExpiracion" />
+        </div>
+        <div>
+          <label>CVV</label>
+          <input type="text" formControlName="cvv" maxlength="3" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Transferencia -->
+    <div *ngIf="medioPagoSeleccionado?.medioPago === 'transferencia'">
+      <div class="campo-par">
+        <div>
+          <label>Banco</label>
+          <input type="text" formControlName="banco" />
+        </div>
+        <div>
+          <label>Número de Cuenta</label>
+          <input type="text" formControlName="numeroCuenta" />
+        </div>
+      </div>
+
+      <div class="campo-par">
+        <div>
+          <label>Nombre del Titular</label>
+          <input type="text" formControlName="nombreTitular" />
+        </div>
+        <div>
+          <label>Código de Transferencia</label>
+          <input type="text" formControlName="codigoTransferencia" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="campo-unico">
+      <label>Descripción</label>
+      <textarea formControlName="descripcion" rows="3"></textarea>
+    </div>
+
+    <!-- Moneda -->
+    <div class="campo-moneda">
+      <label>Moneda:</label>
+      <div class="radio-options">
+        <label>
+          <input
+            type="radio"
+            name="moneda"
+            value="PEN"
+            [checked]="pagoForm.get('tipoMoneda')?.value === 'PEN'"
+            (change)="pagoForm.get('tipoMoneda')?.setValue('PEN')"
+          />
+          PEN
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="moneda"
+            value="USD"
+            [checked]="pagoForm.get('tipoMoneda')?.value === 'USD'"
+            (change)="pagoForm.get('tipoMoneda')?.setValue('USD')"
+          />
+          USD
+        </label>
+      </div>
+    </div>
+       <div style="text-align: center; margin-top: 20px;" >
+          <button type="submit" mat-flat-button color="primary" [disabled]="pagoForm.invalid">
+            Pagar
+          </button>
+        </div>
+  </form>
+</div>
+
+
+
+

@@ -2,7 +2,7 @@
   <h2 class="titulo-contrato">{{ tipoContrato }}</h2>
 
   <div class="text-end mb-3">
-    <button class="boton-verde" (click)="descargarPDF()">Descargar PDF</button>
+    <button mat-flat-button color="primary" (click)="descargarPDF()">Descargar PDF</button>
   </div>
 
   <div class="contenido-contrato">
@@ -12,8 +12,8 @@
   </div>
 
   <div class="d-flex justify-content-end gap-3 mt-4">
-    <button class="boton-verde" mat-dialog-close>Cancelar</button>
-    <button class="boton-verde" (click)="continuarPago()">Aceptar y continuar</button>
+    <button mat-flat-button color="primary" (click)="cerrar()" >Cancelar</button>
+    <button mat-flat-button color="primary" (click)="continuarPago()">Aceptar y continuar</button>
   </div>
 </div>
 
