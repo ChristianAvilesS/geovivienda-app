@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node dist/geovivienda-app/server/server.mjs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:geovivienda-app": "node dist/geovivienda-app/server/server.mjs"
+    "serve:ssr:geovivienda-app": "node dist/geovivienda-app/server/server.mjs",
+    "build:ssr": "ng build && ng run geovivienda-app:server"
+
   },
   "private": true,
   "dependencies": {
