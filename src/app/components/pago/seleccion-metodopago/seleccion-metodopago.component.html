@@ -1,0 +1,55 @@
+<div class="pago-container">
+  <div class="pago-izquierda">
+    <h2>ELIGE CÓMO PAGAR</h2>
+
+    <!-- Método VISA -->
+    <div
+      class="metodo"
+      [class.seleccionado]="metodoSeleccionado?.medioPago === 'visa'"
+      (click)="seleccionarMetodo(listaMetodos[0])">
+      <input type="radio" name="metodo" [checked]="metodoSeleccionado?.medioPago === 'visa'" />
+      <div class="logo-container">
+        <img src="assets/LogoV.png" alt="Visa" />
+      </div>
+    </div>
+
+    <!-- Método MASTERCARD -->
+    <div
+      class="metodo"
+      [class.seleccionado]="metodoSeleccionado?.medioPago === 'mastercard'"
+      (click)="seleccionarMetodo(listaMetodos[1])">
+      <input type="radio" name="metodo" [checked]="metodoSeleccionado?.medioPago === 'mastercard'" />
+      <div class="logo-container">
+        <img src="assets/LogoMC.png" alt="Mastercard" />
+      </div>
+    </div>
+
+    <!-- Método TRANSFERENCIA -->
+    <div
+      class="metodo"
+      [class.seleccionado]="metodoSeleccionado?.medioPago === 'transferencia'"
+      (click)="seleccionarMetodo(listaMetodos[2])">
+      <input type="radio" name="metodo" [checked]="metodoSeleccionado?.medioPago === 'transferencia'" />
+      <div class="logo-container">
+        <img src="assets/LogoTrans.png" alt="Transferencia" />
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+       <button mat-flat-button color="primary" (click)="continuar()">Continuar</button>
+    </div>
+
+  </div>
+
+  <!-- Parte derecha: información del inmueble -->
+  <div class="pago-derecha">
+    <h3>Información del Inmueble</h3>
+    <div class="info-inmueble" *ngIf="inmueble?.direccion">
+      <p><strong>Nombre:</strong> {{ inmueble.nombre }}</p>
+      <p><strong>Dirección:</strong> {{ inmueble.direccion.direccion }}</p>
+      <p><strong>Área:</strong> {{ inmueble.area }} m²</p>
+      <p><strong>Precio:</strong> S/. {{ inmueble.precioBase | number:'1.2-2' }}</p>
+    </div>
+  </div>
+</div>
+

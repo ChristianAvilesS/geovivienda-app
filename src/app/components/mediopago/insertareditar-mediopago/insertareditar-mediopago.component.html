@@ -5,25 +5,25 @@
 <div class="form-container">
   <form [formGroup]="form" (ngSubmit)="aceptar()">
 
-    <mat-form-field class="example-full-width" *ngIf="edicion">       
+    <mat-form-field class="example-full-width" *ngIf="edicion">
       <mat-label>ID</mat-label>
-      <input matInput formControlName="idMedio" readonly/>
+      <input matInput formControlName="idMedio" readonly />
     </mat-form-field>
 
     <br />
 
     <mat-form-field class="example-full-width">
       <mat-label>Medio de Pago</mat-label>
-      <input matInput placeholder="Ex. Debito" formControlName="medioPago" />
+      <input matInput placeholder="Ej. Débito" formControlName="medioPago" />
       <mat-error *ngIf="form.get('medioPago')?.hasError('required')">
-        El medio de pago es obligatorio!!
+        El medio de pago es obligatorio.
       </mat-error>
     </mat-form-field>
+
     <br />
 
-    <button mat-raised-button class="btn-verde" type="submit">
+    <button mat-flat-button color="primary" class="btn-verde" type="submit">
       {{ edicion ? 'Actualizar' : 'Registrar' }}
     </button>
   </form>
-
 </div>
