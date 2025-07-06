@@ -69,7 +69,18 @@
     <p>{{ inmueble.descripcion }}</p>
   </mat-card-content>
 
-  <mat-card-actions class="d-grid">
-    <button mat-flat-button (click)="openDialog()">Ver detalles</button>
+  <mat-card-actions>
+    <button
+      class="like-container"
+      mat-icon-button
+      (click)="marcarDesmarcarFavorito()"
+      *ngIf="estaLogeado"
+    >
+      <mat-icon *ngIf="esFavorito" class="like">favorite</mat-icon>
+      <mat-icon *ngIf="!esFavorito" class="no-like">favorite_border</mat-icon>
+    </button>
+    <button class="details-container" mat-flat-button (click)="openDialog()">
+      Ver detalles
+    </button>
   </mat-card-actions>
 </mat-card>

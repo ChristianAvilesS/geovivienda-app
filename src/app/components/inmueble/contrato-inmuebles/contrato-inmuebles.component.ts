@@ -1,20 +1,30 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
+import { ContratoService } from '../../../services/contrato.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Contrato } from '../../../models/contrato';
+import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-contrato-inmuebles',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, MatButtonModule],
   templateUrl: './contrato-inmuebles.component.html',
-  styleUrl: './contrato-inmuebles.component.css'
+  styleUrl: './contrato-inmuebles.component.css',
 })
 export class ContratoInmueblesComponent {
   aceptado: boolean = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private contratoService: ContratoService,
+    private dialogRef: MatDialogRef<ContratoInmueblesComponent>,
+    private router: Router
+  ) {}
 
   get inmueble() {
     return this.data.inmueble;
@@ -50,18 +60,17 @@ export class ContratoInmueblesComponent {
       : 'CONTRATO DE COMPRAVENTA DE INMUEBLE';
   }
 
-getTextoContratoPorPaginas(): string[] {
-  const direccion = this.inmueble.direccion?.direccion ?? '(Dirección)';
-  const area = this.inmueble.area;
-  const precio = this.inmueble.precioBase.toFixed(2);
-  const fechaFirma = this.fechaFirma.toLocaleDateString();
-  const fechaVencimiento = this.fechaVencimiento.toLocaleDateString();
-  const ciudad = 'Lima'; // Puedes cambiar esto si deseas hacerlo dinámico
+  getTextoContratoPorPaginas(): string[] {
+    const direccion = this.inmueble.direccion?.direccion ?? '(Dirección)';
+    const area = this.inmueble.area;
+    const precio = this.inmueble.precioBase.toFixed(2);
+    const fechaFirma = this.fechaFirma.toLocaleDateString();
+    const fechaVencimiento = this.fechaVencimiento.toLocaleDateString();
+    const ciudad = 'Lima';
 
-  if (!this.esAlquiler) {
-    // CONTRATO DE COMPRAVENTA
-    return [
-`
+    if (!this.esAlquiler) {
+      return [
+        `
 CONTRATO DE COMPRAVENTA DE INMUEBLE
 
 En la ciudad de ${ciudad}, a los ${fechaFirma}, se celebra el presente contrato entre:
@@ -86,7 +95,7 @@ V. OBLIGACIONES DE LAS PARTES
 El vendedor se obliga a entregar el inmueble en un plazo no mayor a 5 días después del pago total. El comprador se obliga a asumir los gastos legales y registrales.
 
 `,
-`
+        `
 VI. CLÁUSULAS ADICIONALES
 
 1. Entrega del Inmueble:
@@ -110,11 +119,11 @@ Ambas partes manifiestan su aceptación total de los términos expresados en est
 
 
 
-`
-    ];
-  } else {
+`,
+      ];
+    } else {
       return [
-`CONTRATO DE ARRENDAMIENTO DE INMUEBLE
+        `CONTRATO DE ARRENDAMIENTO DE INMUEBLE
 
 En la ciudad de Lima, a los ${fechaFirma}, se suscribe el presente contrato entre las siguientes partes:
 
@@ -134,7 +143,7 @@ EL ARRENDATARIO se compromete a pagar mensualmente la suma de S/. ${precio} (Nue
 IV. MANTENIMIENTO Y SERVICIOS
 El ARRENDATARIO se obliga a conservar el inmueble en buen estado y será responsable de los daños causados por mal uso. Asimismo, asumirá el pago de los servicios de agua, luz, internet, arbitrios, entre otros.`,
 
-`V. MODIFICACIONES
+        `V. MODIFICACIONES
 No se permitirá modificación estructural alguna del inmueble sin el consentimiento expreso y por escrito del ARRENDADOR.
 
 VI. SUBARRENDAMIENTO
@@ -152,73 +161,110 @@ EL ARRENDATARIO entregará una garantía equivalente a un (1) mes de arrendamien
 X. FIRMA DEL CONTRATO
 Ambas partes declaran haber leído el contenido del presente contrato, aceptando sus condiciones libre y voluntariamente.
 
-`
-];
+`,
+      ];
     }
   }
 
   descargarPDF() {
     const doc = new jsPDF({
-    orientation: 'portrait',
-    unit: 'mm',
-    format: 'a4'
-  });
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4',
+    });
 
-  const leftMargin = 20;
-  const topMargin = 20;
-  const lineHeight = 7;
-  const maxLineWidth = 170;
-  const fontSize = 12;
-  const fontFamily = 'Times';
+    const leftMargin = 20;
+    const topMargin = 20;
+    const lineHeight = 7;
+    const maxLineWidth = 170;
+    const fontSize = 12;
+    const fontFamily = 'Times';
 
-   const paginas = this.getTextoContratoPorPaginas();
-  doc.setFont(fontFamily, 'normal');
-  doc.setFontSize(fontSize);
+    const paginas = this.getTextoContratoPorPaginas();
+    doc.setFont(fontFamily, 'normal');
+    doc.setFontSize(fontSize);
 
-  let y = topMargin;
+    let y = topMargin;
 
-  const labelUno = this.esAlquiler ? 'ARRENDADOR' : 'VENDEDOR';
-  const labelDos = this.esAlquiler ? 'ARRENDATARIO' : 'COMPRADOR';
+    const labelUno = this.esAlquiler ? 'ARRENDADOR' : 'VENDEDOR';
+    const labelDos = this.esAlquiler ? 'ARRENDATARIO' : 'COMPRADOR';
 
-  paginas.forEach((pagina, index) => {
-    const lineas = doc.splitTextToSize(pagina, maxLineWidth);
-    lineas.forEach((linea:string) => {
-      if (y + lineHeight > 280) {
+    paginas.forEach((pagina, index) => {
+      const lineas = doc.splitTextToSize(pagina, maxLineWidth);
+      lineas.forEach((linea: string) => {
+        if (y + lineHeight > 280) {
+          doc.addPage();
+          y = topMargin;
+        }
+        doc.text(linea, leftMargin, y, { align: 'justify' });
+        y += lineHeight;
+      });
+
+      if (index === paginas.length - 1 && y + 30 < 280) {
+        y += 20;
+
+        const centerX1 = leftMargin + 40;
+        const centerX2 = leftMargin + 130;
+
+        doc.text('___________________________', centerX1, y, {
+          align: 'center',
+        });
+        doc.text('___________________________', centerX2, y, {
+          align: 'center',
+        });
+
+        y += 6;
+        doc.text(this.vendedor.nombre, centerX1, y, { align: 'center' });
+        doc.text(this.comprador.nombre, centerX2, y, { align: 'center' });
+
+        y += 6;
+        doc.text(labelUno, centerX1, y, { align: 'center' });
+        doc.text(labelDos, centerX2, y, { align: 'center' });
+      } else if (index < paginas.length - 1) {
         doc.addPage();
         y = topMargin;
       }
-      doc.text(linea, leftMargin, y, { align: 'justify' });
-      y += lineHeight;
     });
 
-    // Agregar firmas si estamos en la última página y hay espacio
-    if (index === paginas.length - 1 && y + 30 < 280) {
-      y += 20;
-
-      const centerX1 = leftMargin + 40;
-      const centerX2 = leftMargin + 130;
-
-      doc.text('___________________________', centerX1, y, { align: 'center' });
-      doc.text('___________________________', centerX2, y, { align: 'center' });
-
-      y += 6;
-      doc.text(this.vendedor.nombre, centerX1, y, { align: 'center' });
-      doc.text(this.comprador.nombre, centerX2, y, { align: 'center' });
-
-      y += 6;
-      doc.text(labelUno, centerX1, y, { align: 'center' });
-      doc.text(labelDos, centerX2, y, { align: 'center' });
-    } else if (index < paginas.length - 1) {
-      doc.addPage();
-      y = topMargin;
-    }
-  });
-
-  doc.save(`${this.tipoContrato.replaceAll(' ', '_')}.pdf`);
+    doc.save(`${this.tipoContrato.replaceAll(' ', '_')}.pdf`);
   }
 
   continuarPago() {
-    alert('Contrato aceptado. Procediendo al pago...');
-    // Puedes cerrar el modal o redirigir al flujo de pago
+    const contrato: Contrato = {
+      descripcion: `${this.tipoContrato} entre ${this.vendedor.nombre} y ${this.comprador.nombre}`,
+      montoTotal: this.inmueble.precioBase,
+      comprador: this.comprador,
+      vendedor: this.vendedor,
+      inmueble: this.inmueble,
+      fechaFirma: this.fechaFirma,
+      fechaVencimiento: this.fechaVencimiento,
+      tipoContrato: this.tipoContrato,
+    };
+
+    this.contratoService.insert(contrato).subscribe({
+      next: (res) => {
+        alert('Contrato registrado correctamente. Redirigiendo al pago...');
+        this.dialogRef.close(true); // Puedes emitir true si quieres manejarlo desde quien lo abrió
+        this.router.navigate(['/pagos/seleccion-metodo-pago'], {
+          state: {
+            contrato: res,
+            inmueble: this.inmueble,
+            comprador: this.comprador,
+            vendedor: this.vendedor,
+            monto: this.inmueble.precioBase,
+          },
+        });
+        this.cerrar();
+      },
+
+      error: (err) => {
+        console.error('Error al registrar el contrato:', err);
+        alert('Ocurrió un error al guardar el contrato.');
+      },
+    });
+  }
+
+  cerrar(): void {
+    this.dialogRef.close();
   }
 }

@@ -22,7 +22,20 @@ export class SesionUsuarioService {
   private logeado = new BehaviorSubject<boolean>(this.estaLogeado());
   logeado$ = this.logeado.asObservable(); // otros componentes se suscriben a esto
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const token = this.getToken();
+    this.token = token ?? '';
+    if (token) {
+      try {
+        this.payload = jwtDecode<Payload>(token);
+        this.logeado.next(true);
+      } catch (e) {
+        this.logeado.next(false);
+      }
+    } else {
+      this.logeado.next(false);
+    }
+  }
 
   iniciarSesion(jwt: JwtRequest): Observable<Payload> {
     return this.http.post<JwtResponse>(`${base_url}/login`, jwt).pipe(
@@ -50,8 +63,21 @@ export class SesionUsuarioService {
     }
     return new Payload();
   }
+
   estaLogeado(): boolean {
-    return typeof window !== 'undefined' && !!localStorage.getItem('token');
+    const token = this.getToken();
+    if (!token) return false;
+
+    try {
+      const decoded = jwtDecode<Payload>(token);
+      const exp = decoded.exp;
+      if (!exp) return false;
+
+      const now = Math.floor(Date.now() / 1000); // en segundos
+      return exp > now;
+    } catch (e) {
+      return false;
+    }
   }
 
   getToken(): string | null {
@@ -78,7 +104,14 @@ export class SesionUsuarioService {
     }
   }
   getUsuarioActual(): Observable<Usuario> {
-  const id = this.getIdUsuario();
-  return this.http.get<Usuario>(`${base_url}/usuarios/${id}`);
-}
+    const id = this.getIdUsuario();
+    return this.http.get<Usuario>(`${base_url}/usuarios/${id}`);
+  }
+
+  toLocalIsoStringFromUtc(isoUtc: string): string {
+    const dateUtc = new Date(isoUtc);
+    const offset = dateUtc.getTimezoneOffset() * 60000; // en milisegundos
+    const localDate = new Date(dateUtc.getTime() - offset);
+    return localDate.toISOString().slice(0, 19); // sin zona horaria ni "Z"
+  }
 }

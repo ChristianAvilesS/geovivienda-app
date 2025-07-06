@@ -21,6 +21,7 @@
 
 mat-slider {
   width: 90%;
+  font-size: 8px;
 }
 
 mat-dialog-content {
@@ -32,42 +33,4 @@ mat-dialog-content div {
   display: flex;
   justify-content: center;
   flex-direction: column;
-}
-
-::ng-deep mat-slider .mat-slider-track-fill {
-  background-color: #0a663a !important;
-}
-
-::ng-deep mat-slider .mat-slider-thumb {
-  background-color: #0a663a !important;
-}
-
-::ng-deep mat-slider .mat-slider-thumb-label {
-  background-color: #0a663a !important;
-}
-
-::ng-deep mat-slider .mat-slider-track-background {
-  background-color: rgba(10, 102, 58, 0.2) !important;
-}
-
-::ng-deep
-  .mat-form-field-appearance-outline.mat-focused
-  .mat-form-field-outline {
-  color: #0a663a !important;
-  border-color: #0a663a !important;
-}
-
-::ng-deep
-  .mat-form-field-appearance-outline.mat-focused
-  .mat-form-field-outline-thick {
-  color: #0a663a !important;
-  border-color: #0a663a !important;
-}
-
-::ng-deep .mat-select-arrow {
-  color: #0a663a !important;
-}
-
-::ng-deep .mat-select-value {
-  color: #0a663a !important;
 }

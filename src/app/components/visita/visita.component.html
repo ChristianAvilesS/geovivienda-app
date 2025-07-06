@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="my-5 d-flex justify-content-between w-100">
+    <h3 class="text-center">Visitas agendadas</h3>
+
+    <div class="d-flex gap-3">
+      <button
+        *ngIf="esAdmin"
+        mat-flat-button
+        color="primary"
+        (click)="listarTodos()"
+      >
+        <mat-icon>list</mat-icon>
+        Listar todos
+      </button>
+
+      <button mat-flat-button color="primary" (click)="filtrarHistorial()">
+        <mat-icon>history</mat-icon>
+        Historial
+      </button>
+
+      <button mat-flat-button color="accent" (click)="filtrarProximas()">
+        <mat-icon>schedule</mat-icon>
+        Próximas
+      </button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Mostrar mensaje si no hay datos -->
+    <p
+      *ngIf="dataSource.data?.length === 0"
+      class="text-center my-5 fst-italic"
+    >
+      No hay visitas agendadas.
+    </p>
+
+    <!-- Tabla solo si hay datos -->
+    <table
+      *ngIf="dataSource.data.length > 0"
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+    >
+      <!-- Columna: Inmueble -->
+      <ng-container matColumnDef="inmueble">
+        <th mat-header-cell *matHeaderCellDef>Inmueble</th>
+        <td mat-cell *matCellDef="let visita">{{ visita.inmueble.nombre }}</td>
+      </ng-container>
+
+      <!-- Columna: Inmueble -->
+      <ng-container matColumnDef="usuario" *ngIf="esVendedor">
+        <th mat-header-cell *matHeaderCellDef>Visitante</th>
+        <td mat-cell *matCellDef="let visita">{{ visita.usuario.nombre }}</td>
+      </ng-container>
+
+      <!-- Columna: Dirección -->
+      <ng-container matColumnDef="direccion">
+        <th mat-header-cell *matHeaderCellDef>Dirección</th>
+        <td mat-cell *matCellDef="let visita">
+          {{ visita.inmueble.direccion.direccion }}
+        </td>
+      </ng-container>
+
+      <!-- Columna: Fecha -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+        <td mat-cell *matCellDef="let visita">
+          {{ visita.fechaVisita | date : "dd-MM-yyyy" }}
+        </td>
+      </ng-container>
+
+      <!-- Columna: Hora -->
+      <ng-container matColumnDef="hora">
+        <th mat-header-cell *matHeaderCellDef>Hora</th>
+        <td mat-cell *matCellDef="let visita">
+          {{ visita.fechaVisita | date : "hh:mm a" }}
+        </td>
+      </ng-container>
+
+      <!-- Columna: Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let visita">
+          <button mat-icon-button (click)="eliminar(visita?.idVisita)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header y Filas -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="
+          !esVendedor ? displayedColumns : displayedColumnsVendedor
+        "
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="
+          let row;
+          columns: !esVendedor ? displayedColumns : displayedColumnsVendedor
+        "
+      ></tr>
+    </table>
+
+    <!-- Paginador solo si hay datos -->
+    <mat-paginator
+      *ngIf="dataSource.data.length > 0"
+      [pageSize]="5"
+      class="paginador mb-3"
+      [hidePageSize]="true"
+      [pageSizeOptions]="[5, 10, 15]"
+    ></mat-paginator>
+  </div>
+</div>

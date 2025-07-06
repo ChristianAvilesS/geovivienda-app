@@ -82,8 +82,14 @@ export class AgregarInmueblesComponent implements OnInit, AfterViewInit {
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
       tipo: ['', Validators.required],
-      precio: ['', [Validators.required, Validators.min(0)]],
-      area: ['', [Validators.required, Validators.min(0)]],
+      precio: [
+        '',
+        [Validators.required, Validators.min(0), Validators.max(3000000)],
+      ],
+      area: [
+        '',
+        [Validators.required, Validators.min(0), Validators.max(1000)],
+      ],
       direccion: ['', Validators.required],
       latitud: [''],
       longitud: [''],

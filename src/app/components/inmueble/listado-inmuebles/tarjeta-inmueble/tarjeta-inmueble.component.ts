@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Inmueble } from '../../../../models/inmueble';
@@ -11,22 +11,31 @@ import { SesionUsuarioService } from '../../../../services/sesion-usuario.servic
 import { InmuebleUsuarioService } from '../../../../services/inmueble-usuario.service';
 import { ContratoInmueblesComponent } from '../../contrato-inmuebles/contrato-inmuebles.component';
 import { InmuebleUsuario } from '../../../../models/inmueble-usuario';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-tarjeta-inmueble',
-  imports: [MatCardModule, MatButtonModule, CommonModule],
+  imports: [MatCardModule, MatButtonModule, CommonModule, MatIconModule],
   templateUrl: './tarjeta-inmueble.component.html',
   styleUrl: './tarjeta-inmueble.component.css',
 })
-export class TarjetaInmuebleComponent {
+export class TarjetaInmuebleComponent implements OnInit {
   imagenes: Imagen[] = [];
   inmuebleUsuario: InmuebleUsuario = new InmuebleUsuario();
+  inmuebleUsuarioInit: InmuebleUsuario = new InmuebleUsuario();
+
+  esFavorito: boolean = false;
+  estaLogeado: boolean = false;
 
   private _inmueble!: Inmueble;
 
   readonly dialog = inject(MatDialog);
-  private sesionService = inject(SesionUsuarioService);
-  private inmuebleusuarioService = inject(InmuebleUsuarioService);
+
+  constructor(
+    private imagenService: ImagenesService,
+    private sesionService: SesionUsuarioService,
+    private inmuebleusuarioService: InmuebleUsuarioService
+  ) {}
 
   openDialog() {
     const dialogRef = this.dialog.open(InformacionInmuebleComponent, {
@@ -61,6 +70,7 @@ export class TarjetaInmuebleComponent {
       }
     });
   }
+
   calcularVencimiento(modalidad: string): Date {
     const fecha = new Date();
     if (modalidad === 'alquiler') {
@@ -99,5 +109,38 @@ export class TarjetaInmuebleComponent {
     margin: 10,
   };
 
-  constructor(private imagenService: ImagenesService) {}
+  marcarDesmarcarFavorito() {
+    this.inmuebleusuarioService
+      .marcarDesmarcarFavorito(
+        this.inmueble.idInmueble,
+        this.sesionService.getIdUsuario()
+      )
+      .subscribe((data) => {
+        this.esFavorito = data.esFavorito;
+        this.inmuebleusuarioService.setObj(data);
+      });
+  }
+
+  ngOnInit(): void {
+    this.inmuebleusuarioService
+      .obtenerPorIds(
+        this.inmueble.idInmueble,
+        this.sesionService.getIdUsuario()
+      )
+      .subscribe((data) => {
+        this.inmuebleUsuarioInit = data;
+
+        console.log(this.inmuebleUsuarioInit);
+        if (
+          this.inmuebleUsuarioInit.usuario.idUsuario ===
+            this.sesionService.getIdUsuario() &&
+          this.inmuebleUsuarioInit.esFavorito
+        ) {
+          this.esFavorito = true;
+        }
+        console.log(this.esFavorito);
+      });
+
+    this.estaLogeado = this.sesionService.estaLogeado();
+  }
 }
