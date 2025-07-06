@@ -63,7 +63,7 @@ export class ChatbotComponent {
         this.http.post('https://openrouter.ai/api/v1/chat/completions', body, {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer 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`,
             'HTTP-Referer': 'https://geovivienda-app.vercel.app/',
             'X-Title': 'geovivienda-app',
           },
