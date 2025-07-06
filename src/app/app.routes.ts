@@ -114,6 +114,7 @@ export const routes: Routes = [
   {
     path: 'inicio',
     component: InicioComponent,
+    data: { renderMode: 'default' },
   },
   {
     path: 'reportes',
