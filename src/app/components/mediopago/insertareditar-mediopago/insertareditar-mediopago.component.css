@@ -3,47 +3,6 @@
   margin: 0;
 }
 
-/* Fondo */
-.fondoMain {
-  background: linear-gradient(180deg, #A4E267 0%, #BFE564 33%, #F0EA5F 65%, #14CC74 100%);
-  width: 100%;
-  min-height: 100vh;
-  padding: 0;
-}
-
-/* Header*/
-#cabecera {
-  background-color: #F0EA5F;
-  height: 12vh;
-  text-align: center;
-  font-size: 2.5rem;
-  padding: 10px 20px;
-  font-family: Jost, sans-serif;
-  font-weight: 850; 
-  clear: both;
-  overflow: hidden;
-  display: flex; 
-  justify-content: center;
-  align-items: center; 
-  gap: 15px; 
-}
-
-/* Contenedor del logo */
-#logo {
-  display: flex;
-  align-items: center;
-}
-
-#logo img {
-  border-radius: 8px; /* Esquinas redondeadas del logo */
-}
-
-#tituloGeo {
-  margin: 0;
-  color: #0A663A;
-  white-space: nowrap;
-}
-
 .titulo-pagina {
   border-radius: 8px;
   padding: 20px;
@@ -51,15 +10,6 @@
   text-align: center;
 }
 
-/* Titulo/estilo */
-.titulo-pagina h1 {
-  font-family: Jost, sans-serif;
-  font-weight: 850;
-  font-size: 2.2rem;
-  color: #0A663A;
-  margin: 0;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
 
 .form-container {
   max-width: 500px;
@@ -71,21 +21,14 @@
   text-align: center;
 }
 
-/* Asegura que los campos ocupen todo el ancho */
+
 .example-full-width {
   width: 100%;
 }
 
 .btn-verde {
-  background-color: #2e7d32 !important; /* Verde oscuro */
-  color: #ffeb3b !important;           /* Amarillo */
-  font-weight: bold;
   padding: 8px 24px;
   border-radius: 6px;
   font-size: 16px;
   transition: background-color 0.3s ease;
-}
-
-.btn-verde:hover {
-  background-color: #1b5e20 !important;
 }

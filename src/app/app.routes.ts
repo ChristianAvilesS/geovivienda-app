@@ -19,6 +19,10 @@ import { CambiarPasswordComponent } from './components/usuario/cambiar-password/
 import { AgregarAdminComponent } from './components/usuario/agregar-admin/agregar-admin.component';
 import { loginBlockGuard } from './guards/login-block.guard';
 import { VisitaComponent } from './components/visita/visita.component';
+import { SeleccionMetodoPagoComponent } from './components/pago/seleccion-metodopago/seleccion-metodopago.component';
+import { PagoComponent } from './components/pago/pago.component';
+import { FormularioMetodopagoComponent } from './components/pago/formulario-metodopago/formulario-metodopago.component';
+import { PagoExitosoComponent } from './components/pago/pago-exitoso/pago-exitoso.component';
 
 export const routes: Routes = [
   {
@@ -109,4 +113,19 @@ export const routes: Routes = [
     data: { roles: ['ADMIN'] },
   },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+
+  {
+    path: 'pagos',
+    component: PagoComponent,
+    canActivate: [seguridadGuard],
+    data: { roles: ['COMPRADOR', 'ARRENDATARIO', 'ADMIN'] },
+    children: [
+      {
+        path: 'seleccion-metodo-pago',
+        component: SeleccionMetodoPagoComponent,
+      },
+      { path: 'formulario-pago', component: FormularioMetodopagoComponent },
+      { path: 'pagoexitoso', component: PagoExitosoComponent },
+    ],
+  },
 ];

@@ -1,0 +1,90 @@
+.pago-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+  gap: 40px;
+  flex-wrap: wrap;
+  background-color: #f9f9f9;
+  min-height: 90vh;
+}
+
+.pago-izquierda, .pago-derecha {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.pago-izquierda h2 {
+  margin-bottom: 25px;
+  font-size: 22px;
+  text-align: center;
+}
+
+.metodo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.metodo.seleccionado {
+  border-color: #28a745;
+  background-color: #e6f4ea;
+}
+
+.metodo .logo-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.metodo img {
+  width: 80px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.metodo input[type="checkbox"] {
+  margin-left: 10px;
+  transform: scale(1.2);
+}
+
+.btn-continuar {
+  display: block;
+  width: 50%;
+  margin: 30px auto 0;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-continuar:hover {
+  background-color: #218838;
+}
+
+.pago-derecha h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.info-inmueble p {
+  margin: 8px 0;
+  font-size: 15px;
+}
