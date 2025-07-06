@@ -109,4 +109,16 @@ export const routes: Routes = [
   },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
 
+  {
+    path: 'pagos',
+    component: PagoComponent,
+    canActivate: [seguridadGuard],
+    data: { roles: ['COMPRADOR', 'ARRENDATARIO', 'ADMIN'] },
+    children: [
+      { path: 'seleccion-metodo-pago', component: SeleccionMetodoPagoComponent },
+      { path: 'formulario-pago', component: FormularioMetodopagoComponent },
+      { path: 'pagoexitoso', component: PagoExitosoComponent}
+    ],
+  },
+
 ];
