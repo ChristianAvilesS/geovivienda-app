@@ -1,45 +1,61 @@
-<div class="titulo-container">
-  <div class="titulo-pagina">
+<div class="container">
+  <div class="mt-4 mb-3 text-center">
     <h1>Medios de Pago</h1>
   </div>
-  <button mat-flat-button color="primary" class="btn-agregar" [routerLink]="['/medios-pago/insertar']">
+  <div class="container text-center mb-3">
+    <button
+    mat-flat-button class="btn btn-sm"
+    [routerLink]="['/medios-pago/insertar']"
+  >
     <mat-icon>add</mat-icon> Agregar Medio de Pago
   </button>
-</div>
+  </div>
 
-<div class="container-tabla">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <div class="container w-80">
+    <table mat-table [dataSource]="dataSource"
+    class="mat-elevation-z8 table table-striped table-hover table-bordered">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.idMedio }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.idMedio}} </td>
-    </ng-container>
+      <ng-container matColumnDef="medioPago">
+        <th mat-header-cell *matHeaderCellDef>Medio de Pago</th>
+        <td mat-cell *matCellDef="let element">{{ element.medioPago }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="medioPago">
-      <th mat-header-cell *matHeaderCellDef> Medio de Pago </th>
-      <td mat-cell *matCellDef="let element"> {{element.medioPago}} </td>
-    </ng-container>
+      <ng-container matColumnDef="actualizar">
+        <th mat-header-cell *matHeaderCellDef>Actualizar</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+          matButton="outlined"
+          class="btn btn-sm btn-verde"
+            [routerLink]="['../ediciones', element.idMedio]"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="actualizar">
-      <th mat-header-cell *matHeaderCellDef> Actualizar </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-flat-button color="primary" class="btn-accion actualizar" [routerLink]="['../ediciones', element.idMedio]">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="eliminar">
+        <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+          matButton="outlined"
+          class="btn btn-sm btn-rojo"
+            (click)="eliminar(element.idMedio)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="eliminar">
-      <th mat-header-cell *matHeaderCellDef> Eliminar </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-flat-button color="warn" class="btn-accion eliminar" (click)="eliminar(element.idMedio)">
-          <mat-icon>delete_forever</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSize]="3"
+      class="paginador mb-3"
+    ></mat-paginator>
+  </div>
 </div>
