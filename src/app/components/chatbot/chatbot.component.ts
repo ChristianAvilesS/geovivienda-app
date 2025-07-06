@@ -9,7 +9,15 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-chatbot',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgIf, NgFor, NgClass, MatButtonModule, MatIconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgIf,
+    NgFor,
+    NgClass,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.css'],
 })
@@ -56,7 +64,7 @@ export class ChatbotComponent {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer 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`,
-            'HTTP-Referer': 'https://localhost:4200/',
+            'HTTP-Referer': 'https://geovivienda-app-628v.vercel.app/',
             'X-Title': 'geovivienda-app',
           },
         })
