@@ -18,8 +18,13 @@ import { seguridadGuard } from './guards/seguridad.guard';
 import { CambiarPasswordComponent } from './components/usuario/cambiar-password/cambiar-password.component';
 import { AgregarAdminComponent } from './components/usuario/agregar-admin/agregar-admin.component';
 import { loginBlockGuard } from './guards/login-block.guard';
+import { VisitaComponent } from './components/visita/visita.component';
 
 export const routes: Routes = [
+  {
+    path: 'visitas',
+    component: VisitaComponent,
+  },
   {
     path: 'usuarios',
     component: UsuarioComponent,

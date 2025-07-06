@@ -19,6 +19,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { authInterceptorFn } from './services/auth-interceptor';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { loadingInterceptorFn } from './services/loading-interceptor';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,5 +32,6 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
     provideCharts(withDefaultRegisterables()),
+    provideNativeDateAdapter(),
   ],
 };

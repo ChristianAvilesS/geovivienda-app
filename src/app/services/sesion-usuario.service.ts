@@ -78,7 +78,14 @@ export class SesionUsuarioService {
     }
   }
   getUsuarioActual(): Observable<Usuario> {
-  const id = this.getIdUsuario();
-  return this.http.get<Usuario>(`${base_url}/usuarios/${id}`);
-}
+    const id = this.getIdUsuario();
+    return this.http.get<Usuario>(`${base_url}/usuarios/${id}`);
+  }
+
+  toLocalIsoStringFromUtc(isoUtc: string): string {
+    const dateUtc = new Date(isoUtc);
+    const offset = dateUtc.getTimezoneOffset() * 60000; // en milisegundos
+    const localDate = new Date(dateUtc.getTime() - offset);
+    return localDate.toISOString().slice(0, 19); // sin zona horaria ni "Z"
+  }
 }
