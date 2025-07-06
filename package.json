@@ -7,8 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:geovivienda-app": "node dist/geovivienda-app/server/server.mjs",
-    "build:ssr": "ng build && ng run geovivienda-app:server"
+    "build:ssr": "npx ng build && ng run geovivienda-app:server",
+    "serve:ssr:geovivienda-app": "node dist/geovivienda-app/server/server.mjs"
 
   },
   "private": true,
