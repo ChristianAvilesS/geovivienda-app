@@ -44,66 +44,9 @@ label {
   color: #444;
 }
 
-input[type="text"],
-input[type="month"],
-textarea {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #f9f9f9;
-  outline: none;
-}
-
-textarea {
-  resize: vertical;
-}
-
-/* Checkbox moneda */
-.campo-moneda {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  font-size: 14px;
-}
-
-.campo-moneda label {
-  font-weight: 500;
-  color: #444;
-}
-
-.radio-option {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.radio-option input[type="radio"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #4CAF50;
-  border-radius: 50%;
-  outline: none;
-  cursor: pointer;
-  position: relative;
-}
-
-.radio-option input[type="radio"]:checked::before {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 8px;
-  height: 8px;
-  background-color: #4CAF50;
-  border-radius: 50%;
-}
-
 /* Botón */
 .btn-continuar {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   font-weight: bold;
   padding: 10px 16px;

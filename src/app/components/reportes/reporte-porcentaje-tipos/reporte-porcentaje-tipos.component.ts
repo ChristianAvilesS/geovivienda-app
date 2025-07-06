@@ -1,9 +1,5 @@
 import { ReportesService } from '../../../services/reportes.service';
-import {
-  ChartDataset,
-  ChartOptions,
-  ChartType,
-} from 'chart.js';
+import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { Component, OnInit } from '@angular/core';
 
@@ -30,7 +26,7 @@ export class ReportePorcentajeTiposComponent implements OnInit {
       this.chartData = [
         {
           data: data.map((item) => item.porcentaje),
-          label: 'Porcentaje de usuarios por tipo',
+          label: 'Porcentaje',
           backgroundColor: [
             '#0a663a', // Verde base
             '#f0ea5f', // Amarillo complementario (tu otro color base)

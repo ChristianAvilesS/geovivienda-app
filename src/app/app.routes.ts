@@ -117,8 +117,8 @@ export const routes: Routes = [
   {
     path: 'pagos',
     component: PagoComponent,
-    canActivate: [seguridadGuard],
-    data: { roles: ['COMPRADOR', 'ARRENDATARIO', 'ADMIN'] },
+    //canActivate: [seguridadGuard],
+    //data: { roles: ['COMPRADOR', 'ARRENDATARIO', 'ADMIN'] },
     children: [
       {
         path: 'seleccion-metodo-pago',
