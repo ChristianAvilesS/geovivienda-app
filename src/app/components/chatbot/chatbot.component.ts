@@ -64,7 +64,7 @@ export class ChatbotComponent {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer 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`,
-            'HTTP-Referer': 'https://geovivienda-app-628v.vercel.app/',
+            'HTTP-Referer': 'https://geovivienda-app.vercel.app/',
             'X-Title': 'geovivienda-app',
           },
         })
