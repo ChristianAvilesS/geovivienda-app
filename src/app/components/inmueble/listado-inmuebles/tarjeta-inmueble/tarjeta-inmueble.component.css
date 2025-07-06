@@ -60,3 +60,21 @@
   color: #777;
   font-style: italic;
 }
+
+.like {
+  color: #5f9572;
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.like-container {
+  flex-grow: 1;
+}
+
+.details-container {
+  flex-grow: 100;
+}

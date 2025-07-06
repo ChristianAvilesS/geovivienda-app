@@ -13,6 +13,7 @@ const url_base = environment.base;
 export class ValoracionService {
   private url = `${url_base}/valoracion`;
   private listaCambio = new Subject<Valoracion[]>();
+  private objCambio = new Subject<Valoracion>();
 
   constructor(private http: HttpClient) {}
 
@@ -20,10 +21,13 @@ export class ValoracionService {
     return this.http.get<Valoracion[]>(this.url);
   }
 
-insertarValoracion(valoracion: Valoracion): Observable<Valoracion> {
-  return this.http.post<Valoracion>(`${this.url}`, valoracion);
-}
+  insertarValoracion(valoracion: Valoracion): Observable<Valoracion> {
+    return this.http.post<Valoracion>(`${this.url}`, valoracion);
+  }
 
+  getList() {
+    return this.listaCambio.asObservable();
+  }
 
   setList(listaNueva: Valoracion[]) {
     this.listaCambio.next(listaNueva);
@@ -33,8 +37,9 @@ insertarValoracion(valoracion: Valoracion): Observable<Valoracion> {
     return this.http.delete(`${this.url}/${id}`);
   }
 
-obtenerListaValoracionPromedio(): Observable<ValoracionPromedio[]> {
-  return this.http.get<ValoracionPromedio[]>(`${this.url}/promediovaloracion`);
-}
-
+  obtenerListaValoracionPromedio(): Observable<ValoracionPromedio[]> {
+    return this.http.get<ValoracionPromedio[]>(
+      `${this.url}/promediovaloracion`
+    );
+  }
 }

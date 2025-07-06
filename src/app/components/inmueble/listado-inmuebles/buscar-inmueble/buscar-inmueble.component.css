@@ -19,11 +19,6 @@
   background-color: #ddd;
 }
 
-mat-slider {
-  width: 90%;
-  font-size: 8px;
-}
-
 mat-dialog-content {
   width: 500px;
 }

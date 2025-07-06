@@ -1,7 +1,7 @@
 .chatbot-bubble {
   position: fixed;
   bottom: 55px;
-  left: 20px;
+  right: 40px;
   background-color: #f0ea5f;
   color: #346949;
   border-radius: 50%;
@@ -18,7 +18,7 @@
 .chatbot-panel {
   position: fixed;
   bottom: 65px;
-  left: 20px;
+  right: 40px;
   width: 400px;
   height: 480px;
   max-height: 480px;

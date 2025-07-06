@@ -18,12 +18,17 @@ import { seguridadGuard } from './guards/seguridad.guard';
 import { CambiarPasswordComponent } from './components/usuario/cambiar-password/cambiar-password.component';
 import { AgregarAdminComponent } from './components/usuario/agregar-admin/agregar-admin.component';
 import { loginBlockGuard } from './guards/login-block.guard';
+import { VisitaComponent } from './components/visita/visita.component';
 import { SeleccionMetodoPagoComponent } from './components/pago/seleccion-metodopago/seleccion-metodopago.component';
 import { PagoComponent } from './components/pago/pago.component';
 import { FormularioMetodopagoComponent } from './components/pago/formulario-metodopago/formulario-metodopago.component';
 import { PagoExitosoComponent } from './components/pago/pago-exitoso/pago-exitoso.component';
 
 export const routes: Routes = [
+  {
+    path: 'visitas',
+    component: VisitaComponent,
+  },
   {
     path: 'usuarios',
     component: UsuarioComponent,
@@ -115,10 +120,12 @@ export const routes: Routes = [
     canActivate: [seguridadGuard],
     data: { roles: ['COMPRADOR', 'ARRENDATARIO', 'ADMIN'] },
     children: [
-      { path: 'seleccion-metodo-pago', component: SeleccionMetodoPagoComponent },
+      {
+        path: 'seleccion-metodo-pago',
+        component: SeleccionMetodoPagoComponent,
+      },
       { path: 'formulario-pago', component: FormularioMetodopagoComponent },
-      { path: 'pagoexitoso', component: PagoExitosoComponent}
+      { path: 'pagoexitoso', component: PagoExitosoComponent },
     ],
   },
-
 ];

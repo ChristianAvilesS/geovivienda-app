@@ -4,15 +4,31 @@ import { HeaderComponent } from './components/util/header/header.component';
 import { FooterComponent } from './components/util/footer/footer.component';
 import { SesionUsuarioService } from './services/sesion-usuario.service';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingService } from './services/loading.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, ChatbotComponent, FooterComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    ChatbotComponent,
+    FooterComponent,
+    MatProgressSpinnerModule,
+    CommonModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  constructor(private sesionS: SesionUsuarioService, private router: Router) {}
+  loading = false;
+
+  constructor(
+    private sesionS: SesionUsuarioService,
+    private router: Router,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
     const payload = this.sesionS.decodeToken();
@@ -22,5 +38,11 @@ export class AppComponent implements OnInit {
       this.sesionS.cerrarSesion();
       this.router.navigate(['/inicio']);
     }
+
+    this.loadingService.loading$.subscribe((estado) => {
+      setTimeout(() => {
+        this.loading = estado;
+      });
+    });
   }
 }

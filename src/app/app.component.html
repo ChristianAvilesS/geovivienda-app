@@ -1,7 +1,14 @@
 <div class="layout-wrapper">
   <app-header></app-header>
 
-  <div class="main-container">
+  <mat-progress-spinner
+    *ngIf="loading"
+    mode="indeterminate"
+    diameter="50"
+    class="loading-overlay"
+  ></mat-progress-spinner>
+
+  <div [ngClass]="{ 'contenido-oculto': loading }">
     <router-outlet></router-outlet>
   </div>
 

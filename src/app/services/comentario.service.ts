@@ -6,40 +6,45 @@ import { Subject } from 'rxjs';
 const base_url = environment.base;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ComentarioService {
   private url = `${base_url}/comentarios`;
   private listaCambio = new Subject<Comentario[]>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   listarporinmueble(id: number) {
-      return this.http.get<Comentario[]>(this.url + '/buscarporinmueble/'+ id);
-    }
-    
+    return this.http.get<Comentario[]>(this.url + '/buscarporinmueble/' + id);
+  }
+
   insertar(comentario: Comentario) {
-      return this.http.post<Comentario>(this.url, comentario);
-    }
+    return this.http.post<Comentario>(this.url, comentario);
+  }
 
   buscarPorId(id: number) {
-      return this.http.get<Comentario>(`${this.url}/${id}`);
-    }
+    return this.http.get<Comentario>(`${this.url}/${id}`);
+  }
+
+  eliminar(id: number) {
+    return this.http.delete<Comentario>(`${this.url}/${id}`);
+  }
 
   setLista(listaNueva: Comentario[]) {
-      this.listaCambio.next(listaNueva);
-    }
-  
-    getLista() {
-      return this.listaCambio.asObservable();
-    }
-  
-    listarporUsuarioInmueble(idUsuario: number, idInmueble: number) {
-      return this.http.get<Comentario>(this.url+ '/buscarporusarioinmueble', { params:{idUsuario: idUsuario, idInmueble: idInmueble} });
-    }
-    
-  actualizar(comentario: Comentario) {
-      return this.http.put<Comentario>(this.url, comentario);
-    }
+    this.listaCambio.next(listaNueva);
+  }
 
+  getLista() {
+    return this.listaCambio.asObservable();
+  }
+
+  listarporUsuarioInmueble(idUsuario: number, idInmueble: number) {
+    return this.http.get<Comentario>(this.url + '/buscarporusuarioinmueble', {
+      params: { idUsuario: idUsuario, idInmueble: idInmueble },
+    });
+  }
+
+  actualizar(comentario: Comentario) {
+    return this.http.put<Comentario>(this.url, comentario);
+  }
 }

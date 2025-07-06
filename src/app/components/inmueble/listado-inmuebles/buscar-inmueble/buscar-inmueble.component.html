@@ -1,0 +1,43 @@
+<div class="title-container">
+  <h2 mat-dialog-title class="text-center fw-bold">Buscar inmuebles</h2>
+  <button matMiniFab mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content class="d-flex flex-column">
+  <div class="w-100 d-flex gap-2 align-items-end">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Buscar dirección</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="direccionControl"
+        [matAutocomplete]="auto"
+        (input)="buscarDirecciones()"
+        placeholder="Ej. Av. Arequipa 123, Lima"
+      />
+      <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+        <mat-option
+          *ngFor="let direccion of direccionesFiltradas$ | async"
+          [value]="direccion"
+        >
+          {{ direccion }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <div class="gap-2 d-flex">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="buscarPorDireccion()"
+      [mat-dialog-close]="true"
+    >
+      Buscar
+    </button>
+  </div>
+</mat-dialog-actions>

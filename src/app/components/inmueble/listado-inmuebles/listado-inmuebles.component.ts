@@ -9,16 +9,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  Observable,
-  of,
-  switchMap,
-} from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { FiltradoInmueblesComponent } from './filtrado-inmuebles/filtrado-inmuebles.component';
+import { BuscarInmuebleComponent } from './buscar-inmueble/buscar-inmueble.component';
+import { SesionUsuarioService } from '../../../services/sesion-usuario.service';
 
 @Component({
   selector: 'app-listado-inmuebles',
@@ -35,24 +30,41 @@ import { FiltradoInmueblesComponent } from './filtrado-inmuebles/filtrado-inmueb
     MatButtonModule,
   ],
   templateUrl: './listado-inmuebles.component.html',
-  styleUrls: ['./listado-inmuebles.component.css','./listado-inmuebles.component.scss'],
+  styleUrls: [
+    './listado-inmuebles.component.css',
+    './listado-inmuebles.component.scss',
+  ],
 })
 export class ListadoInmueblesComponent {
+  solicituRealizada: boolean = false;
   inmueblesOriginales: Inmueble[] = [];
   inmuebles: Inmueble[] = [];
 
-  direccionControl = new FormControl('');
-  direccionesFiltradas$: Observable<string[]> = of([]);
+  estaLogeado: boolean = false;
 
-  pageSize = 8;
+  roles: any = [];
+  esVendedor: boolean = false;
+
+  pageSize = 3;
   pageIndex = 0;
 
-  constructor(private iS: InmuebleService) {}
+  constructor(
+    private iS: InmuebleService,
+    private sessionService: SesionUsuarioService
+  ) {}
 
   readonly dialog = inject(MatDialog);
 
-  openDialog() {
+  openDialogFiltro() {
     const dialogRef = this.dialog.open(FiltradoInmueblesComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openDialogBuscar() {
+    const dialogRef = this.dialog.open(BuscarInmuebleComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
@@ -63,50 +75,20 @@ export class ListadoInmueblesComponent {
     this.iS.listar().subscribe((data) => {
       this.inmueblesOriginales = data;
       this.actualizarInmuebles();
+      this.solicituRealizada = true;
     });
 
     this.iS.getLista().subscribe((data) => {
       this.inmueblesOriginales = data;
       this.actualizarInmuebles();
+      this.solicituRealizada = true;
     });
 
-    this.direccionesFiltradas$ = this.direccionControl.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((valor) => {
-        if (!valor || valor.length < 3) return of([]);
-        return this.iS.autocompletadoDirecciones(valor);
-      })
-    );
+    this.roles = this.sessionService.getRoles();
 
-    this.direccionControl.valueChanges
-      .pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe((direccion) => {
-        if (typeof direccion === 'string' && direccion.length > 5) {
-          this.buscarPorDireccion();
-        } else {
-          this.iS.listar().subscribe((data) => {
-            this.inmueblesOriginales = data;
-            this.actualizarInmuebles();
-          });
+    this.estaLogeado = this.sessionService.estaLogeado();
 
-          this.iS.getLista().subscribe((data) => {
-            this.inmueblesOriginales = data;
-            this.actualizarInmuebles();
-          });
-        }
-      });
-  }
-
-  buscarPorDireccion() {
-    const direccion = this.direccionControl.value;
-    if (!direccion || direccion.length < 3) return;
-
-    this.iS.obtenerCercaDireccion(direccion, 0.02).subscribe((data) => {
-      this.inmueblesOriginales = data;
-      this.pageIndex = 0;
-      this.actualizarInmuebles();
-    });
+    this.esVendedor = this.roles?.includes('VENDEDOR') ?? false;
   }
 
   onPageChange(event: PageEvent) {
@@ -119,5 +101,21 @@ export class ListadoInmueblesComponent {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.inmuebles = this.inmueblesOriginales.slice(startIndex, endIndex);
+  }
+
+  mostrarFavoritos() {
+    this.iS
+      .mostrarFavoritos(this.sessionService.getIdUsuario())
+      .subscribe((data) => {
+        this.iS.setLista(data);
+      });
+  }
+
+  listarPorUsuario() {
+    this.iS
+      .listarPorUsuario(this.sessionService.getIdUsuario())
+      .subscribe((data) => {
+        this.iS.setLista(data);
+      });
   }
 }

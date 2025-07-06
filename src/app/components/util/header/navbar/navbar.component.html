@@ -7,10 +7,16 @@
     </div>
 
     @if (estaLogeado) {
-    <button mat-icon-button class="btn-white btn-circle">
-      <mat-icon [matMenuTriggerFor]="menuUsuario">person</mat-icon
-      >
-    </button>
+
+    <div>
+      <button class="icon-person" mat-icon-button (click)="abrirDrawer()">
+        <mat-icon>notifications</mat-icon>
+      </button>
+
+      <button mat-icon-button class="icon-person">
+        <mat-icon [matMenuTriggerFor]="menuUsuario">person</mat-icon>
+      </button>
+    </div>
 
     } @else {
     <div class="d-flex gap-3">
@@ -23,7 +29,6 @@
   </mat-toolbar>
 </div>
 
-
 <mat-menu #menu="matMenu">
   <button mat-menu-item [routerLink]="['/']">
     <mat-icon>home</mat-icon> Inicio
@@ -31,9 +36,18 @@
   <button mat-menu-item [routerLink]="['/inmuebles/listado']">
     <mat-icon>home_work</mat-icon> Inmuebles
   </button>
+
   @if(estaLogeado) {
-  <button mat-menu-item [routerLink]="['/inmuebles/agregar']" *ngIf="esVendedor || esAdmin">
+  <button
+    mat-menu-item
+    [routerLink]="['/inmuebles/agregar']"
+    *ngIf="esVendedor || esAdmin"
+  >
     <mat-icon>add_home</mat-icon> Agregar
+  </button>
+
+  <button mat-menu-item [routerLink]="['/visitas']">
+    <mat-icon>event</mat-icon> Visitas
   </button>
 
   @if (esAdmin) {
@@ -52,14 +66,68 @@
   <button mat-menu-item [routerLink]="['/reportes']">
     <mat-icon>insert_chart_outlined</mat-icon> Reportes
   </button>
-  }
-  }
+  } }
 </mat-menu>
-
 
 <mat-menu #menuUsuario="matMenu">
-  <button mat-menu-item [routerLink]="['usuarios/perfil']">
-    Ver Perfil
-  </button>
+  <button mat-menu-item [routerLink]="['usuarios/perfil']">Ver Perfil</button>
   <button mat-menu-item (click)="cerrarSesion()">Cerrar Sesión</button>
 </mat-menu>
+
+<ng-template [ngIf]="drawerAbierto">
+  <mat-drawer-container class="drawer-container">
+    <!-- Drawer con backdrop -->
+    <mat-drawer
+      #drawer
+      position="start"
+      [mode]="'over'"
+      class="custom-drawer"
+      (closedStart)="cerrarDrawer()"
+    >
+      <h5 class="text-center">Anuncios</h5>
+
+      <div>
+        <div
+          *ngIf="anuncios.length === 0"
+          class="d-flex justify-content-center align-items-center"
+          style="margin-top: 15rem"
+        >
+          <p class="text-center fst-italic">No hay anuncios</p>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div *ngFor="let anuncio of anuncios">
+          <div class="w-100 p-3">
+            <div class="d-flex justify-content-between align-items-center px-3">
+              <p>{{ anuncio.anunciante.nombre }}</p>
+
+              <div class="d-flex flex-column align-items-end fw-light">
+                <p style="margin-bottom: 0">
+                  {{ anuncio.fechaPublicacion | date : "yyyy-MM-dd" }}
+                </p>
+                <p>
+                  {{ anuncio.fechaPublicacion | date : "hh:mm a" }}
+                </p>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div class="fw-light mt-3 px-3">
+              <p>{{ anuncio.inmueble.nombre }}</p>
+              <p>{{ anuncio.descripcion }}</p>
+              <p>
+                {{
+                  anuncio.inmueble.direccion.direccion
+                    .split(",")
+                    .slice(0, -2)
+                    .join(",")
+                }}
+              </p>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
+</ng-template>

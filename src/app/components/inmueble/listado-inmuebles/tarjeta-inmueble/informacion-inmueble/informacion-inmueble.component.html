@@ -29,7 +29,7 @@
     </section>
 
     <!-- Información del propietario -->
-    <section>
+    <section *ngIf="estaLogeado">
       <h5 class="mb-2">Información del propietario</h5>
       <mat-list>
         <mat-list-item>
@@ -56,135 +56,279 @@
       ></div>
     </section>
 
-    <!-- Valoración promedio -->
-    <section>
-      <h5 class="mb-2">Valoración promedio</h5>
-      <div class="d-flex align-items-center gap-2">
-        <ng-container *ngFor="let estrella of estrellas">
-          <mat-icon
-            [ngClass]="{
-              'text-warning': estrella <= promedioValoracion,
-              'text-muted': estrella > promedioValoracion
-            }"
+    <!-- Visita -->
+    <section *ngIf="!esVendedor">
+      <h5 class="mb-2">Agenda tu visita</h5>
+
+      <div *ngIf="existeVisita">
+        <p class="text-center fst-italic">Ya agendó una visita</p>
+      </div>
+
+      <div *ngIf="!existeVisita">
+        <form
+          class="d-flex flex-column px-5 py-3"
+          [formGroup]="formVisita"
+          (ngSubmit)="agendarVisita()"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha</mat-label>
+            <input
+              matInput
+              [matDatepicker]="datepicker"
+              formControlName="fecha"
+            />
+            <mat-datepicker-toggle
+              [for]="datepicker"
+              matSuffix
+            ></mat-datepicker-toggle>
+            <mat-datepicker #datepicker></mat-datepicker>
+            <mat-error *ngIf="formVisita.get('fecha')?.hasError('required')">
+              La fecha es obligatoria
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Hora</mat-label>
+            <input
+              [matTimepicker]="timepicker"
+              matInput
+              formControlName="hora"
+              [min]="minHora"
+              [max]="maxHora"
+            />
+            <mat-timepicker #timepicker />
+            <mat-timepicker-toggle [for]="timepicker" matSuffix />
+            <mat-error *ngIf="formVisita.get('hora')?.hasError('required')">
+              La hora es obligatoria
+            </mat-error>
+          </mat-form-field>
+
+          <div
+            *ngIf="formVisita.errors?.['fechaHoraNoFutura']"
+            class="text-danger"
           >
-            star
-          </mat-icon>
-        </ng-container>
-        <span *ngIf="promedioValoracion > 0">
-          {{ promedioValoracion }} ({{ valoraciones.length }} valoraciones)
-        </span>
-        <span *ngIf="promedioValoracion === 0">Sin valoraciones aún</span>
-      </div>
-    </section>
-
-    <!-- Sección de valoración del usuario -->
-    <section *ngIf="!esDuenio">
-      <h5 class="mt-3 mb-2">Tu valoración</h5>
-      <div class="d-flex align-items-center gap-2">
-        <!-- Estrellas para seleccionar valoración -->
-        <mat-icon
-          *ngFor="let estrella of estrellas"
-          class="cursor-pointer"
-          [ngClass]="{
-            'text-warning': estrella <= valoracionSeleccionada,
-            'text-muted': estrella > valoracionSeleccionada
-          }"
-          (click)="!usuarioYaValoro && (valoracionSeleccionada = estrella)"
-        >
-          star
-        </mat-icon>
-
-        <!-- Botón que cambia según el estado -->
-        <button
-          mat-stroked-button
-          color="primary"
-          class="ms-2"
-          (click)="usuarioYaValoro ? eliminarValoracion() : guardarValoracion()"
-          [disabled]="!usuarioYaValoro && valoracionSeleccionada === 0"
-        >
-          {{ usuarioYaValoro ? "Eliminar" : "Enviar" }}
-        </button>
-      </div>
-
-      <!-- Mensaje de confirmación -->
-      <div *ngIf="usuarioYaValoro" class="mt-2 text-success">
-        ¡Gracias por tu valoración!
-      </div>
-    </section>
-
-    <!-- Lista de valoraciones -->
-    <section *ngIf="valoraciones.length > 0">
-      <h5 class="mt-4 mb-2">Valoraciones</h5>
-      <div *ngFor="let val of valoracionesMostradas">
-        <mat-card class="mb-2 p-2">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <strong>{{ val.usuario.nombre }}</strong>
-            </div>
-            <div class="d-flex">
-              <mat-icon
-                *ngFor="let estrella of estrellas"
-                [ngClass]="{
-                  'text-warning': estrella <= val.rating,
-                  'text-muted': estrella > val.rating
-                }"
-                >star</mat-icon
-              >
-            </div>
+            La fecha y hora deben ser futuras.
           </div>
-        </mat-card>
+
+          <button
+            mat-dialog-close
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="formVisita.invalid"
+          >
+            Agendar Visita
+          </button>
+        </form>
       </div>
-      <button
-        *ngIf="valoracionesMostradas.length < valoraciones.length"
-        mat-flat-button
-        color="primary"
-        (click)="verMasValoraciones()"
-      >
-        Ver más valoraciones
-      </button>
+    </section>
+
+    <!-- Valoración -->
+
+    <section>
+      <h5 class="mb-2">Valoraciones</h5>
+
+      <div class="px-4 pt-2">
+        <div>
+          <h6 class="mb-2">Valoración promedio</h6>
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <ng-container *ngFor="let estrella of estrellas">
+              <mat-icon
+                [ngClass]="{
+                  'text-warning': estrella <= promedioValoracion,
+                  'text-muted': estrella > promedioValoracion
+                }"
+              >
+                star
+              </mat-icon>
+            </ng-container>
+            <span *ngIf="promedioValoracion > 0">
+              {{ promedioValoracion }} ({{ valoraciones.length }} valoraciones)
+            </span>
+            <span *ngIf="promedioValoracion === 0">Sin valoraciones aún</span>
+          </div>
+        </div>
+
+        <!-- Sección de valoración del usuario -->
+        <div *ngIf="!esDuenio">
+          <h6 class="mt-3 mb-2">Tu valoración</h6>
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <!-- Estrellas para seleccionar valoración -->
+            <mat-icon
+              *ngFor="let estrella of estrellas"
+              class="cursor-pointer"
+              [ngClass]="{
+                'text-warning': estrella <= valoracionSeleccionada,
+                'text-muted': estrella > valoracionSeleccionada
+              }"
+              (click)="!usuarioYaValoro && (valoracionSeleccionada = estrella)"
+            >
+              star
+            </mat-icon>
+
+            <!-- Botón que cambia según el estado -->
+            <button
+              mat-flat-button
+              color="primary"
+              class="ms-2"
+              (click)="
+                usuarioYaValoro ? eliminarValoracion() : guardarValoracion()
+              "
+              [disabled]="!usuarioYaValoro && valoracionSeleccionada === 0"
+            >
+              {{ usuarioYaValoro ? "Eliminar" : "Enviar" }}
+            </button>
+          </div>
+
+          <!-- Mensaje de confirmación -->
+          <div *ngIf="usuarioYaValoro" class="mt-2 text-success">
+            ¡Gracias por tu valoración!
+          </div>
+        </div>
+
+        <!-- Lista de valoraciones -->
+        <div *ngIf="valoraciones.length > 0">
+          <h6 class="mt-4 mb-2">Lista de Valoraciones</h6>
+          <div *ngFor="let val of valoracionesMostradas">
+            <mat-card class="mb-2 p-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>{{ val.usuario.nombre }}</strong>
+                </div>
+                <div class="d-flex">
+                  <mat-icon
+                    *ngFor="let estrella of estrellas"
+                    [ngClass]="{
+                      'text-warning': estrella <= val.rating,
+                      'text-muted': estrella > val.rating
+                    }"
+                    >star</mat-icon
+                  >
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <button
+            *ngIf="valoracionesMostradas.length < valoraciones.length"
+            mat-flat-button
+            color="primary"
+            (click)="verMasValoraciones()"
+          >
+            Ver más valoraciones
+          </button>
+        </div>
+      </div>
     </section>
 
     <!-- Comentario -->
     <section>
-      <h3 class="mb-2">Comentario</h3>
+      <h5 class="mb-2">Comentarios</h5>
+      <div class="px-4">
+        <div *ngIf="!esVendedor">
+          <h6>Agregar comentario</h6>
+          <!-- Formulario para insertar o editar comentario -->
+          <form [formGroup]="comentarioform" (ngSubmit)="insertarComentario()">
+            <!-- Campo de texto -->
+            <mat-form-field appearance="outline" class="w-100">
+              <textarea
+                matInput
+                placeholder="Escribe tu comentario aquí..."
+                formControlName="comentario"
+                required
+                rows="2"
+              ></textarea>
+            </mat-form-field>
+
+            <!-- Botones de acción -->
+            <div class="mt-2 d-flex justify-content-center gap-2">
+              <button mat-flat-button color="primary" type="submit">
+                {{ existeComentario ? "Editar" : "Enviar" }}
+              </button>
+
+              <button
+                mat-flat-button
+                color="warn"
+                type="button"
+                (click)="eliminarComentario()"
+                *ngIf="existeComentario"
+              >
+                Eliminar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Lista de comentarios -->
+        <div class="mt-4 mb-4">
+          <h6 class="mb-2">Lista de Comentarios</h6>
+
+          <div
+            hideToggle
+            *ngFor="let comentario of comentarios | slice : 0 : mostrarCantidad"
+            class="comentario-container"
+          >
+            <div class="comentario-title-container">
+              <b>{{ comentario.usuario.nombre }}</b>
+              <p>{{ comentario.usuario.email }}</p>
+            </div>
+
+            <div>
+              <p class="fs-6">{{ comentario.descripcion }}</p>
+            </div>
+          </div>
+
+          <!-- Botón "Ver más / Ver menos" -->
+          <div *ngIf="comentarios.length > 3" class="mt-2 text-center">
+            <button mat-button color="primary" (click)="toggleVerMas()">
+              {{
+                mostrarCantidad >= comentarios.length ? "Ver menos" : "Ver más"
+              }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section *ngIf="esVendedor">
       <div>
-        <form [formGroup]="comentarioform" (submit)="insertarComentario()">
+        <h5>Anunciar Inmueble</h5>
+        <!-- Formulario para insertar o editar comentario -->
+        <form [formGroup]="anuncioform" (ngSubmit)="insertarAnuncio()">
+          <!-- Campo de texto -->
           <mat-form-field appearance="outline" class="w-100">
             <textarea
               matInput
-              placeholder="Escribe tu comentario aquí..."
-              name="comentario"
-              formControlName="comentario"
+              placeholder="Escribe la descripción de tu anuncio aquí..."
+              formControlName="anuncio"
               required
-              rows="4"
+              rows="2"
             ></textarea>
           </mat-form-field>
-          <button mat-raised-button color="primary" type="submit">
-            {{ existeComentario ? 'Editar Comentario' : 'Enviar Comentario' }}
-          </button>
+
+          <!-- Botones de acción -->
+          <div class="mt-2 d-flex justify-content-center gap-2">
+            <button mat-flat-button color="primary" type="submit">
+              {{ existeAnuncio ? "Editar" : "Anunciar" }}
+            </button>
+
+            <button
+              mat-flat-button
+              color="warn"
+              type="button"
+              (click)="eliminarAnuncio()"
+              *ngIf="existeAnuncio"
+            >
+              Eliminar
+            </button>
+          </div>
         </form>
-      </div>
-      <div>
-        <mat-accordion *ngFor=" let comentario of comentarios">
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title> 
-                <strong>{{ comentario.usuario.nombre }}</strong> dijo:
-            </mat-panel-title>
-              
-            </mat-expansion-panel-header>
-            <p>{{comentario.descripcion}}</p>
-          </mat-expansion-panel>
-        
-        </mat-accordion>
-        
       </div>
     </section>
   </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <div class="gap-2 d-flex" *ngIf="esDuenio">
+  <div class="gap-2 d-flex" *ngIf="esDuenio && estaLogeado">
     <button
       mat-dialog-close
       mat-flat-button
@@ -197,18 +341,24 @@
     <button
       mat-dialog-close
       mat-flat-button
-      (click)="eliminar(inmueble.idInmueble)"
+      (click)="eliminarInmueble(inmueble.idInmueble)"
       routerLinkActive="router-link-active"
     >
       Eliminar
     </button>
   </div>
-  <div class="gap-2 d-flex" *ngIf="!esDuenio">
-    <button *ngIf="esAlquiler" mat-flat-button [mat-dialog-close]="'alquiler'">
-      Alquilar
-    </button>
-    <button *ngIf="esVenta" mat-flat-button [mat-dialog-close]="'venta'">
-      Comprar
-    </button>
+  <div class="gap-2 d-flex" *ngIf="!esDuenio && estaLogeado">
+    <div class="gap-2 d-flex" *ngIf="!esDuenio">
+      <button
+        *ngIf="esAlquiler"
+        mat-flat-button
+        [mat-dialog-close]="'alquiler'"
+      >
+        Alquilar
+      </button>
+      <button *ngIf="esVenta" mat-flat-button [mat-dialog-close]="'venta'">
+        Comprar
+      </button>
+    </div>
   </div>
 </mat-dialog-actions>
