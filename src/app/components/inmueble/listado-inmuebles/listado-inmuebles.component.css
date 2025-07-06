@@ -11,10 +11,14 @@
 }
 
 .paginador {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  justify-self: center;
   background-color: #0a663a;
-  border-radius: 30px;
-  padding: 0.5rem 1rem;
-  color: #fff;
+  border-radius: 3rem;
+  color: #feffef;
   font-weight: bold;
   padding: 0;
 }

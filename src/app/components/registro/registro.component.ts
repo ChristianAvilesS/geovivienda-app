@@ -17,6 +17,7 @@ import { UsuarioService } from '../../services/usuario.service';
 import { RolService } from '../../services/rol.service';
 import { SesionUsuarioService } from '../../services/sesion-usuario.service';
 import { JwtRequest } from '../../models/jwt-request';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-registro',
@@ -44,7 +45,8 @@ export class RegistroComponent implements OnInit {
     private rolS: RolService,
     private sessionS: SesionUsuarioService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -67,7 +69,6 @@ export class RegistroComponent implements OnInit {
   }
 
   aceptar() {
-    console.log("Estoy entrando a la verificación del form");
     if (this.form.valid) {
       if (this.form.value.password !== this.form.value.passwordVerificar) {
         console.log('Error');
@@ -82,15 +83,16 @@ export class RegistroComponent implements OnInit {
 
       this.rolId = this.form.value.rol;
 
-      console.log('Antes de insertar');
       this.userServ.insertar(this.usuario, this.rolId).subscribe(() => {
-        console.log('Entré a insertar');
         var jwt = new JwtRequest();
         jwt.username = this.usuario.username;
         jwt.password = this.usuario.password;
         this.sessionS.iniciarSesion(jwt).subscribe(() => {
+          this.snackBar.open('Registrado exitosamente', 'Cerrar', {
+            duration: 1000,
+          });
           this.router.navigate(['']);
-        })
+        });
       });
     }
   }
