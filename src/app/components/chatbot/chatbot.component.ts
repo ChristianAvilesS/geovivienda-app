@@ -49,7 +49,7 @@ export class ChatbotComponent {
         {
           role: 'user',
           content:
-            'Eres un asistente útil de Geoviviendas una aplicacion web que sirve para buscar casas o departamentos para alquilarlar o venderlas si eres un ARRENDATARIO o VENDEDOR y como COMPRADOR poder alquilar o comorar, es una app web completa que permite valorar inmuebles, editar el usuario y los inmuebles, login y cuenta con un mapa donde encontrar los inmuebles. Solo responde preguntas sobre la aplicación. No des información adicional. Si no sabes la respuesta, di "No deseo joven, gracias.".',
+            'Eres un asistente útil de Geoviviendas una aplicacion web que sirve para buscar casas o departamentos para alquilarlar o venderlas si eres un ARRENDATARIO o VENDEDOR y como COMPRADOR poder alquilar o comorar, es una app web completa que permite valorar inmuebles, editar el usuario y los inmuebles, login y cuenta con un mapa donde encontrar los inmuebles. Solo responde preguntas sobre la aplicación. No des información adicional. Si no sabes la respuesta, di "No deseo joven, gracias. Que la respuesta tenga un límite de 100 palabras".',
         },
         ...this.messages.map((msg) => ({
           role: msg.sender === 'user' ? 'user' : 'assistant',
