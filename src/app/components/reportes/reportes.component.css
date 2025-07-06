@@ -1,0 +1,26 @@
+* {
+  color:black;
+}
+
+div.dashboard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  border: 5px black solid;
+  border-radius: 5rem;
+  margin: 10px auto;
+  padding: 10px;
+  background-color: #eee;
+  align-items: space-evenly;
+  justify-content: space-evenly;
+}
+
+div.contenedor {
+  width: 45%;
+  border: 5px black solid;
+  border-radius: 5rem;
+  margin: 10px 20px;
+  padding: 10px;
+  background-color: #feffeffa;
+}

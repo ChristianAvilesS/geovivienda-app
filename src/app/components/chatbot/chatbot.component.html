@@ -1,0 +1,36 @@
+<div class="chatbot-bubble" *ngIf="!isOpen" (click)="toggleChat()">💬</div>
+
+<div class="chatbot-panel" *ngIf="isOpen">
+  <div class="chatbot-header">
+    <span>Geoviviendas Bot</span>
+    <button mat-icon-button (click)="toggleChat()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="chatbot-messages">
+    <div
+      *ngFor="let msg of messages"
+      class="chat-message"
+      [ngClass]="msg.sender"
+    >
+      <div class="message-bubble">
+        <strong>{{ msg.sender === "user" ? "Tú" : "GeoBoticito" }}:</strong>
+        <div>{{ msg.text }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-error" *ngIf="errorMessage">⚠️ {{ errorMessage }}</div>
+
+  <form (submit)="sendMessage(); $event.preventDefault()">
+    <input
+      type="text"
+      [(ngModel)]="userInput"
+      name="message"
+      placeholder="Escribe tu mensaje..."
+      required
+    />
+    <button type="submit" [disabled]="isLoading">Enviar</button>
+  </form>
+</div>

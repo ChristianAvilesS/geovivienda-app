@@ -10,6 +10,11 @@ export const authInterceptorFn: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 
+  if (req.url.includes('openrouter')) {
+    return next(req);
+  }
+
+
   if (token) {
     req = req.clone({
       setHeaders: {

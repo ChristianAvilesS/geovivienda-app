@@ -1,0 +1,31 @@
+<div>
+  <div class="title-container text-center"><h3>Reporte Cantidad Contratos por tipo de contrato por mes</h3></div>
+
+  <div class="mb-3">
+    <form [formGroup]="form" class="example-form" (submit)="aceptar()">
+      <div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Ingrese un año</mat-label>
+          <input matInput placeholder="Ex. 2025" formControlName="anio" />
+          <mat-error *ngIf="!form.valid">
+            Solo se aceptan años después del 2000!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="text-center d-flex">
+        <button class="w-100" mat-flat-button>Generar reporte</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="container chart-container">
+    @if(visible) {
+      <canvas baseChart [datasets]="chartData" [labels]="chartLabels"
+    [options]="chartOptions" [type]="chartType" [legend]="chartLegend">
+    </canvas>
+    }
+    @else {
+      <p>No se ha dado un valor o no hay datos</p>
+    }
+  </div>
+</div>

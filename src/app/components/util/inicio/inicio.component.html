@@ -43,10 +43,12 @@
   <div id="my-map"></div>
 </section>
 
-<section class="py-5 text-center section-action">
-  <h4>¿Tienes un inmueble para alquilar o vender?</h4>
-  <p>Empieza a llegar a cientos de personas en minutos.</p>
-  <a routerLink="/inmuebles/crear" class="mt-2" mat-flat-button
-    >Publicar ahora</a
-  >
-</section>
+@if(!logeado) {
+  <section class="py-5 text-center section-action">
+    <h4>¿Tienes un inmueble para alquilar o vender?</h4>
+    <p>Empieza a llegar a cientos de personas en minutos.</p>
+    <a [routerLink]="['registro']" class="mt-2" mat-flat-button
+      >Publicar ahora</a
+    >
+  </section>
+}

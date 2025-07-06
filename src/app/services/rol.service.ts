@@ -45,4 +45,9 @@ export class RolService {
   listarRolesSinAdmin(): Observable<Rol[]> {
     return this.http.get<Rol[]>(`${this.url}/roles-clientes`);
   }
+
+  buscarRolPorNombre(rol: string): Observable<Rol> {
+    const params = { nombre: rol };
+    return this.http.get<Rol>(`${this.url}/rol-nombre`, {params});
+  }
 }

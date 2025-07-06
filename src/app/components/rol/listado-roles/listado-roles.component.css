@@ -16,20 +16,30 @@ div.container-centrado {
   width: 100%;
 }
 
-.title {
-  background-color: #f0ea5f;
-  color: #0a663a;
-  font-family: Jost, sans-serif;
-  border-radius: 50px 20px;
-  padding: 0.5rem 1rem;
-}
-
-div.container-title {
-  margin: 10px 0;
-  padding: 5px 0;
-}
-
 td, th {
   text-align: center;
   vertical-align: middle;
+}
+
+.paginador {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  justify-self: center;
+  background-color: #0a663a;
+  border-radius: 3rem;
+  color: #feffef;
+  font-weight: bold;
+  padding: 0;
+}
+
+
+.btn-rojo {
+  background-color: rgb(163, 28, 28) !important;
+  color:white;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  justify-content: center;
 }
