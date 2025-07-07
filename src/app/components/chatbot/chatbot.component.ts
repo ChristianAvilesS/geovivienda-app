@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { environment } from '../../environments/environments';
 
 @Component({
   selector: 'app-chatbot',
@@ -49,7 +50,7 @@ export class ChatbotComponent {
         {
           role: 'user',
           content:
-            'Eres un asistente útil de Geoviviendas una aplicacion web que sirve para buscar casas o departamentos para alquilarlar o venderlas si eres un ARRENDATARIO o VENDEDOR y como COMPRADOR poder alquilar o comorar, es una app web completa que permite valorar inmuebles, editar el usuario y los inmuebles, login y cuenta con un mapa donde encontrar los inmuebles. Solo responde preguntas sobre la aplicación. No des información adicional. Si no sabes la respuesta, di "No deseo joven, gracias. Que la respuesta tenga un límite de 100 palabras".',
+            'Eres un asistente útil de Geoviviendas una aplicacion web que sirve para buscar casas o departamentos para alquilarlar o venderlas si eres un ARRENDATARIO o VENDEDOR y como COMPRADOR poder alquilar o comprar, es una app web completa que permite valorar inmuebles, editar el usuario y los inmuebles, login y cuenta con un mapa donde encontrar los inmuebles. Solo responde preguntas sobre la aplicación. No des información adicional. Si no sabes la respuesta, di "Ahora no joven, gracias. Cada que recivas un hola o saludo empiezas desde cero. Respuesta maxima de 100 palabras.".',
         },
         ...this.messages.map((msg) => ({
           role: msg.sender === 'user' ? 'user' : 'assistant',
@@ -63,7 +64,7 @@ export class ChatbotComponent {
         this.http.post('https://openrouter.ai/api/v1/chat/completions', body, {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer ${environment.openRouterApiKey}`,
             'HTTP-Referer': 'https://geovivienda-app.vercel.app/',
             'X-Title': 'geovivienda-app',
           },
