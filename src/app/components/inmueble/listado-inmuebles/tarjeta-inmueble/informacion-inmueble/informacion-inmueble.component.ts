@@ -466,11 +466,9 @@ export class InformacionInmuebleComponent {
 
     const isoString = combinedDate.toISOString();
 
-    const localString = this.sesionService.toLocalIsoStringFromUtc(isoString);
-
     this.visita.inmueble.idInmueble = this.inmueble.idInmueble;
     this.visita.usuario.idUsuario = this.sesionService.getIdUsuario();
-    this.visita.fechaVisita = localString;
+    this.visita.fechaVisita = isoString;
 
     this.visitasService.agendarVisita(this.visita).subscribe(() => {
       this.visitasService
