@@ -3,5 +3,5 @@ export const environment = {
   base: 'https://geovivienda.onrender.com/geovivienda',
   apiKeyMaps: 'a638798ea1c142ef85837a2036970f91',
   openRouterApiKey:
-    'sk-or-v1-0951a195634a680ca72bf8f5f70e4ab1c18ad268906eae67280e6f792ec1077aBCA'.slice(0, -3),
+    'sk-or-v1-dccd1703562286c4351131f81f126b930795cd6755aefe6b6dc1dd206b322359BCA'.slice(0, -3),
 };
